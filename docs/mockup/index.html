@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastrototem 2.0 — Prototipo Interactivo</title>
+<style>
+  :root {
+    --black: #1a1a1a;
+    --white: #ffffff;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #e5e5e5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --amber: #f59e0b;
+    --amber-light: #fef3c7;
+    --green: #22c55e;
+    --green-light: #dcfce7;
+    --red: #ef4444;
+    --red-light: #fef2f2;
+    --blue: #3b82f6;
+    --blue-light: #eff6ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--gray-100);
+    color: var(--black);
+    min-height: 100vh;
+  }
+
+  /* ===== TOP NAV ===== */
+  .top-bar {
+    background: var(--black);
+    color: var(--white);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+  .top-bar .logo {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+  .top-bar .badge {
+    font-size: 10px;
+    background: var(--gray-700);
+    padding: 3px 8px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== APP SELECTOR ===== */
+  .app-selector {
+    display: flex;
+    gap: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    position: fixed;
+    top: 54px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    overflow-x: auto;
+  }
+  .app-tab {
+    flex: 1;
+    padding: 14px 12px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    color: var(--gray-400);
+    transition: all 0.2s;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .app-tab:hover { color: var(--gray-600); }
+  .app-tab.active {
+    color: var(--black);
+    border-bottom-color: var(--black);
+  }
+  .app-tab .tab-icon {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  /* ===== CONTENT ===== */
+  .content {
+    margin-top: 108px;
+    padding: 24px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .app-view { display: none; }
+  .app-view.active { display: block; }
+
+  /* ===== PHONE FRAME ===== */
+  .phone-frame {
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    overflow: hidden;
+    border: 8px solid var(--black);
+  }
+  .phone-statusbar {
+    background: var(--black);
+    color: var(--white);
+    padding: 8px 24px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .phone-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .phone-header h2 {
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .phone-header .back-btn {
+    font-size: 14px;
+    color: var(--gray-500);
+    cursor: pointer;
+  }
+  .phone-body {
+    padding: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  /* ===== DESKTOP FRAME ===== */
+  .desktop-frame {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+  }
+  .desktop-toolbar {
+    background: var(--gray-100);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .desktop-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gray-300);
+  }
+  .desktop-dot.red { background: #ff5f57; }
+  .desktop-dot.yellow { background: #febc2e; }
+  .desktop-dot.green { background: #28c840; }
+  .desktop-url {
+    flex: 1;
+    background: var(--white);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-left: 8px;
+  }
+  .desktop-body {
+    padding: 0;
+  }
+
+  /* ===== SHARED COMPONENTS ===== */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray-400);
+    margin-bottom: 12px;
+    margin-top: 24px;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  .card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--black);
+    color: var(--white);
+    width: 100%;
+  }
+  .btn-primary:hover { background: var(--gray-700); }
+  .btn-secondary {
+    background: var(--white);
+    color: var(--black);
+    border: 1px solid var(--gray-300);
+  }
+  .btn-small {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .input-group {
+    margin-bottom: 16px;
+  }
+  .input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+  }
+  .input-group input,
+  .input-group textarea,
+  .input-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gray-300);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--white);
+  }
+  .input-group textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+
+  .rating {
+    display: flex;
+    gap: 4px;
+    margin: 6px 0;
+  }
+  .rating-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--gray-300);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--gray-400);
+    transition: all 0.2s;
+  }
+  .rating-dot.active {
+    background: var(--black);
+    border-color: var(--black);
+    color: var(--white);
+  }
+
+  .badge-status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-pending { background: var(--amber-light); color: #92400e; }
+  .badge-done { background: var(--green-light); color: #166534; }
+  .badge-active { background: var(--blue-light); color: #1e40af; }
+
+  /* ===== CALENDAR ===== */
+  .calendar {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  .calendar th {
+    padding: 8px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-400);
+    text-transform: uppercase;
+  }
+  .calendar td {
+    padding: 4px;
+    text-align: center;
+  }
+  .cal-day {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    border-radius: 50%;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .cal-day:hover { background: var(--gray-100); }
+  .cal-day.empty { cursor: default; }
+  .cal-day.empty:hover { background: transparent; }
+  .cal-day.available {
+    background: var(--green-light);
+    color: #166534;
+    font-weight: 600;
+  }
+  .cal-day.available:hover { background: #bbf7d0; }
+  .cal-day.selected {
+    background: var(--black) !important;
+    color: var(--white) !important;
+  }
+  .cal-day.past { color: var(--gray-300); cursor: default; }
+
+  .zone-chip {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    border: 1px solid var(--gray-300);
+    cursor: pointer;
+    margin: 4px;
+    transition: all 0.15s;
+  }
+  .zone-chip.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+
+  /* ===== NOTES APP BLOCKS ===== */
+  .block-tab {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--gray-200);
+    margin: 0 -20px;
+    padding: 0 20px;
+  }
+  .block-tab-item {
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    color: var(--gray-400);
+    transition: all 0.2s;
+  }
+  .block-tab-item.active {
+    color: var(--black);
+    border-bottom-color: var(--black);
+  }
+  .block-tab-item .block-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--gray-200);
+    font-size: 10px;
+    margin-right: 4px;
+  }
+  .block-tab-item.active .block-num {
+    background: var(--black);
+    color: var(--white);
+  }
+  .block-tab-item.completed .block-num {
+    background: var(--green);
+    color: var(--white);
+  }
+
+  .block-content { display: none; }
+  .block-content.active { display: block; }
+
+  /* Dish card */
+  .dish-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .dish-photo {
+    height: 160px;
+    background: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: var(--gray-300);
+    position: relative;
+    cursor: pointer;
+  }
+  .dish-photo .cam-label {
+    position: absolute;
+    bottom: 10px;
+    font-size: 11px;
+    color: var(--gray-400);
+    background: rgba(255,255,255,0.9);
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+  .dish-photo.has-photo {
+    background: linear-gradient(135deg, #f5e6d3 0%, #e8d5b7 100%);
+  }
+  .dish-photo.has-photo .cam-label { display: none; }
+  .dish-body { padding: 14px; }
+
+  .voice-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--gray-50);
+    border: 1px dashed var(--gray-300);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--gray-500);
+    width: 100%;
+    margin-top: 8px;
+  }
+  .voice-btn:hover {
+    border-color: var(--gray-400);
+    color: var(--gray-600);
+  }
+  .voice-btn.recording {
+    border-color: var(--red);
+    color: var(--red);
+    background: var(--red-light);
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* ===== REPORT PREVIEW ===== */
+  .report-preview {
+    background: var(--white);
+    padding: 40px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    border: 1px solid var(--gray-200);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .report-header {
+    text-align: center;
+    border-bottom: 2px solid var(--black);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+  .report-header h1 {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+  .report-header .report-meta {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-top: 8px;
+  }
+  .report-section {
+    margin-bottom: 24px;
+  }
+  .report-section h3 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .report-item {
+    margin-bottom: 12px;
+  }
+  .report-item strong {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-500);
+  }
+  .report-action {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .action-immediate { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+  .action-recommended { background: var(--amber-light); color: #92400e; border: 1px solid #fde68a; }
+  .action-fine { background: var(--blue-light); color: #1e40af; border: 1px solid #bfdbfe; }
+
+  .report-verdict {
+    border: 2px solid var(--black);
+    padding: 20px;
+    margin-top: 30px;
+    text-align: center;
+  }
+  .report-verdict h3 {
+    border: none;
+    margin-bottom: 8px;
+  }
+  .report-verdict p {
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .report-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-200);
+    font-size: 11px;
+    color: var(--gray-400);
+  }
+
+  /* ===== ADMIN PANEL ===== */
+  .admin-sidebar {
+    width: 220px;
+    background: var(--black);
+    color: var(--white);
+    padding: 20px 0;
+    min-height: 500px;
+    float: left;
+  }
+  .admin-nav-item {
+    padding: 10px 20px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--gray-400);
+    transition: all 0.15s;
+  }
+  .admin-nav-item:hover { color: var(--white); background: var(--gray-700); }
+  .admin-nav-item.active { color: var(--white); background: var(--gray-700); }
+  .admin-content {
+    margin-left: 220px;
+    padding: 24px;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .stat-card .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+  }
+  .stat-card .stat-label {
+    font-size: 11px;
+    color: var(--gray-500);
+    margin-top: 4px;
+  }
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .admin-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-400);
+    border-bottom: 2px solid var(--gray-200);
+  }
+  .admin-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  /* ===== LANDING PAGE ===== */
+  .landing-hero {
+    background: var(--black);
+    color: var(--white);
+    padding: 60px 40px;
+    text-align: center;
+  }
+  .landing-hero h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .landing-hero p {
+    font-size: 16px;
+    color: var(--gray-400);
+    max-width: 500px;
+    margin: 0 auto 24px;
+    line-height: 1.6;
+  }
+  .landing-hero .btn {
+    background: var(--white);
+    color: var(--black);
+    font-size: 15px;
+    padding: 14px 32px;
+  }
+  .landing-section {
+    padding: 40px;
+  }
+  .landing-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .feature-card {
+    padding: 20px;
+    background: var(--gray-50);
+    border-radius: 12px;
+  }
+  .feature-card .feature-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .feature-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .feature-card p {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+  .price-box {
+    text-align: center;
+    padding: 30px;
+    background: var(--gray-50);
+    border-radius: 16px;
+    margin: 20px 40px;
+  }
+  .price-box .price {
+    font-size: 48px;
+    font-weight: 800;
+  }
+  .price-box .price-label {
+    color: var(--gray-500);
+    font-size: 14px;
+  }
+
+  /* ===== STEP INDICATOR ===== */
+  .steps {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+  }
+  .step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 12px 8px;
+  }
+  .step::after {
+    content: '';
+    position: absolute;
+    top: 22px;
+    right: -50%;
+    width: 100%;
+    height: 2px;
+    background: var(--gray-200);
+    z-index: 0;
+  }
+  .step:last-child::after { display: none; }
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--gray-200);
+    color: var(--gray-500);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+  }
+  .step.active .step-num {
+    background: var(--black);
+    color: var(--white);
+  }
+  .step.completed .step-num {
+    background: var(--green);
+    color: var(--white);
+  }
+  .step-label {
+    font-size: 10px;
+    color: var(--gray-400);
+    font-weight: 600;
+  }
+  .step.active .step-label { color: var(--black); }
+
+  /* ===== INTRO OVERLAY ===== */
+  .intro-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .intro-card h2 {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .intro-card p {
+    color: var(--gray-500);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .intro-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    text-align: left;
+    margin-bottom: 24px;
+  }
+  .intro-feature {
+    padding: 16px;
+    background: var(--gray-50);
+    border-radius: 10px;
+  }
+  .intro-feature .if-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  .intro-feature h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .intro-feature p {
+    font-size: 12px;
+    margin: 0;
+    color: var(--gray-500);
+  }
+
+  /* ===== GENERATE REPORT ANIMATION ===== */
+  .generate-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+  }
+  .generate-overlay.active { display: flex; }
+  .generate-modal {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+  }
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--gray-200);
+    border-top-color: var(--black);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .feature-grid { grid-template-columns: 1fr; }
+    .admin-sidebar { display: none; }
+    .admin-content { margin-left: 0; }
+    .intro-cards { grid-template-columns: 1fr; }
+    .report-preview { padding: 20px; }
+  }
+
+  /* Sub-nav within each app */
+  .sub-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .sub-nav-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--gray-300);
+    background: var(--white);
+    color: var(--gray-600);
+    transition: all 0.15s;
+  }
+  .sub-nav-btn.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+
+  .dish-grid-photo {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f5e6d3 0%, #e8d5b7 50%, #d4c4a8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="logo">GASTROTOTEM</div>
+  <div class="badge">PROTOTIPO 2.0</div>
+</div>
+
+<!-- APP SELECTOR -->
+<div class="app-selector">
+  <div class="app-tab active" onclick="showApp('intro')">
+    <span class="tab-icon">&#9679;</span>
+    Inicio
+  </div>
+  <div class="app-tab" onclick="showApp('landing')">
+    <span class="tab-icon">&#9741;</span>
+    Web publica
+  </div>
+  <div class="app-tab" onclick="showApp('booking')">
+    <span class="tab-icon">&#9735;</span>
+    Reserva
+  </div>
+  <div class="app-tab" onclick="showApp('notes')">
+    <span class="tab-icon">&#9997;</span>
+    Notas en vivo
+  </div>
+  <div class="app-tab" onclick="showApp('report')">
+    <span class="tab-icon">&#9782;</span>
+    Informe IA
+  </div>
+  <div class="app-tab" onclick="showApp('admin')">
+    <span class="tab-icon">&#9881;</span>
+    Panel admin
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ==================== INTRO ==================== -->
+  <div class="app-view active" id="view-intro">
+    <div class="intro-card">
+      <h2>Gastrototem 2.0</h2>
+      <p>Fernando, este es un prototipo interactivo de las herramientas que vamos a construir. Puedes navegar entre las distintas apps usando las pestanas de arriba. Todo lo que ves aqui es funcional a nivel visual — el objetivo es que tengas una idea clara de como sera la experiencia.</p>
+      <div class="intro-cards">
+        <div class="intro-feature">
+          <div class="if-icon">&#9741;</div>
+          <h4>Web publica</h4>
+          <p>Lo que ve el cliente al entrar en gastrototem.com</p>
+        </div>
+        <div class="intro-feature">
+          <div class="if-icon">&#9735;</div>
+          <h4>App de reserva</h4>
+          <p>Calendario, formulario y pago integrado</p>
+        </div>
+        <div class="intro-feature">
+          <div class="if-icon">&#9997;</div>
+          <h4>Notas en vivo</h4>
+          <p>Lo que usamos en el movil durante la comida</p>
+        </div>
+        <div class="intro-feature">
+          <div class="if-icon">&#9782;</div>
+          <h4>Informe con IA</h4>
+          <p>El PDF que se genera automaticamente</p>
+        </div>
+      </div>
+      <p style="font-size:12px; color:var(--gray-400);">Pulsa en cada pestana para explorar. Los elementos son interactivos — haz clic en botones, calendarios y formularios.</p>
+    </div>
+  </div>
+
+  <!-- ==================== LANDING ==================== -->
+  <div class="app-view" id="view-landing">
+    <div class="desktop-frame">
+      <div class="desktop-toolbar">
+        <div class="desktop-dot red"></div>
+        <div class="desktop-dot yellow"></div>
+        <div class="desktop-dot green"></div>
+        <div class="desktop-url">gastrototem.com/afinacion</div>
+      </div>
+      <div class="desktop-body">
+        <div class="landing-hero">
+          <div style="font-size:12px; letter-spacing:3px; margin-bottom:16px; color:var(--gray-400);">GASTROTOTEM</div>
+          <h1>Afinamos restaurantes.<br>Decimos la verdad.</h1>
+          <p>Somos la firma de critica gastronomica especializada que afina tu negocio. Visita de incognito, juicio experto y un plan de mejora concreto. En un dia.</p>
+          <button class="btn" onclick="showApp('booking')">Reservar Sesion de Afinacion</button>
+        </div>
+        <div class="landing-section">
+          <h2>Como funciona</h2>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feature-icon">1</div>
+              <h3>Reservas y nos cuentas</h3>
+              <p>Eliges fecha, rellenas un breve formulario sobre tu restaurante y pagas. Sin llamadas, sin reuniones previas.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">2</div>
+              <h3>Vamos de incognito</h3>
+              <p>Comemos como clientes reales. Evaluamos cocina, sala, experiencia y coherencia con criterio de critica profesional.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">3</div>
+              <h3>Te decimos la verdad</h3>
+              <p>Reunion inmediata con la propiedad. Te presentamos el informe con observaciones, juicios y acciones concretas.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">4</div>
+              <h3>Seguimiento a 30 dias</h3>
+              <p>Llamada de control incluida para revisar que has implementado y resolver dudas.</p>
+            </div>
+          </div>
+        </div>
+        <div class="price-box">
+          <div class="price">1.000 &#8364;</div>
+          <div class="price-label">+ IVA | Servicio completo en un dia</div>
+          <div style="margin-top:16px;">
+            <button class="btn btn-primary" style="max-width:300px;" onclick="showApp('booking')">Reservar ahora</button>
+          </div>
+        </div>
+        <div class="landing-section" style="text-align:center; padding-top:20px;">
+          <p style="font-size:13px; color:var(--gray-400);">Fernando Huidobro &middot; Juanma Agrela<br>Gastrototem &mdash; Alta Afinacion Gastronomica</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== BOOKING APP ==================== -->
+  <div class="app-view" id="view-booking">
+    <div class="sub-nav">
+      <button class="sub-nav-btn active" onclick="showBookingStep(1, this)">1. Zona y fecha</button>
+      <button class="sub-nav-btn" onclick="showBookingStep(2, this)">2. Formulario</button>
+      <button class="sub-nav-btn" onclick="showBookingStep(3, this)">3. Pago</button>
+      <button class="sub-nav-btn" onclick="showBookingStep(4, this)">4. Confirmacion</button>
+    </div>
+
+    <div class="phone-frame">
+      <div class="phone-statusbar">
+        <span>14:32</span>
+        <span>&#9679;&#9679;&#9679;</span>
+      </div>
+
+      <!-- STEP 1: Zona y fecha -->
+      <div class="booking-step active" id="booking-1">
+        <div class="phone-header">
+          <h2>Reservar sesion</h2>
+          <span style="font-size:12px; color:var(--gray-400);">Paso 1 de 4</span>
+        </div>
+        <div class="phone-body">
+          <div class="section-label">Zona</div>
+          <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:20px;">
+            <div class="zone-chip active">Malaga capital</div>
+            <div class="zone-chip" onclick="this.classList.toggle('active')">Costa del Sol</div>
+            <div class="zone-chip" onclick="this.classList.toggle('active')">Interior</div>
+          </div>
+
+          <div class="section-label">Horario</div>
+          <div style="display:flex; gap:8px; margin-bottom:20px;">
+            <div class="zone-chip active">Comida</div>
+            <div class="zone-chip">Cena</div>
+          </div>
+
+          <div class="section-label">Mayo 2026</div>
+          <table class="calendar">
+            <tr><th>L</th><th>M</th><th>X</th><th>J</th><th>V</th><th>S</th><th>D</th></tr>
+            <tr>
+              <td><div class="cal-day empty"></div></td>
+              <td><div class="cal-day empty"></div></td>
+              <td><div class="cal-day empty"></div></td>
+              <td><div class="cal-day empty"></div></td>
+              <td><div class="cal-day past">1</div></td>
+              <td><div class="cal-day past">2</div></td>
+              <td><div class="cal-day past">3</div></td>
+            </tr>
+            <tr>
+              <td><div class="cal-day past">4</div></td>
+              <td><div class="cal-day past">5</div></td>
+              <td><div class="cal-day past">6</div></td>
+              <td><div class="cal-day past">7</div></td>
+              <td><div class="cal-day past">8</div></td>
+              <td><div class="cal-day past">9</div></td>
+              <td><div class="cal-day past">10</div></td>
+            </tr>
+            <tr>
+              <td><div class="cal-day past">11</div></td>
+              <td><div class="cal-day past">12</div></td>
+              <td><div class="cal-day past">13</div></td>
+              <td><div class="cal-day available" onclick="selectDay(this)">14</div></td>
+              <td><div class="cal-day">15</div></td>
+              <td><div class="cal-day available" onclick="selectDay(this)">16</div></td>
+              <td><div class="cal-day">17</div></td>
+            </tr>
+            <tr>
+              <td><div class="cal-day">18</div></td>
+              <td><div class="cal-day available" onclick="selectDay(this)">19</div></td>
+              <td><div class="cal-day">20</div></td>
+              <td><div class="cal-day available selected" onclick="selectDay(this)">21</div></td>
+              <td><div class="cal-day">22</div></td>
+              <td><div class="cal-day available" onclick="selectDay(this)">23</div></td>
+              <td><div class="cal-day">24</div></td>
+            </tr>
+            <tr>
+              <td><div class="cal-day">25</div></td>
+              <td><div class="cal-day available" onclick="selectDay(this)">26</div></td>
+              <td><div class="cal-day">27</div></td>
+              <td><div class="cal-day available" onclick="selectDay(this)">28</div></td>
+              <td><div class="cal-day">29</div></td>
+              <td><div class="cal-day available" onclick="selectDay(this)">30</div></td>
+              <td><div class="cal-day">31</div></td>
+            </tr>
+          </table>
+
+          <div class="card" style="text-align:center;">
+            <div style="font-size:12px; color:var(--gray-400);">Seleccionado</div>
+            <div style="font-size:18px; font-weight:700; margin:4px 0;">Miercoles 21 mayo</div>
+            <div style="font-size:13px; color:var(--gray-500);">Comida &middot; Malaga capital</div>
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:12px;" onclick="showBookingStep(2)">Continuar</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Formulario -->
+      <div class="booking-step" id="booking-2">
+        <div class="phone-header">
+          <span class="back-btn" onclick="showBookingStep(1)">&larr; Atras</span>
+          <span style="font-size:12px; color:var(--gray-400);">Paso 2 de 4</span>
+        </div>
+        <div class="phone-body">
+          <h2 style="font-size:17px; margin-bottom:4px;">Cuentanos sobre tu restaurante</h2>
+          <p style="font-size:12px; color:var(--gray-400); margin-bottom:20px;">Esta informacion nos ayuda a preparar un analisis mas preciso.</p>
+
+          <div class="input-group">
+            <label>Nombre del restaurante</label>
+            <input type="text" placeholder="Ej: La Cosmopolita" value="La Cosmopolita">
+          </div>
+          <div class="input-group">
+            <label>Direccion</label>
+            <input type="text" placeholder="Calle, numero, ciudad" value="C/ Jose Denis Belgrano 3, Malaga">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="input-group">
+              <label>Web</label>
+              <input type="text" placeholder="www..." value="lacosmopolita.es">
+            </div>
+            <div class="input-group">
+              <label>Instagram</label>
+              <input type="text" placeholder="@..." value="@lacosmopolita">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Concepto culinario en una frase</label>
+            <input type="text" placeholder="Ej: Cocina mediterranea de mercado" value="Cocina de autor con base andaluza">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="input-group">
+              <label>Cubiertos</label>
+              <input type="number" placeholder="Ej: 45" value="52">
+            </div>
+            <div class="input-group">
+              <label>Equipo cocina/sala</label>
+              <input type="text" placeholder="Ej: 3/2" value="4/3">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Principal reto del negocio ahora mismo</label>
+            <textarea placeholder="Describe el mayor desafio que enfrentas...">Fidelizar al cliente local frente a la estacionalidad turistica</textarea>
+          </div>
+          <div class="input-group">
+            <label>Algo concreto que quieras que observemos</label>
+            <textarea placeholder="Opcional — cualquier aspecto especifico...">La transicion entre primer y segundo plato suele ser lenta</textarea>
+          </div>
+          <div class="input-group">
+            <label>Has trabajado con asesor/consultor antes</label>
+            <select>
+              <option>No, es la primera vez</option>
+              <option selected>Si, hace mas de un ano</option>
+              <option>Si, actualmente trabajo con uno</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:12px;" onclick="showBookingStep(3)">Continuar al pago</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Pago -->
+      <div class="booking-step" id="booking-3">
+        <div class="phone-header">
+          <span class="back-btn" onclick="showBookingStep(2)">&larr; Atras</span>
+          <span style="font-size:12px; color:var(--gray-400);">Paso 3 de 4</span>
+        </div>
+        <div class="phone-body">
+          <h2 style="font-size:17px; margin-bottom:16px;">Confirmar y pagar</h2>
+
+          <div class="card">
+            <div style="font-size:12px; color:var(--gray-400); margin-bottom:8px;">RESUMEN</div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+              <span style="font-size:14px;">Sesion de Afinacion</span>
+              <span style="font-size:14px; font-weight:700;">1.000 &#8364;</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+              <span style="font-size:13px; color:var(--gray-500);">IVA (21%)</span>
+              <span style="font-size:13px; color:var(--gray-500);">210 &#8364;</span>
+            </div>
+            <div style="border-top:1px solid var(--gray-200); padding-top:8px; margin-top:8px; display:flex; justify-content:space-between;">
+              <span style="font-size:16px; font-weight:700;">Total</span>
+              <span style="font-size:16px; font-weight:700;">1.210 &#8364;</span>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:8px;">
+            <div style="font-size:12px; color:var(--gray-400); margin-bottom:4px;">FECHA</div>
+            <div style="font-size:14px; font-weight:600;">Miercoles 21 mayo 2026 &middot; Comida</div>
+            <div style="font-size:12px; color:var(--gray-500);">Malaga capital &middot; La Cosmopolita</div>
+          </div>
+
+          <div class="section-label">Metodo de pago</div>
+          <div class="input-group">
+            <label>Numero de tarjeta</label>
+            <input type="text" placeholder="1234 5678 9012 3456" value="4242 4242 4242 4242">
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="input-group">
+              <label>Caducidad</label>
+              <input type="text" placeholder="MM/AA" value="12/27">
+            </div>
+            <div class="input-group">
+              <label>CVC</label>
+              <input type="text" placeholder="123" value="***">
+            </div>
+          </div>
+
+          <div style="text-align:center; padding:10px 0; font-size:11px; color:var(--gray-400);">
+            Pago seguro con <strong style="color:var(--gray-600);">Stripe</strong>
+          </div>
+
+          <button class="btn btn-primary" onclick="showBookingStep(4)">Pagar 1.210 &#8364;</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Confirmacion -->
+      <div class="booking-step" id="booking-4">
+        <div class="phone-body" style="text-align:center; padding-top:60px;">
+          <div style="font-size:64px; margin-bottom:16px;">&#10003;</div>
+          <h2 style="font-size:20px; margin-bottom:8px;">Reserva confirmada</h2>
+          <p style="font-size:14px; color:var(--gray-500); margin-bottom:24px;">Te hemos enviado un email con todos los detalles.</p>
+
+          <div class="card" style="text-align:left;">
+            <div style="font-size:12px; color:var(--gray-400); margin-bottom:8px;">DETALLES</div>
+            <div style="margin-bottom:6px;"><strong>Restaurante:</strong> La Cosmopolita</div>
+            <div style="margin-bottom:6px;"><strong>Fecha:</strong> Miercoles 21 mayo 2026</div>
+            <div style="margin-bottom:6px;"><strong>Horario:</strong> Comida</div>
+            <div style="margin-bottom:6px;"><strong>Zona:</strong> Malaga capital</div>
+            <div style="margin-bottom:6px;"><strong>Importe:</strong> 1.210 &#8364; (IVA incluido)</div>
+          </div>
+
+          <div class="card" style="text-align:left; margin-top:8px; background:var(--blue-light);">
+            <div style="font-size:13px;"><strong>Que pasa ahora:</strong></div>
+            <div style="font-size:12px; color:var(--gray-600); margin-top:6px; line-height:1.5;">
+              1. Recibiras un recordatorio 48h antes<br>
+              2. Gastrototem visitara tu restaurante de incognito<br>
+              3. Tras la comida, reunion con el equipo para presentar el informe<br>
+              4. Llamada de control a los 30 dias
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== NOTES APP ==================== -->
+  <div class="app-view" id="view-notes">
+    <div class="phone-frame">
+      <div class="phone-statusbar">
+        <span>14:47</span>
+        <span style="color:#ef4444;">&#9679; REC</span>
+      </div>
+      <div class="phone-header">
+        <div>
+          <h2 style="font-size:15px;">La Cosmopolita</h2>
+          <div style="font-size:11px; color:var(--gray-400);">21 mayo 2026 &middot; Comida</div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <div style="width:28px; height:28px; border-radius:50%; background:var(--gray-100); display:flex; align-items:center; justify-content:center; font-size:14px; cursor:pointer;">&#9729;</div>
+          <div style="width:28px; height:28px; border-radius:50%; background:var(--green-light); display:flex; align-items:center; justify-content:center; font-size:12px; color:#166534;">&#10003;</div>
+        </div>
+      </div>
+
+      <div class="block-tab">
+        <div class="block-tab-item completed" onclick="showBlock(1, this)"><span class="block-num">1</span> Llegada</div>
+        <div class="block-tab-item active" onclick="showBlock(2, this)"><span class="block-num">2</span> Platos</div>
+        <div class="block-tab-item" onclick="showBlock(3, this)"><span class="block-num">3</span> Sala</div>
+        <div class="block-tab-item" onclick="showBlock(4, this)"><span class="block-num">4</span> Global</div>
+        <div class="block-tab-item" onclick="showBlock(5, this)"><span class="block-num">5</span> Veredicto</div>
+      </div>
+
+      <div class="phone-body">
+        <!-- BLOCK 1 -->
+        <div class="block-content" id="block-1">
+          <div class="section-label">Primera impresion</div>
+          <div class="input-group">
+            <label>Exterior (fachada, senalizacion, acceso)</label>
+            <textarea>Fachada discreta pero limpia. Rotulo bien integrado. Acceso sin escalones.</textarea>
+          </div>
+          <div class="input-group">
+            <label>Recepcion y bienvenida</label>
+            <textarea>Recibidos por el maitre en menos de 30 segundos. Trato amable, nos lleva a mesa sin espera.</textarea>
+          </div>
+          <div class="input-group">
+            <label>Ambiente interior</label>
+            <textarea>Iluminacion natural buena. Acustica aceptable, algo ruidosa en hora punta. Temperatura correcta. Limpieza impecable.</textarea>
+          </div>
+          <div class="input-group">
+            <label>Valoracion</label>
+            <div class="rating">
+              <div class="rating-dot" onclick="setRating(this, 1)">1</div>
+              <div class="rating-dot" onclick="setRating(this, 2)">2</div>
+              <div class="rating-dot" onclick="setRating(this, 3)">3</div>
+              <div class="rating-dot active" onclick="setRating(this, 4)">4</div>
+              <div class="rating-dot" onclick="setRating(this, 5)">5</div>
+            </div>
+          </div>
+          <div class="voice-btn">
+            &#127908; Nota de voz
+          </div>
+        </div>
+
+        <!-- BLOCK 2 -->
+        <div class="block-content active" id="block-2">
+          <!-- Plato 1 -->
+          <div class="dish-card">
+            <div class="dish-photo has-photo">&#127858;</div>
+            <div class="dish-body">
+              <div class="input-group" style="margin-bottom:8px;">
+                <input type="text" value="Salmorejo cordobes con jamon iberico" style="font-weight:600; border:none; padding:0; font-size:15px;">
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
+                <div>
+                  <div style="font-size:10px; color:var(--gray-400); font-weight:600;">MATERIA PRIMA</div>
+                  <div class="rating" style="margin:4px 0;">
+                    <div class="rating-dot active" style="width:24px;height:24px;font-size:10px;">4</div>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:10px; color:var(--gray-400); font-weight:600;">TECNICA</div>
+                  <div class="rating" style="margin:4px 0;">
+                    <div class="rating-dot active" style="width:24px;height:24px;font-size:10px;">5</div>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:10px; color:var(--gray-400); font-weight:600;">EMPLATADO</div>
+                  <div class="rating" style="margin:4px 0;">
+                    <div class="rating-dot active" style="width:24px;height:24px;font-size:10px;">3</div>
+                  </div>
+                </div>
+              </div>
+              <textarea style="width:100%; border:1px solid var(--gray-200); border-radius:6px; padding:8px; font-size:12px; min-height:40px;" placeholder="Comentarios...">Tomate excelente, textura perfecta. Jamon de calidad. Emplatado funcional pero sin personalidad, parece de carta estandar.</textarea>
+              <div class="voice-btn" style="font-size:12px;">
+                &#127908; 0:12 — "El salmorejo esta muy bueno pero..."
+              </div>
+            </div>
+          </div>
+
+          <!-- Plato 2 -->
+          <div class="dish-card">
+            <div class="dish-photo has-photo" style="background:linear-gradient(135deg, #e8d5b7 0%, #d4c4a8 100%);">&#127843;</div>
+            <div class="dish-body">
+              <div class="input-group" style="margin-bottom:8px;">
+                <input type="text" value="Atun rojo de Barbate con ajoblanco" style="font-weight:600; border:none; padding:0; font-size:15px;">
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:10px;">
+                <div>
+                  <div style="font-size:10px; color:var(--gray-400); font-weight:600;">MATERIA PRIMA</div>
+                  <div class="rating" style="margin:4px 0;">
+                    <div class="rating-dot active" style="width:24px;height:24px;font-size:10px;">5</div>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:10px; color:var(--gray-400); font-weight:600;">TECNICA</div>
+                  <div class="rating" style="margin:4px 0;">
+                    <div class="rating-dot active" style="width:24px;height:24px;font-size:10px;">5</div>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:10px; color:var(--gray-400); font-weight:600;">EMPLATADO</div>
+                  <div class="rating" style="margin:4px 0;">
+                    <div class="rating-dot active" style="width:24px;height:24px;font-size:10px;">5</div>
+                  </div>
+                </div>
+              </div>
+              <textarea style="width:100%; border:1px solid var(--gray-200); border-radius:6px; padding:8px; font-size:12px; min-height:40px;" placeholder="Comentarios...">Plato estrella. Punto del atun impecable, ajoblanco con cuerpo. Presentacion que eleva el producto. Aqui se ve la mano del chef.</textarea>
+            </div>
+          </div>
+
+          <!-- Add dish button -->
+          <button class="btn btn-secondary" style="width:100%;">+ Anadir plato</button>
+        </div>
+
+        <!-- BLOCK 3 -->
+        <div class="block-content" id="block-3">
+          <div class="section-label">Servicio de sala</div>
+          <div class="input-group">
+            <label>Tiempos entre platos</label>
+            <textarea placeholder="Flujo de tiempos...">Primer al segundo plato: 18 minutos. Aceptable. Del segundo al postre: 12 minutos. Bien.</textarea>
+          </div>
+          <div class="input-group">
+            <label>Conocimiento de la carta</label>
+            <textarea placeholder="El personal conoce los platos?">El maitre domina la carta. El segundo camarero dudo al describir el plato del dia.</textarea>
+          </div>
+          <div class="input-group">
+            <label>Hospitalidad y resolucion</label>
+            <textarea placeholder="Capacidad de resolver imprevistos...">Pedimos cambiar un plato por alergia simulada. Resuelto en 2 minutos sin problema.</textarea>
+          </div>
+          <div class="input-group">
+            <label>Cierre (cuenta, despedida)</label>
+            <textarea placeholder="Como fue el cierre...">Cuenta presentada a los 4 minutos de pedirla. Despedida amable del maitre.</textarea>
+          </div>
+          <div class="input-group">
+            <label>Valoracion global sala</label>
+            <div class="rating">
+              <div class="rating-dot">1</div>
+              <div class="rating-dot">2</div>
+              <div class="rating-dot">3</div>
+              <div class="rating-dot active">4</div>
+              <div class="rating-dot">5</div>
+            </div>
+          </div>
+          <div class="voice-btn">&#127908; Nota de voz</div>
+        </div>
+
+        <!-- BLOCK 4 -->
+        <div class="block-content" id="block-4">
+          <div class="section-label">Experiencia global</div>
+          <div class="input-group">
+            <label>Fluye la experiencia sin friccion?</label>
+            <textarea placeholder="Sensacion general de fluidez...">La experiencia fluye bien en general. Unico momento de friccion: al llegar los platos principales, coincidieron con una mesa grande que se levantaba y hubo algo de caos en sala.</textarea>
+          </div>
+          <div class="input-group">
+            <label>El restaurante es lo que dice ser?</label>
+            <textarea placeholder="Coherencia entre promesa y realidad...">"Cocina de autor con base andaluza" se cumple en los platos principales. Las entradas son mas convencionales de lo que el concepto sugiere.</textarea>
+          </div>
+          <div class="input-group">
+            <label>El precio se corresponde con lo entregado?</label>
+            <textarea placeholder="Relacion calidad-precio...">Ticket medio 45 euros. Correcto para la calidad de los principales. Las entradas no aportan valor diferencial a ese precio.</textarea>
+          </div>
+          <div class="input-group">
+            <label>Observacion mas destacada</label>
+            <textarea placeholder="Lo mas interesante del dia..." style="border-color:var(--black); border-width:2px;">El chef tiene talento real pero lo esconde en una carta demasiado segura. Si se atreviera mas en las entradas como lo hace en los principales, este restaurante estaria en otra liga.</textarea>
+          </div>
+          <div class="voice-btn">&#127908; Nota de voz</div>
+        </div>
+
+        <!-- BLOCK 5 -->
+        <div class="block-content" id="block-5">
+          <div class="section-label">Veredicto rapido</div>
+          <p style="font-size:12px; color:var(--gray-400); margin-bottom:16px;">Completa esto antes de la reunion. Alimenta directamente el informe.</p>
+
+          <div class="input-group">
+            <label style="color:var(--green);">3 cosas que funcionan bien</label>
+            <textarea style="border-color:var(--green);">1. Atun rojo excepcional — plato de referencia
+2. Maitre con dominio de sala y hospitalidad genuina
+3. Limpieza y ambiente cuidado, se nota la atencion al detalle</textarea>
+          </div>
+
+          <div class="input-group">
+            <label style="color:var(--red);">3 cosas que hay que cambiar ya</label>
+            <textarea style="border-color:var(--red);">1. Las entradas no estan a la altura del concepto — demasiado convencionales
+2. El segundo camarero necesita formacion sobre la carta
+3. El emplatado del salmorejo no refleja la calidad del producto</textarea>
+          </div>
+
+          <div class="input-group">
+            <label>Veredicto en una frase</label>
+            <textarea style="font-weight:600; font-size:15px; border-width:2px; min-height:50px;">Un restaurante con un chef que va por delante de su propia carta. Si iguala las entradas al nivel de sus principales, entra en el radar de las guias.</textarea>
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:16px; background:#22c55e;" onclick="showGenerateOverlay()">
+            Generar Informe
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== REPORT ==================== -->
+  <div class="app-view" id="view-report">
+    <div class="sub-nav">
+      <button class="sub-nav-btn active">Informe estandar</button>
+      <button class="sub-nav-btn">Informe seguimiento</button>
+      <button class="sub-nav-btn">Informe comparativo</button>
+    </div>
+    <div class="report-preview">
+      <div class="report-header">
+        <h1>INFORME DE AFINACION</h1>
+        <div style="font-size:11px; letter-spacing:2px; color:var(--gray-400); margin-bottom:8px;">GASTROTOTEM</div>
+        <div class="report-meta">
+          <strong>La Cosmopolita</strong> &mdash; Malaga &mdash; 21 de mayo de 2026<br>
+          Sesion realizada por Fernando Huidobro y Juanma Agrela
+        </div>
+      </div>
+
+      <div class="report-section">
+        <h3>1. La Cocina</h3>
+        <div class="report-item">
+          <strong>Observacion</strong>
+          <p>La Cosmopolita presenta una carta que promete cocina de autor con base andaluza, y esa promesa se cumple de forma desigual. Los platos principales demuestran un nivel tecnico sobresaliente &mdash; el atun rojo de Barbate con ajoblanco es un plato de referencia por punto, equilibrio y presentacion. Sin embargo, las entradas operan en un registro distinto: el salmorejo cordobes, pese a utilizar un tomate excelente y una tecnica impecable, llega a la mesa con un emplatado que no acompana a la calidad del producto. La brecha entre las entradas y los principales sugiere que el chef se reserva para la segunda mitad de la carta.</p>
+        </div>
+        <div class="report-item">
+          <strong>Juicio</strong>
+          <p>Hay talento real en esta cocina. El problema no es de materia prima ni de tecnica &mdash; es de ambicion. Las entradas estan concebidas como relleno seguro cuando deberian ser la declaracion de intenciones del restaurante. Un comensal que juzgue por los dos primeros platos se va con una impresion inferior a lo que esta cocina es capaz de ofrecer.</p>
+        </div>
+        <div class="report-item">
+          <strong>Accion</strong>
+          <p><span class="report-action action-immediate">ATENCION INMEDIATA</span> Redisenar las entradas para que reflejen el mismo nivel de identidad y ambicion que los platos principales. No es cuestion de complejidad, sino de personalidad. El salmorejo, por ejemplo, merece un emplatado que este a la altura de su sabor.</p>
+        </div>
+        <div style="background:var(--gray-50); border-radius:8px; padding:16px; margin-top:12px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div>
+            <div class="dish-grid-photo">&#127858;</div>
+            <div style="font-size:11px; color:var(--gray-600);"><strong>Salmorejo cordobes</strong> &mdash; Emplatado funcional sin personalidad. No refleja la calidad del producto.</div>
+          </div>
+          <div>
+            <div class="dish-grid-photo" style="background:linear-gradient(135deg, #e8d5b7 0%, #d4c4a8 100%);">&#127843;</div>
+            <div style="font-size:11px; color:var(--gray-600);"><strong>Atun rojo de Barbate</strong> &mdash; Presentacion que eleva el producto. Referencia de la carta.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="report-section">
+        <h3>2. La Sala</h3>
+        <div class="report-item">
+          <strong>Observacion</strong>
+          <p>El maitre es el gran activo de esta sala. Domina la carta, recibe con hospitalidad genuina y resuelve imprevistos con solvencia (un cambio de plato por alergia fue gestionado en dos minutos sin aspavientos). El segundo camarero, en cambio, dudo al describir el plato del dia &mdash; una senal de que la formacion interna no es homogenea.</p>
+        </div>
+        <div class="report-item">
+          <strong>Juicio</strong>
+          <p>La sala funciona bien porque el maitre la sostiene. Eso es un merito y un riesgo. El dia que el maitre no este, la experiencia caera. El segundo camarero necesita el mismo nivel de dominio sobre la carta.</p>
+        </div>
+        <div class="report-item">
+          <strong>Accion</strong>
+          <p><span class="report-action action-recommended">MEJORA RECOMENDADA</span> Implementar un briefing diario de 5 minutos antes del servicio en el que el maitre repase la carta con el equipo. Especial enfasis en platos del dia y sugerencias. El objetivo es que cualquier miembro del equipo pueda describir cualquier plato con seguridad.</p>
+        </div>
+      </div>
+
+      <div class="report-section">
+        <h3>3. La Experiencia Global</h3>
+        <div class="report-item">
+          <strong>Observacion</strong>
+          <p>La experiencia fluye con naturalidad durante la mayor parte del servicio. Los tiempos entre platos son correctos (18 min del primero al segundo, 12 min al postre). Unico momento de friccion: la coincidencia con una mesa grande que se levantaba genero un breve caos en sala que rompio el ritmo. Ambiente cuidado, limpio, temperatura agradable.</p>
+        </div>
+        <div class="report-item">
+          <strong>Juicio</strong>
+          <p>El ticket medio de 45 euros es correcto para la calidad de los platos principales, pero las entradas no aportan valor diferencial a ese precio. El comensal esta pagando por una cocina de autor y recibe entradas de brasserie.</p>
+        </div>
+        <div class="report-item">
+          <strong>Accion</strong>
+          <p><span class="report-action action-fine">AFINACION FINA</span> Establecer un protocolo de gestion de flujo en sala para momentos de alta rotacion (mesas que se levantan mientras otras estan en servicio). No es un problema grave, pero en un restaurante que aspira a guias, la fluidez debe ser total.</p>
+        </div>
+      </div>
+
+      <div class="report-section">
+        <h3>4. La Coherencia de la Propuesta</h3>
+        <div class="report-item">
+          <strong>Observacion</strong>
+          <p>"Cocina de autor con base andaluza" es el concepto declarado. Instagram muestra una imagen coherente y cuidada. Google tiene buenas resenas pero algunas senalan tiempos largos. La carta tiene 28 referencias, numero razonable. La promesa se cumple en la segunda mitad de la carta; en las entradas, el concepto se diluye.</p>
+        </div>
+        <div class="report-item">
+          <strong>Juicio</strong>
+          <p>La incoherencia entre entradas y principales es el mayor freno para el reconocimiento externo. Una guia que envie un inspector vera lo mismo que nosotros: un restaurante con destellos de excelencia que no mantiene el nivel durante toda la comida.</p>
+        </div>
+        <div class="report-item">
+          <strong>Accion</strong>
+          <p><span class="report-action action-immediate">ATENCION INMEDIATA</span> Elevar las entradas al nivel de los principales. Esta es la accion de mayor impacto de todo este informe. Si se resuelve, la coherencia de la propuesta se completa y el restaurante esta en posicion de aspirar a reconocimiento en guias.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:30px; padding:20px; background:var(--gray-50); border-radius:8px;">
+        <h3 style="font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">Acciones prioritarias</h3>
+        <div style="margin-bottom:8px;">
+          <span class="report-action action-immediate">ATENCION INMEDIATA</span>
+          <span style="font-size:13px; margin-left:8px;">Redisenar las entradas para igualar el nivel de identidad de los principales</span>
+        </div>
+        <div style="margin-bottom:8px;">
+          <span class="report-action action-immediate">ATENCION INMEDIATA</span>
+          <span style="font-size:13px; margin-left:8px;">Mejorar el emplatado del salmorejo (y entradas en general)</span>
+        </div>
+        <div style="margin-bottom:8px;">
+          <span class="report-action action-recommended">MEJORA RECOMENDADA</span>
+          <span style="font-size:13px; margin-left:8px;">Briefing diario de carta con todo el equipo de sala</span>
+        </div>
+        <div>
+          <span class="report-action action-fine">AFINACION FINA</span>
+          <span style="font-size:13px; margin-left:8px;">Protocolo de gestion de flujo en momentos de alta rotacion</span>
+        </div>
+      </div>
+
+      <div class="report-verdict">
+        <h3 style="font-size:13px; letter-spacing:2px;">VEREDICTO</h3>
+        <p>Un restaurante con un chef que va por delante de su propia carta. La Cosmopolita tiene los mimbres para dar el salto al reconocimiento en guias: materia prima excelente, un maitre que sostiene la sala y platos principales de referencia. Lo que le separa de ese siguiente nivel es una primera mitad de la carta que no esta a la altura de la segunda. Si iguala las entradas al nivel de sus principales, este restaurante deja de ser una buena mesa y entra en el radar gastronomico andaluz.</p>
+        <div style="margin-top:16px; font-size:13px; font-weight:700;">Fernando Huidobro &middot; Juanma Agrela</div>
+      </div>
+
+      <div class="report-footer">
+        <div style="font-weight:700; letter-spacing:1px; margin-bottom:4px;">GASTROTOTEM</div>
+        Alta Afinacion Gastronomica<br>
+        gastrototem.com
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ADMIN PANEL ==================== -->
+  <div class="app-view" id="view-admin">
+    <div class="desktop-frame">
+      <div class="desktop-toolbar">
+        <div class="desktop-dot red"></div>
+        <div class="desktop-dot yellow"></div>
+        <div class="desktop-dot green"></div>
+        <div class="desktop-url">gastrototem.com/admin</div>
+      </div>
+      <div class="desktop-body" style="display:flex; min-height:500px;">
+        <div class="admin-sidebar">
+          <div style="padding:0 20px 20px; font-weight:800; letter-spacing:1px; font-size:13px;">GASTROTOTEM</div>
+          <div class="admin-nav-item active">&#9635; Dashboard</div>
+          <div class="admin-nav-item">&#9735; Reservas</div>
+          <div class="admin-nav-item">&#9997; Sesiones</div>
+          <div class="admin-nav-item">&#9782; Informes</div>
+          <div class="admin-nav-item">&#9733; Clientes</div>
+          <div class="admin-nav-item">&#9881; Disponibilidad</div>
+          <div class="admin-nav-item">&#9783; Mazzocco</div>
+        </div>
+        <div class="admin-content" style="flex:1;">
+          <h2 style="font-size:20px; margin-bottom:20px;">Dashboard</h2>
+
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-value">6</div>
+              <div class="stat-label">Sesiones este mes</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">1</div>
+              <div class="stat-label">Programa premium</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">9.500 &#8364;</div>
+              <div class="stat-label">Facturacion mayo</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">3</div>
+              <div class="stat-label">Leads pendientes</div>
+            </div>
+          </div>
+
+          <h3 style="font-size:14px; margin-bottom:12px;">Proximas sesiones</h3>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Restaurante</th>
+                <th>Fecha</th>
+                <th>Zona</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Origen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>La Cosmopolita</strong></td>
+                <td>21 may</td>
+                <td>Malaga</td>
+                <td>Sesion</td>
+                <td><span class="badge-status badge-active">Confirmada</span></td>
+                <td>Web</td>
+              </tr>
+              <tr>
+                <td><strong>El Tapeo de Cervantes</strong></td>
+                <td>23 may</td>
+                <td>Malaga</td>
+                <td>Sesion</td>
+                <td><span class="badge-status badge-active">Confirmada</span></td>
+                <td>Mazzocco</td>
+              </tr>
+              <tr>
+                <td><strong>Restaurante Amador</strong></td>
+                <td>26 may</td>
+                <td>Costa Sol</td>
+                <td>Premium V2</td>
+                <td><span class="badge-status badge-pending">Pendiente</span></td>
+                <td>Mazzocco</td>
+              </tr>
+              <tr>
+                <td><strong>Casa Lola</strong></td>
+                <td>28 may</td>
+                <td>Malaga</td>
+                <td>Sesion</td>
+                <td><span class="badge-status badge-active">Confirmada</span></td>
+                <td>Google Ads</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 style="font-size:14px; margin:24px 0 12px;">Controles 30 dias pendientes</h3>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Restaurante</th>
+                <th>Sesion</th>
+                <th>Llamar antes de</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Vino Mio</strong></td>
+                <td>22 abr</td>
+                <td>22 may</td>
+                <td><span class="badge-status badge-pending">Pendiente</span></td>
+              </tr>
+              <tr>
+                <td><strong>Oleo Restaurante</strong></td>
+                <td>18 abr</td>
+                <td>18 may</td>
+                <td><span class="badge-status badge-done">Completado</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 style="font-size:14px; margin:24px 0 12px;">Comisiones Mazzocco — Mayo</h3>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Restaurante</th>
+                <th>Tipo</th>
+                <th>Facturado</th>
+                <th>Comision</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>El Tapeo de Cervantes</td>
+                <td>Sesion</td>
+                <td>1.000 &#8364;</td>
+                <td>100 &#8364;</td>
+                <td><span class="badge-status badge-pending">Pendiente</span></td>
+              </tr>
+              <tr>
+                <td>Restaurante Amador</td>
+                <td>Premium</td>
+                <td>3.500 &#8364;</td>
+                <td>525 &#8364;</td>
+                <td><span class="badge-status badge-pending">Pendiente</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- GENERATE OVERLAY -->
+<div class="generate-overlay" id="generateOverlay">
+  <div class="generate-modal">
+    <div class="spinner"></div>
+    <h3 style="margin-bottom:8px;">Generando informe...</h3>
+    <p style="font-size:13px; color:var(--gray-500);" id="generateStatus">Procesando notas y valoraciones</p>
+  </div>
+</div>
+
+<script>
+  function showApp(id) {
+    document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('view-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function showBookingStep(n, btn) {
+    document.querySelectorAll('.booking-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('booking-' + n).classList.add('active');
+    if (btn) {
+      document.querySelectorAll('.sub-nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    } else {
+      const btns = document.querySelectorAll('#view-booking .sub-nav-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      btns[n-1].classList.add('active');
+    }
+  }
+
+  function showBlock(n, tab) {
+    document.querySelectorAll('.block-content').forEach(b => b.classList.remove('active'));
+    document.getElementById('block-' + n).classList.add('active');
+    document.querySelectorAll('.block-tab-item').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  }
+
+  function selectDay(el) {
+    document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function setRating(el, val) {
+    const dots = el.parentElement.querySelectorAll('.rating-dot');
+    dots.forEach(d => d.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function showGenerateOverlay() {
+    const overlay = document.getElementById('generateOverlay');
+    const status = document.getElementById('generateStatus');
+    overlay.classList.add('active');
+
+    const steps = [
+      'Procesando notas y valoraciones...',
+      'Analizando fotografias de platos...',
+      'Redactando seccion de cocina...',
+      'Redactando seccion de sala...',
+      'Generando veredicto final...',
+      'Maquetando PDF...',
+    ];
+
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      if (i < steps.length) {
+        status.textContent = steps[i];
+      } else {
+        clearInterval(interval);
+        overlay.classList.remove('active');
+        showApp('report');
+        document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.app-tab')[4].classList.add('active');
+      }
+    }, 800);
+  }
+</script>
+
+</body>
+</html>
