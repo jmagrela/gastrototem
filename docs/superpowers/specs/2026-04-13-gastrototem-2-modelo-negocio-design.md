@@ -245,7 +245,8 @@ Gastrototem — Alta Afinación Gastronómica
 - Fotos de platos incluidas cuando hay algo que destacar, valorar o corregir (emplatado, limpieza, presentación).
 
 **Pago del Programa Premium:**
-- 100% al confirmar la reserva de la Visita 1 (3.500 EUR + IVA). El compromiso de 3 visitas requiere pago completo por adelantado.
+- 100% al confirmar la reserva de la Visita 1 (3.500 EUR + IVA). Gastrototem cobra el total por adelantado.
+- Opción de fraccionamiento para el cliente: Klarna integrado como método de pago alternativo a Stripe. El cliente fracciona en 3 pagos, Gastrototem recibe el 100% al momento. Klarna asume el riesgo de impago.
 
 **Informes adicionales para Programa Premium:**
 - Visita 2: Informe de seguimiento breve (1 página). Qué se implementó, qué no, valoración del progreso.
