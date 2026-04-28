@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastrototem 2.0 — Propuesta de Modelo de Negocio</title>
+<style>
+  @page {
+    margin: 2cm;
+    size: A4;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    background: #fff;
+  }
+  .cover {
+    text-align: center;
+    padding: 80px 0 60px;
+    border-bottom: 3px solid #1a1a1a;
+    margin-bottom: 50px;
+    page-break-after: always;
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .cover .subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 40px;
+  }
+  .cover h2 {
+    font-size: 22px;
+    font-weight: 300;
+    margin-bottom: 6px;
+    color: #333;
+  }
+  .cover .meta {
+    font-size: 13px;
+    color: #999;
+    margin-top: 40px;
+  }
+  .cover .meta p {
+    margin-bottom: 4px;
+  }
+  .confidential {
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 4px 14px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #999;
+    margin-top: 20px;
+  }
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 50px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #1a1a1a;
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #444;
+  }
+  p {
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .lead {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  .highlight-box {
+    background: #f7f7f7;
+    border-left: 4px solid #1a1a1a;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .highlight-box p {
+    margin-bottom: 6px;
+  }
+  .highlight-box p:last-child {
+    margin-bottom: 0;
+  }
+  .alert-box {
+    background: #fff8f0;
+    border-left: 4px solid #e67e22;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .success-box {
+    background: #f0f9f0;
+    border-left: 4px solid #27ae60;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 13px;
+  }
+  th {
+    background: #1a1a1a;
+    color: #fff;
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  tr:nth-child(even) td {
+    background: #fafafa;
+  }
+  ul, ol {
+    margin: 10px 0 16px 20px;
+    font-size: 14px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .section-number {
+    color: #999;
+    font-weight: 400;
+    margin-right: 6px;
+  }
+  .page-break {
+    page-break-before: always;
+  }
+  .footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+  }
+  .toc {
+    margin: 30px 0 50px;
+  }
+  .toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .toc li {
+    padding: 8px 0;
+    border-bottom: 1px dotted #ddd;
+    font-size: 14px;
+  }
+  .toc .num {
+    display: inline-block;
+    width: 30px;
+    color: #999;
+  }
+  .verdict {
+    text-align: center;
+    padding: 30px;
+    margin: 30px 0;
+    border: 2px solid #1a1a1a;
+  }
+  .verdict p {
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+  }
+  strong {
+    font-weight: 700;
+  }
+  .input-box {
+    border: 1px dashed #ccc;
+    padding: 16px 20px;
+    margin: 16px 0;
+    background: #fcfcfc;
+  }
+  .input-box p {
+    font-size: 13px;
+    color: #666;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>GASTROTOTEM</h1>
+  <div class="subtitle">Servicios para Gastronomia</div>
+  <h2>Gastrototem 2.0</h2>
+  <h2 style="font-weight:400; font-size:18px; color:#666;">Propuesta de Modelo de Negocio, Tecnologia y Marketing</h2>
+  <div class="meta">
+    <p>Elaborado por Juanma Agrela</p>
+    <p>Abril 2026</p>
+    <p>Para revision de Fernando Huidobro</p>
+  </div>
+  <div class="confidential">Documento interno &middot; Confidencial</div>
+</div>
+
+<!-- INDICE -->
+<h2>Indice</h2>
+<div class="toc">
+  <ol>
+    <li><span class="num">1.</span> Por que este documento</li>
+    <li><span class="num">2.</span> Diagnostico de situacion actual</li>
+    <li><span class="num">3.</span> El modelo propuesto: dos productos, una identidad</li>
+    <li><span class="num">4.</span> Estructura comercial con Mazzocco Gourmet</li>
+    <li><span class="num">5.</span> La operativa real: como funciona una sesion</li>
+    <li><span class="num">6.</span> Las herramientas tecnologicas</li>
+    <li><span class="num">7.</span> Estrategia de marketing, SEO y publicidad</li>
+    <li><span class="num">8.</span> Proyeccion economica</li>
+    <li><span class="num">9.</span> Hoja de ruta de implementacion</li>
+    <li><span class="num">10.</span> Decisiones que requieren tu opinion</li>
+  </ol>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECCION 1 -->
+<h2><span class="section-number">1.</span> Por que este documento</h2>
+
+<p class="lead">Fernando, este documento recoge el resultado de un analisis en profundidad del modelo Gastrototem 2.0 que hemos ido definiendo juntos. Lo he trabajado para poner sobre la mesa los numeros reales, las oportunidades y los riesgos, y proponerte un modelo concreto que podamos validar, ajustar y ejecutar.</p>
+
+<p>Necesito tu opinion sobre todo lo que leas aqui. No es un documento cerrado &mdash; es una propuesta para que la discutamos y la mejoremos entre los dos antes de dar el primer paso.</p>
+
+<p>Al final del documento hay una seccion especifica con las decisiones que necesitan tu input.</p>
+
+<!-- SECCION 2 -->
+<h2><span class="section-number">2.</span> Diagnostico de situacion actual</h2>
+
+<h3>Donde estamos</h3>
+<ul>
+  <li><strong>El PACG esta paralizado</strong> por falta de financiacion. El 70% de nuestra facturacion historica ha desaparecido temporalmente. Estamos trabajando en nuevas propuestas para la Fundacion Unicaja, pero eso no resuelve el corto plazo.</li>
+  <li><strong>Mantenemos clientes del modelo antiguo</strong> (tarifas planas, gestion de redes) que consumen horas sin rentabilidad proporcional.</li>
+  <li><strong>El nuevo modelo no esta en marcha aun.</strong> Tenemos la vision, tenemos el criterio, pero no tenemos la operativa montada ni los clientes del nuevo formato.</li>
+</ul>
+
+<div class="alert-box">
+  <p><strong>La realidad:</strong> La diversificacion de ingresos ya no es un objetivo a 18 meses. Es una urgencia. Las sesiones de afinacion no son un complemento del PACG &mdash; son el motor principal ahora mismo.</p>
+</div>
+
+<h3>Lo que tenemos a favor</h3>
+<ul>
+  <li>Tu autoridad como critico y Presidente de Honor de la Academia Andaluza de Gastronomia es un activo real que el mercado reconoce.</li>
+  <li>Mas de 80.000 seguidores combinados entre tus canales y Gastrohunter.</li>
+  <li>La relacion con Mazzocco Gourmet nos da acceso directo a una cartera de restaurantes en Malaga sin coste de adquisicion.</li>
+  <li>Tu resides en Malaga, que es el territorio de arranque. Yo estoy a 1,5h en Granada.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- SECCION 3 -->
+<h2><span class="section-number">3.</span> El modelo propuesto: dos productos, una identidad</h2>
+
+<p class="lead">La propuesta es lanzar dos productos diferenciados, no dos versiones del mismo servicio. Cada uno tiene su canal, su precio y su funcion dentro del modelo.</p>
+
+<h3>Producto 1 &mdash; Sesion de Afinacion</h3>
+
+<div class="highlight-box">
+  <p><strong>Precio:</strong> 1.000 &euro; + IVA</p>
+  <p><strong>Canal:</strong> Abierto (web, publicidad, organico, Mazzocco)</p>
+  <p><strong>Funcion:</strong> Motor principal de facturacion</p>
+</div>
+
+<p><strong>Que incluye:</strong></p>
+<ul>
+  <li>Visita de incognito al restaurante como clientes reales (2h, compartiendo platos para probar el maximo de la carta)</li>
+  <li>Informe de Afinacion PDF generado con asistencia de IA y revisado por ambos socios (2-3 paginas)</li>
+  <li>Reunion inmediata con la propiedad (1h maximo) para presentar el informe con propuestas de mejora</li>
+  <li>Llamada de control a 30 dias (10 minutos)</li>
+</ul>
+
+<p><strong>Que NO incluye:</strong></p>
+<ul>
+  <li>Segunda visita (se contrata y paga como sesion nueva)</li>
+  <li>Visibilidad en nuestros canales (se otorga solo si el criterio lo justifica, nunca se vende)</li>
+  <li>Ningun servicio de agencia: ni redes, ni web, ni consultoria financiera</li>
+</ul>
+
+<h3>Producto 2 &mdash; Programa de Afinacion en Profundidad</h3>
+
+<div class="highlight-box">
+  <p><strong>Precio:</strong> 3.500 &euro; + IVA</p>
+  <p><strong>Canal:</strong> Exclusivo Mazzocco Gourmet, maximo 1 cliente/mes</p>
+  <p><strong>Funcion:</strong> Producto de prestigio con margen superior</p>
+</div>
+
+<p><strong>Que incluye:</strong></p>
+<ul>
+  <li><strong>Visita 1:</strong> Sesion de afinacion completa (identica al producto estandar)</li>
+  <li><strong>Visita 2 (a los 30-45 dias):</strong> Control de implementacion. Visita pactada (no de incognito). 2 horas maximo. Se revisa en sala y cocina lo que se recomendo. Informe de seguimiento breve (1 pagina).</li>
+  <li><strong>Visita 3 (a los 60-90 dias):</strong> Nueva visita de incognito para verificar la evolucion. Informe comparativo antes/despues (2-3 paginas). Este es el entregable de alto valor: documenta la transformacion.</li>
+  <li><strong>Veredicto final firmado</strong> por ambos socios. Si es positivo, se otorga visibilidad en canales de Gastrototem como reconocimiento publico.</li>
+</ul>
+
+<p><strong>Pago:</strong> Gastrototem cobra el 100% al confirmar la reserva de la Visita 1. El cliente puede fraccionar en 3 pagos a traves de Klarna (nosotros recibimos el total al momento, Klarna asume el riesgo de impago).</p>
+
+<h3>Por que dos productos y no solo uno</h3>
+
+<p>La Sesion de Afinacion es el motor. Es lo que nos da volumen, marca y rentabilidad. El Programa en Profundidad existe porque:</p>
+<ul>
+  <li>Tu quieres ofrecerlo, y tiene sentido para los clientes top de Mazzocco.</li>
+  <li>El informe comparativo antes/despues es un entregable que nadie mas ofrece en el mercado andaluz.</li>
+  <li>La posibilidad de obtener visibilidad publica de Gastrototem tras el programa es un incentivo potente para restaurantes que buscan reconocimiento.</li>
+  <li>A nivel de rentabilidad por hora, rinde mas que la sesion estandar (como veras en la seccion 8).</li>
+</ul>
+
+<p>Pero es importante que el premium no nos distraiga. Maximo 1 al mes. Si la sesion estandar funciona bien, no necesitamos forzar el paquete de 3.500 &euro;.</p>
+
+<div class="page-break"></div>
+
+<!-- SECCION 4 -->
+<h2><span class="section-number">4.</span> Estructura comercial con Mazzocco Gourmet</h2>
+
+<h3>Como funciona la relacion</h3>
+<ul>
+  <li>Mazzocco presenta el servicio a sus clientes restaurantes en sus visitas comerciales habituales.</li>
+  <li>Cuando un restaurante muestra interes, Mazzocco le pasa el enlace de reserva de nuestra web.</li>
+  <li><strong>El cliente paga siempre a Gastrototem</strong> a traves de nuestra web. Mazzocco no factura al cliente por nuestro servicio.</li>
+  <li>Mazzocco tiene un enlace o codigo de referido para que podamos trackear que clientes vienen por su canal y liquidar comisiones.</li>
+</ul>
+
+<h3>Comisiones propuestas</h3>
+
+<table>
+  <tr>
+    <th>Producto</th>
+    <th>Precio</th>
+    <th>Comision Mazzocco</th>
+    <th>Neto Gastrototem</th>
+  </tr>
+  <tr>
+    <td>Sesion de Afinacion</td>
+    <td>1.000 &euro;</td>
+    <td>10% = 100 &euro;</td>
+    <td>900 &euro;</td>
+  </tr>
+  <tr>
+    <td>Programa Premium</td>
+    <td>3.500 &euro;</td>
+    <td>15% = 525 &euro;</td>
+    <td>2.975 &euro;</td>
+  </tr>
+</table>
+
+<div class="highlight-box">
+  <p><strong>Por que comision y no intercambio de valor:</strong> Sin incentivo economico directo, el interes comercial de Mazzocco se diluye con el tiempo. La comision diferenciada (10% estandar, 15% premium) les incentiva a mover ambos productos, y especialmente el de mayor ticket. Es lo que convierte a Mazzocco en un canal activo, no en una buena intencion.</p>
+</div>
+
+<h3>Condiciones clave</h3>
+<ul>
+  <li>Comision pagada a 30 dias del cobro al cliente.</li>
+  <li>Los clientes que llegan por web/ads propios de Gastrototem no generan comision, aunque sean clientes de Mazzocco como distribuidora.</li>
+  <li>Mazzocco no tiene exclusividad geografica. Tiene prioridad comercial en Malaga por la relacion.</li>
+  <li><strong>Gastrototem mantiene independencia total de criterio.</strong> Si un producto que Mazzocco distribuye es malo, se dice en el informe. Sin excepciones.</li>
+</ul>
+
+<h3>Que necesita Mazzocco de nosotros</h3>
+<ul>
+  <li>Un one-pager PDF profesional con el servicio explicado y el argumentario adaptado a su contexto comercial.</li>
+  <li>Su enlace/codigo de referido configurado.</li>
+  <li>Nada mas. No les cargamos de complejidad.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- SECCION 5 -->
+<h2><span class="section-number">5.</span> La operativa real: como funciona una sesion</h2>
+
+<p class="lead">Uno de los cambios fundamentales de esta propuesta es la optimizacion radical del tiempo por sesion. El modelo del Manual Estrategico estimaba 10-15 horas por sesion. Con las herramientas tecnologicas que propongo, bajamos a 4-5,5 horas.</p>
+
+<h3>Flujo completo de una Sesion de Afinacion</h3>
+
+<h4>1. El cliente reserva (sin intervencion nuestra)</h4>
+<p>Entra en la web, ve nuestra disponibilidad geografica y horaria en el calendario, rellena el formulario pre-visita con informacion sobre su restaurante, paga por Stripe y recibe confirmacion automatica. Nosotros recibimos notificacion y los datos.</p>
+
+<h4>2. Pre-visita (30 minutos)</h4>
+<p>Leemos el formulario del cliente. Consultamos su web, redes sociales y presencia en Google/TripAdvisor. Hacemos la reserva en el restaurante para el dia acordado. No invertimos mas tiempo que eso.</p>
+
+<h4>3. Dia de la sesion: la comida (2 horas)</h4>
+<p>Vamos como clientes reales. Compartimos platos para probar el maximo posible de la carta. Mientras comemos, vamos rellenando la app de notas en el movil: valoraciones rapidas, comentarios, fotos de cada plato, notas de voz. Es discreto y rapido &mdash; parece que estamos mirando el movil como cualquier comensal.</p>
+
+<h4>4. Generacion del informe (5 minutos)</h4>
+<p>Al terminar la comida, completamos el veredicto rapido en la app (3 cosas buenas, 3 cosas a cambiar, 1 frase de veredicto). Pulsamos "Generar Informe". La IA produce el borrador completo en 1-2 minutos a partir de nuestras notas, fotos y valoraciones. Lo revisamos en el movil, ajustamos lo que haga falta y confirmamos. PDF listo.</p>
+
+<h4>5. Reunion con la propiedad (1 hora maximo)</h4>
+<p>Nos sentamos con el propietario/gerente. Le presentamos el informe. Le explicamos nuestras observaciones y propuestas de mejora. Sin condescendencia, con criterio. Se lo entregamos y nos vamos.</p>
+
+<h4>6. Control a 30 dias (10 minutos)</h4>
+<p>Llamada breve para revisar que acciones ha implementado y resolver dudas. Si quiere que volvamos, contrata una nueva sesion.</p>
+
+<h3>Tiempo total real</h3>
+
+<table>
+  <tr>
+    <th>Fase</th>
+    <th>Horas</th>
+  </tr>
+  <tr>
+    <td>Pre-visita</td>
+    <td>0,5h</td>
+  </tr>
+  <tr>
+    <td>Desplazamiento (Malaga provincia)</td>
+    <td>0-1,5h</td>
+  </tr>
+  <tr>
+    <td>Comida de incognito</td>
+    <td>2h</td>
+  </tr>
+  <tr>
+    <td>Generacion y revision del informe</td>
+    <td>0,5h</td>
+  </tr>
+  <tr>
+    <td>Reunion con propiedad</td>
+    <td>1h</td>
+  </tr>
+  <tr>
+    <td>Llamada control 30 dias</td>
+    <td>0,15h</td>
+  </tr>
+  <tr>
+    <td><strong>Total por sesion</strong></td>
+    <td><strong>4-5,5h</strong></td>
+  </tr>
+</table>
+
+<div class="success-box">
+  <p><strong>El dato clave:</strong> A 1.000 &euro; por sesion y 4-5,5 horas de trabajo real, la rentabilidad es de <strong>182-250 &euro;/hora</strong>. Eso es lo que vale nuestro criterio cuando dejamos de perder tiempo en tareas que la tecnologia puede resolver.</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECCION 6 -->
+<h2><span class="section-number">6.</span> Las herramientas tecnologicas</h2>
+
+<p class="lead">La rentabilidad del modelo depende de tres herramientas integradas en nuestra web. Sin ellas, volvemos a las 10-15 horas por sesion y los numeros no cuadran. La buena noticia: ya tengo una app similar construida que podemos adaptar.</p>
+
+<h3>Herramienta 1: Sistema de reserva online</h3>
+<p>Integrado en gastrototem.com. Permite al cliente reservar y pagar sin que nosotros intervengamos.</p>
+<ul>
+  <li>Calendario con nuestra disponibilidad por zona (Malaga capital, Costa del Sol, interior) y horario (comida/cena)</li>
+  <li>Formulario pre-visita que el cliente rellena al reservar (datos del restaurante, concepto, retos, que quiere que observemos)</li>
+  <li>Pago integrado con Stripe (sesion estandar) y Klarna (fraccionamiento del premium)</li>
+  <li>Emails automaticos: confirmacion, recordatorio 48h antes</li>
+  <li>Panel de administracion para gestionar agenda, ver datos de clientes e historial de sesiones</li>
+</ul>
+
+<h3>Herramienta 2: App de notas en vivo</h3>
+<p>Interfaz movil que usamos durante la comida para registrar todo lo que observamos. Es la pieza que elimina las 3-4 horas de redaccion posterior.</p>
+<ul>
+  <li>Se abre desde el movil con la sesion del dia cargada (datos del formulario pre-visita ya disponibles)</li>
+  <li>Registro por bloques: llegada/entorno, platos (con foto y valoracion de cada uno), servicio de sala, experiencia global, veredicto rapido</li>
+  <li>Notas de voz con transcripcion automatica (mas rapido que teclear mientras comemos)</li>
+  <li>Foto de cada plato integrada &mdash; se vincula automaticamente a las notas de ese plato y se incluye en el informe</li>
+  <li>Ambos podemos editar la misma sesion desde nuestros moviles simultaneamente</li>
+  <li>Funciona sin conexion y sincroniza al recuperarla</li>
+</ul>
+
+<h3>Herramienta 3: Motor de informes con IA</h3>
+<p>Transforma nuestras notas en el Informe de Afinacion PDF, listo para presentar en la reunion.</p>
+<ul>
+  <li>Toma todas las notas, valoraciones, transcripciones de voz y fotos de la app</li>
+  <li>Genera el borrador completo en 1-2 minutos siguiendo nuestra plantilla</li>
+  <li>Tono de critica gastronomica profesional: directo, fundamentado, sin florituras</li>
+  <li>Incluye fotos de platos cuando hay algo que destacar o corregir (emplatado, limpieza, presentacion)</li>
+  <li>Nosotros revisamos, ajustamos lo que haga falta y confirmamos</li>
+  <li>Se genera el PDF con identidad visual Gastrototem, listo en minutos</li>
+</ul>
+
+<div class="highlight-box">
+  <p><strong>Importante:</strong> La IA no sustituye nuestro criterio. Solo nos ahorra el trabajo de redaccion. Las observaciones, los juicios y las acciones propuestas son nuestras. La IA las convierte en un documento profesional a partir de lo que hemos registrado durante la comida.</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECCION 7 -->
+<h2><span class="section-number">7.</span> Estrategia de marketing, SEO y publicidad</h2>
+
+<p class="lead">Presupuesto limitado, territorio acotado, producto de alto ticket. No necesitamos volumen &mdash; necesitamos entre 6 y 10 solicitudes cualificadas al mes para llenar la agenda. Cada euro invertido debe estar geolocalizado en Malaga y dirigido a propietarios de restaurantes.</p>
+
+<h3>Canales de adquisicion de clientes</h3>
+
+<table>
+  <tr>
+    <th>Canal</th>
+    <th>Funcion</th>
+    <th>Coste mensual</th>
+  </tr>
+  <tr>
+    <td>Mazzocco Gourmet</td>
+    <td>Acceso directo a su cartera de restaurantes</td>
+    <td>0 &euro; (comision por resultado)</td>
+  </tr>
+  <tr>
+    <td>Google Ads</td>
+    <td>Capturar propietarios que ya buscan ayuda</td>
+    <td>100-150 &euro;</td>
+  </tr>
+  <tr>
+    <td>Meta Ads (Instagram/Facebook)</td>
+    <td>Generar demanda en propietarios que aun no buscan</td>
+    <td>150-200 &euro;</td>
+  </tr>
+  <tr>
+    <td>SEO + Blog /criterio</td>
+    <td>Posicionamiento organico a medio plazo</td>
+    <td>0 &euro; (contenido propio)</td>
+  </tr>
+  <tr>
+    <td>Instagram + LinkedIn organico</td>
+    <td>Marca y autoridad</td>
+    <td>0 &euro; (contenido del trabajo real)</td>
+  </tr>
+</table>
+
+<h3>Google Ads &mdash; Capturar demanda existente</h3>
+<ul>
+  <li>Geolocalizado exclusivamente en provincia de Malaga</li>
+  <li>Keywords: "consultor gastronomico Malaga", "asesor restaurantes Malaga", "mejorar restaurante Malaga"</li>
+  <li>Landing: pagina /afinacion con sistema de reserva directo</li>
+  <li>Coste por lead estimado: 30-50 &euro;</li>
+</ul>
+
+<h3>Meta Ads &mdash; Generar demanda</h3>
+<ul>
+  <li>Segmentacion: propietarios/gerentes con intereses en hosteleria/gastronomia, ubicacion Malaga, edad 30-60</li>
+  <li>Campana 1 (60%): Awareness &mdash; contenido de valor con observaciones reales anonimizadas</li>
+  <li>Campana 2 (40%): Conversion &mdash; retargeting a quienes ya interactuaron o visitaron la web</li>
+</ul>
+
+<h3>SEO y contenido</h3>
+<ul>
+  <li>Blog /criterio: 2 articulos/mes orientados a propietarios de restaurantes con problemas que nosotros resolvemos</li>
+  <li>Contenido organico en redes: 3 posts/semana Instagram, 1-2 LinkedIn. Todo nacido del trabajo real, sin produccion adicional</li>
+  <li>Google Business Profile optimizado</li>
+</ul>
+
+<h3>Inversion total en marketing</h3>
+
+<div class="highlight-box">
+  <p><strong>250-350 &euro;/mes</strong> en publicidad de pago (3.000-4.200 &euro;/ano)</p>
+  <p>Objetivo: 6-9 leads/mes, conversion 40%, 2-4 clientes via ads</p>
+  <p>Los clientes de Mazzocco son adicionales a estos numeros.</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SECCION 8 -->
+<h2><span class="section-number">8.</span> Proyeccion economica</h2>
+
+<h3>Rentabilidad por hora de cada producto</h3>
+
+<table>
+  <tr>
+    <th>Producto</th>
+    <th>Precio</th>
+    <th>Horas</th>
+    <th>&euro;/hora</th>
+    <th>&euro;/hora (con comision Mazzocco)</th>
+  </tr>
+  <tr>
+    <td>Sesion de Afinacion</td>
+    <td>1.000 &euro;</td>
+    <td>4-5,5h</td>
+    <td>182-250 &euro;</td>
+    <td>164-225 &euro;</td>
+  </tr>
+  <tr>
+    <td>Programa Premium</td>
+    <td>3.500 &euro;</td>
+    <td>10-14h</td>
+    <td>250-350 &euro;</td>
+    <td>213-298 &euro;</td>
+  </tr>
+</table>
+
+<h3>Escenarios de facturacion mensual y anual</h3>
+
+<table>
+  <tr>
+    <th>Escenario</th>
+    <th>Sesiones/mes</th>
+    <th>Premium/mes</th>
+    <th>Bruto mensual</th>
+    <th>Bruto anual</th>
+    <th>Horas/semana</th>
+  </tr>
+  <tr>
+    <td>Conservador</td>
+    <td>4</td>
+    <td>0</td>
+    <td>4.000 &euro;</td>
+    <td>48.000 &euro;</td>
+    <td>4-5,5h</td>
+  </tr>
+  <tr>
+    <td>Objetivo</td>
+    <td>4</td>
+    <td>1</td>
+    <td>7.500 &euro;</td>
+    <td>90.000 &euro;</td>
+    <td>6,5-9h</td>
+  </tr>
+  <tr>
+    <td>Optimo</td>
+    <td>6</td>
+    <td>1</td>
+    <td>9.500 &euro;</td>
+    <td>114.000 &euro;</td>
+    <td>8,5-12h</td>
+  </tr>
+</table>
+
+<h3>Retorno sobre la inversion en marketing</h3>
+
+<table>
+  <tr>
+    <th>Metrica</th>
+    <th>Mensual</th>
+    <th>Anual</th>
+  </tr>
+  <tr>
+    <td>Inversion en ads</td>
+    <td>250-350 &euro;</td>
+    <td>3.000-4.200 &euro;</td>
+  </tr>
+  <tr>
+    <td>Clientes via ads (conversion 40%)</td>
+    <td>2-4</td>
+    <td>24-48</td>
+  </tr>
+  <tr>
+    <td>Facturacion generada por ads</td>
+    <td>2.000-4.000 &euro;</td>
+    <td>24.000-48.000 &euro;</td>
+  </tr>
+  <tr>
+    <td><strong>ROI</strong></td>
+    <td colspan="2"><strong>6x-16x sobre la inversion publicitaria</strong></td>
+  </tr>
+</table>
+
+<div class="success-box">
+  <p><strong>Comparativa con el PACG:</strong> En el escenario objetivo (4 sesiones + 1 premium/mes), la facturacion anual de 90.000 &euro; supera ampliamente lo que el PACG nos aportaba. Y lo hace con menos horas de trabajo y sin depender de la voluntad politica ni de ciclos electorales.</p>
+</div>
+
+<h3>Politica de precios a largo plazo</h3>
+<p>El precio de 1.000 &euro; es el precio de arranque. Si la demanda supera consistentemente la oferta (mas de 4 solicitudes no atendidas durante dos meses consecutivos), el precio sube a 1.200 &euro; o 1.500 &euro;. La regla: <strong>nunca se aumentan los dias trabajados, solo el precio por dia.</strong></p>
+
+<div class="page-break"></div>
+
+<!-- SECCION 9 -->
+<h2><span class="section-number">9.</span> Hoja de ruta de implementacion</h2>
+
+<h3>Fase 1 &mdash; Cimientos (Mes 1-2)</h3>
+<ul>
+  <li>Desarrollo de las tres herramientas tecnologicas (app de reserva, app de notas, motor de informes)</li>
+  <li>Rediseno de gastrototem.com con el nuevo posicionamiento</li>
+  <li>Actualizacion de bios en Instagram y LinkedIn</li>
+  <li>Configuracion del sistema de reserva y pago (Stripe + Klarna)</li>
+  <li>Creacion del one-pager para Mazzocco</li>
+  <li>Formalizacion del acuerdo comercial con Mazzocco (comisiones, condiciones)</li>
+</ul>
+
+<h3>Fase 2 &mdash; Lanzamiento (Mes 2-3)</h3>
+<ul>
+  <li>2 sesiones piloto con restaurantes de confianza para calibrar la operativa y las herramientas</li>
+  <li>Anuncio oficial del servicio en Instagram y LinkedIn</li>
+  <li>Lanzamiento de Google Ads y Meta Ads geolocalizados en Malaga</li>
+  <li>Mazzocco empieza a presentar el servicio a sus clientes</li>
+  <li>Inicio del plan de contenido: 3 publicaciones/semana</li>
+</ul>
+
+<h3>Fase 3 &mdash; Velocidad de crucero (Mes 3 en adelante)</h3>
+<ul>
+  <li>4 sesiones estandar/mes como objetivo operativo</li>
+  <li>1 programa premium/mes (cuando Mazzocco lo active)</li>
+  <li>1 caso de trabajo publicado/mes (con permiso del cliente)</li>
+  <li>Blog /criterio: 2 articulos/mes</li>
+  <li>Revision trimestral: que canal genera mas solicitudes, ajustar inversion</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- SECCION 10 -->
+<h2><span class="section-number">10.</span> Decisiones que requieren tu opinion</h2>
+
+<p class="lead">Fernando, necesito tu feedback sobre los siguientes puntos antes de avanzar con la implementacion.</p>
+
+<h3>1. Sobre el Programa Premium</h3>
+<p>La propuesta diferencia la Visita 2 de las demas: no es de incognito, es una visita de control pactada de 2 horas sin comida completa. Esto es lo que hace que el paquete rinda mas por hora que la sesion estandar. <strong>&iquest;Estas de acuerdo con este formato o prefieres que las tres visitas sean incognito completas?</strong></p>
+
+<div class="input-box">
+  <p>Tu opinion:</p>
+</div>
+
+<h3>2. Sobre las comisiones de Mazzocco</h3>
+<p>Propongo 10% en sesion estandar y 15% en premium. La alternativa de intercambio de valor (sin comision) genera riesgo de que Mazzocco pierda interes con el tiempo. <strong>&iquest;Ves estos porcentajes razonables o quieres proponer otros?</strong></p>
+
+<div class="input-box">
+  <p>Tu opinion:</p>
+</div>
+
+<h3>3. Sobre el territorio</h3>
+<p>Propongo arrancar exclusivamente en provincia de Malaga y activar Granada cuando la demanda lo justifique. <strong>&iquest;Estas de acuerdo o quieres incluir Granada desde el inicio?</strong></p>
+
+<div class="input-box">
+  <p>Tu opinion:</p>
+</div>
+
+<h3>4. Sobre la independencia de criterio con Mazzocco</h3>
+<p>He incluido explicitamente que si detectamos problemas en productos que Mazzocco distribuye, lo decimos en el informe con el mismo rigor. <strong>&iquest;Has hablado de esto con ellos? &iquest;Lo ven claro?</strong></p>
+
+<div class="input-box">
+  <p>Tu opinion:</p>
+</div>
+
+<h3>5. Sobre el contenido del Programa Premium</h3>
+<p>La propuesta actual cubre cocina, sala, experiencia y coherencia. Tu mencionaste que el premium seria "mas completo". <strong>&iquest;Hay areas adicionales que quieras incluir que no esten contempladas aqui?</strong></p>
+
+<div class="input-box">
+  <p>Tu opinion:</p>
+</div>
+
+<h3>6. Sobre los clientes del modelo antiguo</h3>
+<p>El plan implica liberar las horas que dedicamos a tarifas planas y gestion de redes. <strong>&iquest;Tienes clientes activos que debamos migrar o dar de baja antes de arrancar?</strong></p>
+
+<div class="input-box">
+  <p>Tu opinion:</p>
+</div>
+
+<div class="verdict">
+  <p>&laquo;La era de la agencia 360 ha terminado.<br>Comienza la era de la Alta Afinacion Gastronomica.&raquo;</p>
+</div>
+
+<div class="footer">
+  <p>GASTROTOTEM S.L. &mdash; B90123514 | C/ Bartolome de Medina 24 B | 41004 Sevilla</p>
+  <p>Documento interno &middot; Abril 2026</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión de Afinación — Gastrototem</title>
+<meta name="description" content="Visita de incógnito + informe profesional en 48h. Crítica gastronómica que afina restaurantes. 1.000 EUR + IVA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --off-white: #f7f7f5;
+    --gray-warm: #e8e6e1;
+    --gray-mid: #999690;
+    --gray-dark: #4a4845;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Montserrat', 'Helvetica Neue', sans-serif;
+    --page-max: 1200px;
+    --page-pad: clamp(20px, 5vw, 80px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ============================================
+     UTILITIES
+     ============================================ */
+  .container {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 0 var(--page-pad);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+  }
+
+  /* ============================================
+     REVEAL ANIMATIONS
+     ============================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ============================================
+     HEADER / NAV
+     ============================================ */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--black);
+    transition: background 0.3s ease;
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px var(--page-pad);
+    max-width: var(--page-max);
+    margin: 0 auto;
+  }
+
+  .site-header__logo img {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .site-nav a {
+    color: var(--gray-mid);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .site-nav a:hover {
+    color: var(--white);
+  }
+
+  .site-nav__cta {
+    background: var(--white) !important;
+    color: var(--black) !important;
+    padding: 10px 24px;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: inline-block;
+    transition: background 0.3s, transform 0.2s !important;
+  }
+
+  .site-nav__cta:hover {
+    background: var(--off-white) !important;
+    transform: translateY(-1px);
+  }
+
+  /* Mobile nav */
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    margin: 5px 0;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: block; }
+    .site-nav {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--black);
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .site-nav.open { transform: translateX(0); }
+    .site-nav a { font-size: 16px; }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: var(--black);
+    color: var(--white);
+    padding-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, var(--black), transparent);
+    pointer-events: none;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    padding: clamp(60px, 12vh, 140px) 0;
+  }
+
+  .hero__label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero__label::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--gray-mid);
+  }
+
+  .hero__title {
+    font-family: var(--serif);
+    font-size: clamp(42px, 7vw, 96px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+    max-width: 900px;
+  }
+
+  .hero__title em {
+    font-style: italic;
+  }
+
+  .hero__subtitle {
+    font-size: clamp(16px, 1.8vw, 20px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--gray-mid);
+    max-width: 560px;
+    margin-bottom: 50px;
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--white);
+    color: var(--black);
+    padding: 18px 40px;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .hero__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(255,255,255,0.1);
+  }
+
+  .hero__cta svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s;
+  }
+
+  .hero__cta:hover svg {
+    transform: translateX(4px);
+  }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--gray-mid);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
+  }
+
+  /* ============================================
+     SECTION SHARED
+     ============================================ */
+  .section {
+    padding: clamp(80px, 12vh, 160px) 0;
+  }
+
+  .section--dark {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .section--warm {
+    background: var(--off-white);
+  }
+
+  .section__label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section__label::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .section__title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4.5vw, 60px);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    max-width: 700px;
+  }
+
+  .section__intro {
+    font-size: clamp(16px, 1.5vw, 18px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--gray-dark);
+    max-width: 600px;
+    margin-bottom: 60px;
+  }
+
+  .section--dark .section__intro {
+    color: var(--gray-mid);
+  }
+
+  /* ============================================
+     PROBLEMA (opening tension)
+     ============================================ */
+  .problema__quote {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3.5vw, 44px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 800px;
+    margin-bottom: 40px;
+    position: relative;
+    padding-left: 30px;
+    border-left: 2px solid var(--gray-warm);
+  }
+
+  .problema__text {
+    font-size: clamp(15px, 1.4vw, 17px);
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--gray-dark);
+    max-width: 640px;
+  }
+
+  /* ============================================
+     MÉTODO — 4 AREAS
+     ============================================ */
+  .areas-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--gray-warm);
+    margin-top: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .areas-grid { grid-template-columns: 1fr; }
+  }
+
+  .area-card {
+    background: var(--white);
+    padding: clamp(32px, 4vw, 56px);
+    position: relative;
+    transition: background 0.4s;
+  }
+
+  .area-card:hover {
+    background: var(--off-white);
+  }
+
+  .area-card__number {
+    font-family: var(--serif);
+    font-size: clamp(48px, 5vw, 72px);
+    font-weight: 400;
+    color: var(--gray-warm);
+    line-height: 1;
+    margin-bottom: 20px;
+    transition: color 0.4s;
+  }
+
+  .area-card:hover .area-card__number {
+    color: var(--black);
+  }
+
+  .area-card__title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .area-card__text {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--gray-dark);
+  }
+
+  .area-card__items {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .area-card__items li {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray-dark);
+    padding: 6px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .area-card__items li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gray-mid);
+  }
+
+  /* ============================================
+     PROCESO — Timeline
+     ============================================ */
+  .proceso-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 60px;
+    position: relative;
+  }
+
+  .proceso-steps::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: calc(100% / 6);
+    right: calc(100% / 6);
+    height: 1px;
+    background: var(--gray-warm);
+  }
+
+  @media (max-width: 768px) {
+    .proceso-steps {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .proceso-steps::before {
+      top: 0;
+      bottom: 0;
+      left: 36px;
+      right: auto;
+      width: 1px;
+      height: auto;
+    }
+  }
+
+  .step {
+    text-align: center;
+    position: relative;
+  }
+
+  @media (max-width: 768px) {
+    .step {
+      text-align: left;
+      padding-left: 80px;
+    }
+  }
+
+  .step__marker {
+    width: 72px;
+    height: 72px;
+    border: 1px solid var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    background: var(--white);
+    position: relative;
+    z-index: 1;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  .step:hover .step__marker {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  @media (max-width: 768px) {
+    .step__marker {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 56px;
+      height: 56px;
+      font-size: 22px;
+      margin: 0;
+    }
+  }
+
+  .step__title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .step__text {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--gray-dark);
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .step__text { margin: 0; }
+  }
+
+  .step__time {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    border: 1px solid var(--gray-warm);
+    padding: 6px 14px;
+  }
+
+  /* ============================================
+     PRECIO
+     ============================================ */
+  .precio {
+    text-align: center;
+    padding: clamp(100px, 15vh, 200px) 0;
+  }
+
+  .precio__amount {
+    font-family: var(--serif);
+    font-size: clamp(64px, 10vw, 140px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .precio__iva {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin-bottom: 48px;
+  }
+
+  .precio__includes {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 40px;
+    margin-bottom: 60px;
+  }
+
+  .precio__includes li {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .precio__includes li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--black);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .precio__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--black);
+    color: var(--white);
+    padding: 22px 56px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .precio__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  .precio__note {
+    margin-top: 24px;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--gray-mid);
+  }
+
+  /* ============================================
+     PARA QUIÉN
+     ============================================ */
+  .perfiles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .perfiles-grid { grid-template-columns: 1fr; }
+  }
+
+  .perfil {
+    border-top: 2px solid var(--white);
+    padding-top: 28px;
+  }
+
+  .perfil__name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+
+  .perfil__desc {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--gray-mid);
+    margin-bottom: 20px;
+  }
+
+  .perfil__signal {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-style: italic;
+    color: var(--gray-mid);
+  }
+
+  .perfil__signal::before {
+    content: '« ';
+  }
+
+  .perfil__signal::after {
+    content: ' »';
+  }
+
+  /* ============================================
+     ENTREGABLE
+     ============================================ */
+  .entregable-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 100px);
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .entregable-layout { grid-template-columns: 1fr; }
+  }
+
+  .entregable-text {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--gray-dark);
+  }
+
+  .entregable-text p + p {
+    margin-top: 20px;
+  }
+
+  .informe-preview {
+    background: var(--off-white);
+    border: 1px solid var(--gray-warm);
+    padding: clamp(28px, 3vw, 44px);
+    position: relative;
+  }
+
+  .informe-preview::before {
+    content: 'INFORME DE AFINACIÓN';
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--white);
+    padding: 0 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--gray-mid);
+  }
+
+  .informe-preview__item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--gray-warm);
+  }
+
+  .informe-preview__item:last-child {
+    border-bottom: none;
+  }
+
+  .informe-preview__area {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .informe-preview__detail {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--gray-dark);
+  }
+
+  .informe-preview__indicator {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid var(--black);
+  }
+
+  .informe-preview__indicator--alta {
+    background: var(--black);
+    color: var(--white);
+  }
+
+  /* ============================================
+     FAQ
+     ============================================ */
+  .faq-list {
+    max-width: 720px;
+    margin-top: 60px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--gray-warm);
+  }
+
+  .faq-item__q {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 28px 40px 28px 0;
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.3vw, 17px);
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    color: var(--black);
+    transition: color 0.3s;
+  }
+
+  .faq-item__q:hover {
+    color: var(--gray-dark);
+  }
+
+  .faq-item__q::after {
+    content: '+';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    font-weight: 300;
+    transition: transform 0.3s;
+  }
+
+  .faq-item.open .faq-item__q::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .faq-item__a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .faq-item.open .faq-item__a {
+    max-height: 300px;
+  }
+
+  .faq-item__a-inner {
+    padding: 0 0 28px;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--gray-dark);
+  }
+
+  /* ============================================
+     FINAL CTA
+     ============================================ */
+  .final-cta {
+    text-align: center;
+    padding: clamp(100px, 18vh, 240px) 0;
+    position: relative;
+  }
+
+  .final-cta__title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5.5vw, 72px);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .final-cta__subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--gray-mid);
+    margin-bottom: 50px;
+  }
+
+  .final-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--white);
+    color: var(--black);
+    padding: 22px 56px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--white);
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+
+  .final-cta__btn:hover {
+    background: transparent;
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(255,255,255,0.1);
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+  .site-footer {
+    background: var(--black);
+    color: var(--gray-mid);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding: 60px var(--page-pad);
+    max-width: var(--page-max);
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+  }
+
+  .footer-brand__desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-top: 20px;
+    max-width: 280px;
+  }
+
+  .footer-col__title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  .footer-col__list {
+    list-style: none;
+  }
+
+  .footer-col__list li {
+    margin-bottom: 10px;
+  }
+
+  .footer-col__list a {
+    color: var(--gray-mid);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 300;
+    transition: color 0.3s;
+  }
+
+  .footer-col__list a:hover {
+    color: var(--white);
+  }
+
+  .site-footer__bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 24px var(--page-pad);
+    max-width: var(--page-max);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .site-footer__bottom {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-social a {
+    color: var(--gray-mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-social a:hover {
+    color: var(--white);
+  }
+
+  /* ============================================
+     NOISE TEXTURE OVERLAY
+     ============================================ */
+  .noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Noise texture -->
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- ==========================================
+     HEADER
+     ========================================== -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="../index.html" class="site-header__logo" aria-label="Gastrototem — Inicio">
+      <img src="logo-gastrototem-white.svg" alt="Gastrototem" width="170" height="34">
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul class="site-nav" role="list">
+        <li><a href="../afinacion/index.html">Afinación</a></li>
+        <li><a href="../criterio/index.html">Criterio</a></li>
+        <li><a href="../nosotros/index.html">Nosotros</a></li>
+        <li><a href="../contacto/index.html">Contacto</a></li>
+        <li><a href="../afinacion/reservar" class="site-nav__cta">Reservar sesión</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ==========================================
+     HERO
+     ========================================== -->
+<section class="hero" id="hero">
+  <div class="container hero__content">
+    <p class="hero__label reveal">Sesión de Afinación</p>
+    <h1 class="hero__title reveal reveal-delay-1">
+      Tu restaurante suena.<br>Nosotros decimos <em>dónde desafina.</em>
+    </h1>
+    <p class="hero__subtitle reveal reveal-delay-2">
+      Una visita de incógnito como clientes reales. Una reunión inmediata con la propiedad. Un informe profesional en 48 horas. Sin atajos, sin complacencia.
+    </p>
+    <a href="#precio" class="hero__cta reveal reveal-delay-3">
+      Reservar sesión
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <a href="#problema" class="hero__scroll" aria-label="Seguir leyendo">
+    <span>Scroll</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </a>
+</section>
+
+<!-- ==========================================
+     EL PROBLEMA
+     ========================================== -->
+<section class="section" id="problema">
+  <div class="container">
+    <p class="section__label reveal">La cuestión</p>
+    <blockquote class="problema__quote reveal reveal-delay-1">
+      Un restaurante puede tener una cocina impecable y perder clientes en la puerta. Puede tener una sala brillante y una carta que no cuenta nada. Lo difícil no es ser bueno: es ver lo que falla cuando todo parece funcionar.
+    </blockquote>
+    <p class="problema__text reveal reveal-delay-2">
+      Los puntos ciegos de un restaurante no aparecen en las cuentas de resultados hasta que ya es tarde. Ningún equipo de cocina se evalúa a sí mismo con la distancia necesaria. Ningún propietario puede sentarse en su propia sala como un cliente que no sabe nada. Ese es exactamente nuestro trabajo.
+    </p>
+  </div>
+</section>
+
+<!-- ==========================================
+     LAS 4 ÁREAS
+     ========================================== -->
+<section class="section section--warm" id="metodo">
+  <div class="container">
+    <p class="section__label reveal">El método</p>
+    <h2 class="section__title reveal reveal-delay-1">Cuatro áreas.<br>Sin zona de confort.</h2>
+    <p class="section__intro reveal reveal-delay-2">
+      Cada Sesión de Afinación examina tu restaurante desde cuatro ángulos complementarios. No buscamos lo que quieres oír. Buscamos lo que necesitas saber.
+    </p>
+  </div>
+  <div class="container">
+    <div class="areas-grid">
+      <div class="area-card reveal">
+        <div class="area-card__number">01</div>
+        <h3 class="area-card__title">Cocina</h3>
+        <p class="area-card__text">Lo que sale del pase define tu restaurante. Evaluamos la verdad del plato.</p>
+        <ul class="area-card__items">
+          <li>Materia prima y producto</li>
+          <li>Técnica y ejecución</li>
+          <li>Identidad culinaria</li>
+          <li>La carta como documento</li>
+        </ul>
+      </div>
+      <div class="area-card reveal reveal-delay-1">
+        <div class="area-card__number">02</div>
+        <h3 class="area-card__title">Sala</h3>
+        <p class="area-card__text">La sala no acompaña la cocina: es la otra mitad de la experiencia. La juzgamos con el mismo rigor.</p>
+        <ul class="area-card__items">
+          <li>Bienvenida y primera impresión</li>
+          <li>Tiempos de servicio</li>
+          <li>Conocimiento de carta y producto</li>
+          <li>Hospitalidad y cierre</li>
+        </ul>
+      </div>
+      <div class="area-card reveal reveal-delay-2">
+        <div class="area-card__number">03</div>
+        <h3 class="area-card__title">Experiencia global</h3>
+        <p class="area-card__text">Un restaurante es más que cocina y sala. Es la suma de todo lo que siente el cliente desde que entra hasta que se va.</p>
+        <ul class="area-card__items">
+          <li>Atmósfera y ambiente</li>
+          <li>Coherencia espacio-oferta-precio</li>
+          <li>Fluidez de la experiencia</li>
+          <li>Detalles que suman o restan</li>
+        </ul>
+      </div>
+      <div class="area-card reveal reveal-delay-3">
+        <div class="area-card__number">04</div>
+        <h3 class="area-card__title">Coherencia de la propuesta</h3>
+        <p class="area-card__text">La pregunta final: ¿tu restaurante es lo que dice ser? Incluye presencia digital, comunicación y promesa de marca.</p>
+        <ul class="area-card__items">
+          <li>Identidad vs. realidad</li>
+          <li>Presencia digital y percepción</li>
+          <li>Posicionamiento de precio</li>
+          <li>Promesa al cliente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     PROCESO
+     ========================================== -->
+<section class="section" id="proceso">
+  <div class="container">
+    <p class="section__label reveal">El proceso</p>
+    <h2 class="section__title reveal reveal-delay-1">Un día. Tres fases.<br>Sin misterio.</h2>
+    <p class="section__intro reveal reveal-delay-2">
+      La Sesión de Afinación se completa en una jornada. El informe llega en 48 horas. No hay proyectos eternos, no hay dependencia.
+    </p>
+    <div class="proceso-steps">
+      <div class="step reveal">
+        <div class="step__marker">1</div>
+        <h3 class="step__title">Visita de incógnito</h3>
+        <p class="step__text">
+          Reservamos como cualquier cliente. Llegamos sin aviso. Vivimos tu restaurante exactamente como lo vive quien no te conoce. Pedimos, observamos, anotamos.
+        </p>
+        <span class="step__time">Comida o cena completa</span>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step__marker">2</div>
+        <h3 class="step__title">Reunión con la propiedad</h3>
+        <p class="step__text">
+          Inmediatamente después de la visita nos sentamos contigo. Sin filtros, sin rodeos. Te contamos lo que hemos visto, oído, comido y sentido.
+        </p>
+        <span class="step__time">Ese mismo día</span>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step__marker">3</div>
+        <h3 class="step__title">Informe de Afinación</h3>
+        <p class="step__text">
+          Un documento profesional con observaciones, juicio y acciones concretas priorizadas. Nada genérico: cada línea habla de tu restaurante.
+        </p>
+        <span class="step__time">Entrega en 48 horas</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     ENTREGABLE
+     ========================================== -->
+<section class="section section--warm" id="entregable">
+  <div class="container">
+    <p class="section__label reveal">El entregable</p>
+    <h2 class="section__title reveal reveal-delay-1">Un informe que no adorna.<br>Que señala.</h2>
+    <div class="entregable-layout">
+      <div class="entregable-text reveal reveal-delay-2">
+        <p>
+          El Informe de Afinación no es un documento de consultoría genérico ni una lista de buenas intenciones. Es un diagnóstico escrito con criterio profesional, por personas que llevan años evaluando restaurantes.
+        </p>
+        <p>
+          Cada una de las cuatro áreas incluye tres elementos: la <strong>observación</strong> (lo que hemos visto), el <strong>juicio</strong> (lo que significa) y la <strong>acción concreta</strong> con indicador de prioridad. Sabes exactamente qué corregir, por qué, y por dónde empezar.
+        </p>
+        <p>
+          A los 30 días de la entrega, una llamada de control incluida para revisar avances y resolver dudas de implementación.
+        </p>
+      </div>
+      <div class="informe-preview reveal reveal-delay-3">
+        <div class="informe-preview__item">
+          <div class="informe-preview__area">Cocina</div>
+          <div class="informe-preview__detail">Observación — Juicio — Acción concreta</div>
+          <span class="informe-preview__indicator informe-preview__indicator--alta">Prioridad alta</span>
+        </div>
+        <div class="informe-preview__item">
+          <div class="informe-preview__area">Sala</div>
+          <div class="informe-preview__detail">Observación — Juicio — Acción concreta</div>
+          <span class="informe-preview__indicator">Prioridad media</span>
+        </div>
+        <div class="informe-preview__item">
+          <div class="informe-preview__area">Experiencia global</div>
+          <div class="informe-preview__detail">Observación — Juicio — Acción concreta</div>
+          <span class="informe-preview__indicator informe-preview__indicator--alta">Prioridad alta</span>
+        </div>
+        <div class="informe-preview__item">
+          <div class="informe-preview__area">Coherencia</div>
+          <div class="informe-preview__detail">Observación — Juicio — Acción concreta</div>
+          <span class="informe-preview__indicator">Prioridad media</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     PRECIO
+     ========================================== -->
+<section class="section" id="precio">
+  <div class="container precio">
+    <p class="section__label reveal" style="justify-content: center;">Precio</p>
+    <div class="precio__amount reveal reveal-delay-1">1.000 &euro;</div>
+    <p class="precio__iva reveal reveal-delay-1">+ IVA &middot; Servicio cerrado, un día</p>
+    <ul class="precio__includes reveal reveal-delay-2">
+      <li>Visita completa de incógnito</li>
+      <li>Reunión inmediata con propiedad</li>
+      <li>Informe de Afinación en 48h</li>
+      <li>Llamada de control a 30 días</li>
+    </ul>
+    <a href="../afinacion/reservar" class="precio__cta reveal reveal-delay-3">
+      Reservar sesión
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <p class="precio__note reveal reveal-delay-4">Segunda visita disponible al mismo precio</p>
+  </div>
+</section>
+
+<!-- ==========================================
+     PARA QUIÉN
+     ========================================== -->
+<section class="section section--dark" id="para-quien">
+  <div class="container">
+    <p class="section__label reveal">Para quién</p>
+    <h2 class="section__title reveal reveal-delay-1">No es para todos.<br>Es para quien quiere saber.</h2>
+    <p class="section__intro reveal reveal-delay-2">
+      La Sesión de Afinación funciona cuando hay voluntad real de escuchar. Si buscas confirmación de que todo está bien, no somos tu servicio.
+    </p>
+    <div class="perfiles-grid">
+      <div class="perfil reveal">
+        <h3 class="perfil__name">El restaurante maduro</h3>
+        <p class="perfil__desc">
+          Llevas años funcionando. Los números acompañan. Pero intuyes que hay puntos ciegos operativos que tu equipo ya no ve porque lleva demasiado tiempo dentro.
+        </p>
+        <p class="perfil__signal">Sé que algo falla, pero no consigo ver qué</p>
+      </div>
+      <div class="perfil reveal reveal-delay-1">
+        <h3 class="perfil__name">El que va a escalar</h3>
+        <p class="perfil__desc">
+          Estás a punto de abrir un segundo local, reformar o dar un salto. Antes de multiplicar necesitas saber si lo que tienes está realmente afinado.
+        </p>
+        <p class="perfil__signal">Quiero crecer, pero sobre una base sólida</p>
+      </div>
+      <div class="perfil reveal reveal-delay-2">
+        <h3 class="perfil__name">El que merece más</h3>
+        <p class="perfil__desc">
+          Tu cocina es buena, tu sala funciona, pero no recibes el reconocimiento que esperas. Puede que el problema no sea de calidad, sino de coherencia.
+        </p>
+        <p class="perfil__signal">Hago las cosas bien pero nadie parece notarlo</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     FAQ
+     ========================================== -->
+<section class="section" id="faq">
+  <div class="container">
+    <p class="section__label reveal">Preguntas frecuentes</p>
+    <h2 class="section__title reveal reveal-delay-1">Lo que necesitas saber</h2>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-item__q" aria-expanded="false">¿Cómo funciona la visita de incógnito?</button>
+        <div class="faq-item__a" role="region">
+          <div class="faq-item__a-inner">
+            Reservamos como cualquier cliente. No avisamos al equipo, no pedimos trato especial. Realizamos una comida o cena completa evaluando cada punto de contacto: desde la reserva telefónica o digital hasta el momento de pagar. Tu equipo no sabe que estamos ahí.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-item__q" aria-expanded="false">¿Quién realiza la visita?</button>
+        <div class="faq-item__a" role="region">
+          <div class="faq-item__a-inner">
+            Fernando Huidobro y Juanma Agrela, socios de Gastrototem. Ambos con trayectoria contrastada en crítica y cultura gastronómica. No delegamos en colaboradores externos.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-item__q" aria-expanded="false">¿Cuánto tiempo lleva todo el proceso?</button>
+        <div class="faq-item__a" role="region">
+          <div class="faq-item__a-inner">
+            La visita y la reunión se completan en un solo día. El Informe de Afinación se entrega en un máximo de 48 horas. A los 30 días, una llamada de seguimiento incluida. No hay procesos largos ni dependencia.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-item__q" aria-expanded="false">¿Trabajáis solo en Sevilla?</button>
+        <div class="faq-item__a" role="region">
+          <div class="faq-item__a-inner">
+            Nuestra base es Sevilla, pero realizamos sesiones en toda España. Los desplazamientos fuera de Sevilla pueden implicar gastos adicionales de transporte y alojamiento, que se presupuestan por adelantado.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-item__q" aria-expanded="false">¿Y si no estoy de acuerdo con el informe?</button>
+        <div class="faq-item__a" role="region">
+          <div class="faq-item__a-inner">
+            Es probable que algún punto te incomode. Eso es parte del valor. Nuestro criterio es independiente y fundamentado. No buscamos agradar; buscamos que mejores. La llamada de control a 30 días es un buen momento para contrastar impresiones una vez hayas tenido tiempo de reflexionar.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-item__q" aria-expanded="false">¿Se puede repetir la sesión?</button>
+        <div class="faq-item__a" role="region">
+          <div class="faq-item__a-inner">
+            Sí. Ofrecemos una segunda visita al mismo precio para evaluar la evolución tras implementar las recomendaciones. Muchos clientes la solicitan a los 3-6 meses de la primera sesión.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     FINAL CTA
+     ========================================== -->
+<section class="section section--dark" id="reservar">
+  <div class="container final-cta">
+    <p class="section__label reveal" style="justify-content: center;">Siguiente paso</p>
+    <h2 class="final-cta__title reveal reveal-delay-1">Si tu restaurante<br>está listo para escuchar,<br>nosotros estamos listos<br>para decir la verdad.</h2>
+    <p class="final-cta__subtitle reveal reveal-delay-2">1.000 EUR + IVA &middot; Un día &middot; Informe en 48h</p>
+    <a href="../afinacion/reservar" class="final-cta__btn reveal reveal-delay-3">
+      Reservar sesión de afinación
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ==========================================
+     FOOTER
+     ========================================== -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="footer-brand">
+      <img src="logo-gastrototem-white.svg" alt="Gastrototem" width="140" height="28">
+      <p class="footer-brand__desc">Crítica gastronómica que afina restaurantes. Sevilla.</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col__title">Navegar</h4>
+      <ul class="footer-col__list">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../afinacion/index.html">Afinación</a></li>
+        <li><a href="../criterio/index.html">Criterio</a></li>
+        <li><a href="../nosotros/index.html">Nosotros</a></li>
+        <li><a href="../contacto/index.html">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col__title">Legal</h4>
+      <ul class="footer-col__list">
+        <li><a href="../aviso-legal/index.html">Aviso legal</a></li>
+        <li><a href="../privacidad/index.html">Privacidad</a></li>
+        <li><a href="../cookies/index.html">Cookies</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col__title">Contacto</h4>
+      <ul class="footer-col__list">
+        <li><a href="mailto:hola@gastrototem.com">hola@gastrototem.com</a></li>
+        <li><a href="https://instagram.com/gastrototem" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://linkedin.com/company/gastrototem" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <span>&copy; 2025 Gastrototem S.L. &mdash; B90123514</span>
+    <div class="footer-social">
+      <a href="https://instagram.com/gastrototem" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://linkedin.com/company/gastrototem" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ==========================================
+     SCRIPTS
+     ========================================== -->
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item__q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      document.querySelectorAll('.faq-item__q').forEach(b => b.setAttribute('aria-expanded', 'false'));
+
+      // Toggle current
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Mobile nav toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.site-nav');
+  navToggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('open');
+    navToggle.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // Close mobile nav on link click
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Smooth header background on scroll
+  const header = document.querySelector('.site-header');
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const scroll = window.scrollY;
+    if (scroll > 100) {
+      header.style.boxShadow = '0 1px 0 rgba(255,255,255,0.05)';
+    } else {
+      header.style.boxShadow = 'none';
+    }
+    lastScroll = scroll;
+  }, { passive: true });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+/*
+ Theme Name:   Gastrototem Astra Child
+ Theme URI:    https://gastrototem.com
+ Description:  Child theme de Astra Pro para Gastrototem — Crítica gastronómica que afina restaurantes.
+ Author:       Gastrototem S.L.
+ Author URI:   https://gastrototem.com
+ Template:     astra
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+ Text Domain:  gastrototem-astra-child
+*/
+
+/* El CSS propio se carga desde assets/css/gastrototem.css via functions.php */
