@@ -21,9 +21,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Versión basada en mtime del archivo (cache-busting en dev).
  */
-function gastrototem_asset_version( $relative_path ) {
-	$absolute = GASTROTOTEM_DIR . $relative_path;
-	return file_exists( $absolute ) ? (string) filemtime( $absolute ) : GASTROTOTEM_VERSION;
+function gtt_theme_asset_version( $relative_path ) {
+	$absolute = GTT_THEME_DIR . $relative_path;
+	return file_exists( $absolute ) ? (string) filemtime( $absolute ) : GTT_THEME_VERSION;
 }
 
 /**
@@ -31,14 +31,14 @@ function gastrototem_asset_version( $relative_path ) {
  *
  * Sintaxis ital,wght@1,400 para Instrument Serif italic 400.
  */
-function gastrototem_google_fonts_url() {
+function gtt_theme_google_fonts_url() {
 	return 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital,wght@1,400&family=JetBrains+Mono:wght@400;500&display=swap';
 }
 
 /**
  * Enqueue de estilos parent + child + tokens + base.
  */
-function gastrototem_enqueue_styles() {
+function gtt_theme_enqueue_styles() {
 	wp_enqueue_style(
 		'astra-parent-style',
 		get_template_directory_uri() . '/style.css',
@@ -50,42 +50,42 @@ function gastrototem_enqueue_styles() {
 		'gastrototem-style',
 		get_stylesheet_uri(),
 		array( 'astra-parent-style' ),
-		gastrototem_asset_version( '/style.css' )
+		gtt_theme_asset_version( '/style.css' )
 	);
 
 	wp_enqueue_style(
 		'gastrototem-tokens',
-		GASTROTOTEM_URI . '/assets/css/tokens.css',
+		GTT_THEME_URI . '/assets/css/tokens.css',
 		array( 'gastrototem-style' ),
-		gastrototem_asset_version( '/assets/css/tokens.css' )
+		gtt_theme_asset_version( '/assets/css/tokens.css' )
 	);
 
 	wp_enqueue_style(
 		'gastrototem-base',
-		GASTROTOTEM_URI . '/assets/css/base.css',
+		GTT_THEME_URI . '/assets/css/base.css',
 		array( 'gastrototem-tokens' ),
-		gastrototem_asset_version( '/assets/css/base.css' )
+		gtt_theme_asset_version( '/assets/css/base.css' )
 	);
 }
-add_action( 'wp_enqueue_scripts', 'gastrototem_enqueue_styles' );
+add_action( 'wp_enqueue_scripts', 'gtt_theme_enqueue_styles' );
 
 /**
  * Enqueue de Google Fonts.
  */
-function gastrototem_enqueue_fonts() {
+function gtt_theme_enqueue_fonts() {
 	wp_enqueue_style(
 		'gastrototem-google-fonts',
-		gastrototem_google_fonts_url(),
+		gtt_theme_google_fonts_url(),
 		array(),
 		null
 	);
 }
-add_action( 'wp_enqueue_scripts', 'gastrototem_enqueue_fonts' );
+add_action( 'wp_enqueue_scripts', 'gtt_theme_enqueue_fonts' );
 
 /**
  * Resource hints: preconnect a Google Fonts.
  */
-function gastrototem_resource_hints( $urls, $relation_type ) {
+function gtt_theme_resource_hints( $urls, $relation_type ) {
 	if ( 'preconnect' === $relation_type ) {
 		$urls[] = array( 'href' => 'https://fonts.googleapis.com' );
 		$urls[] = array(
@@ -95,17 +95,17 @@ function gastrototem_resource_hints( $urls, $relation_type ) {
 	}
 	return $urls;
 }
-add_filter( 'wp_resource_hints', 'gastrototem_resource_hints', 10, 2 );
+add_filter( 'wp_resource_hints', 'gtt_theme_resource_hints', 10, 2 );
 
 /**
  * Estilos para el editor de Gutenberg.
  *
  * Importante: se registra en after_setup_theme con prioridad mayor que
- * gastrototem_setup() para que add_theme_support('editor-styles') ya
+ * gtt_theme_setup() para que add_theme_support('editor-styles') ya
  * haya corrido.
  */
-function gastrototem_enqueue_editor_styles() {
+function gtt_theme_enqueue_editor_styles() {
 	add_editor_style( 'assets/css/editor.css' );
-	add_editor_style( gastrototem_google_fonts_url() );
+	add_editor_style( gtt_theme_google_fonts_url() );
 }
-add_action( 'after_setup_theme', 'gastrototem_enqueue_editor_styles', 11 );
+add_action( 'after_setup_theme', 'gtt_theme_enqueue_editor_styles', 11 );

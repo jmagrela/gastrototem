@@ -51,7 +51,7 @@ add_action(
 /**
  * Cerrar enumeración de usuarios vía REST cuando no hay auth.
  */
-function gastrototem_restrict_users_endpoint( $endpoints ) {
+function gtt_theme_restrict_users_endpoint( $endpoints ) {
 	if ( ! is_user_logged_in() ) {
 		if ( isset( $endpoints['/wp/v2/users'] ) ) {
 			unset( $endpoints['/wp/v2/users'] );
@@ -62,12 +62,12 @@ function gastrototem_restrict_users_endpoint( $endpoints ) {
 	}
 	return $endpoints;
 }
-add_filter( 'rest_endpoints', 'gastrototem_restrict_users_endpoint' );
+add_filter( 'rest_endpoints', 'gtt_theme_restrict_users_endpoint' );
 
 /**
  * Quitar emoji scripts y estilos de WP.
  */
-function gastrototem_disable_emojis() {
+function gtt_theme_disable_emojis() {
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 	remove_action( 'wp_print_styles', 'print_emoji_styles' );
@@ -96,7 +96,7 @@ function gastrototem_disable_emojis() {
 		2
 	);
 }
-add_action( 'init', 'gastrototem_disable_emojis' );
+add_action( 'init', 'gtt_theme_disable_emojis' );
 
 /**
  * Limitar revisiones de post a 5.

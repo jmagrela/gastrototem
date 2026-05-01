@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Configura los soportes de tema.
  */
-function gastrototem_setup() {
-	load_child_theme_textdomain( 'gastrototem', GASTROTOTEM_DIR . '/languages' );
+function gtt_theme_setup() {
+	load_child_theme_textdomain( 'gastrototem', GTT_THEME_DIR . '/languages' );
 
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'title-tag' );
@@ -38,4 +38,4 @@ function gastrototem_setup() {
 		)
 	);
 }
-add_action( 'after_setup_theme', 'gastrototem_setup' );
+add_action( 'after_setup_theme', 'gtt_theme_setup' );
