@@ -56,8 +56,8 @@
 	/* ============================================================
 	 * COLOR — Semánticos (UI funcional, NO copy editorial)
 	 * ============================================================ */
-	--gtt-color-exito: #3D5A3A;
-	--gtt-color-aviso: #8B6B1F;
+	--gtt-color-success: #3D5A3A;
+	--gtt-color-warning: #8B6B1F;
 	--gtt-color-error: #7A2A2A;
 
 	/* ============================================================
