@@ -59,14 +59,33 @@ gastrototem/
 
 | Prefijo | Uso | Origen |
 |---|---|---|
-| `--gtt-*` | CSS custom properties (theme + plugin) | Compartido |
-| `.gtt-*` | Clases utilitarias y BEM CSS (theme) | Theme |
+| `--gtt-*` | CSS custom properties (tokens de marca) | Compartido (theme + plugin) |
+| `.gtt-u-*` | Clases utilitarias CSS del theme | Theme |
+| `.gtt-template-*` | Clases de plantillas PHP del theme | Theme |
+| `.gtt-pattern-*`, `.gtt-block-*` | Clases de patterns y custom blocks (futuras fases) | Theme |
+| `.gtt-*` (plano, sin sub-prefijo) | Clases del plugin de reservas | Plugin |
 | `gtt_theme_*` | Funciones PHP del theme | Theme |
 | `GTT_THEME_*` | Constantes PHP del theme | Theme |
 | `gtt_*` | Funciones públicas del plugin de reservas | Plugin |
 | `gastrototem` | Text domain (WP i18n) y slug del theme | Compartido |
 
 Regla de integración: **el theme conoce al plugin** (consume sus shortcodes/funciones públicas), **el plugin no conoce al theme**. Los tokens `--gtt-*` del theme son la fuente única; el plugin los consume sin mapeos.
+
+---
+
+## Convención de prefijos CSS
+
+Theme y plugin comparten el namespace `gtt-` pero se reparten el uso plano y los sub-prefijos para evitar colisiones. Esta es la convención **vinculante** para cualquier CSS o HTML que se añada al ecosistema:
+
+- **`--gtt-*`** (sin sub-prefijo) — tokens visuales de marca (color, tipografía, espaciado). Se definen en `assets/css/tokens.css` del theme y se exponen también desde `theme.json` vía `--wp--preset--color--*`. **Compartidos** entre theme y plugin: el plugin los consume directamente sin alias intermedios.
+
+- **`.gtt-*`** (sin sub-prefijo) — clases del **plugin** de reservas (`.gtt-btn`, `.gtt-form`, `.gtt-badge`, etc., para el booking flow y el portal de cliente). **El theme NO añade clases con este prefijo plano.**
+
+- **`.gtt-u-*`** — clases utilitarias del theme. Pequeñas, reutilizables, una sola responsabilidad. Ejemplos actuales: `.gtt-u-mono`, `.gtt-u-serif-italic`.
+
+- **`.gtt-template-*`**, **`.gtt-pattern-*`**, **`.gtt-block-*`** — sub-prefijos descriptivos para clases del theme que no son utilities. Cualquier futura clase del theme que no sea utility usará el sub-prefijo que corresponda según el caso (plantilla PHP, block pattern, custom block).
+
+Si añades código nuevo y dudas si una clase debe ir plana o con sub-prefijo, la regla es simple: **plano solo en plugin**. Cualquier clase emitida desde el theme **siempre** lleva sub-prefijo.
 
 ---
 
@@ -86,7 +105,7 @@ Plantillas PHP clásicas (no FSE). El theme cubre los contextos básicos de Word
 Convenciones uniformes en las plantillas:
 
 - Estructuras semánticas (`<article>`, `<header>`, `<footer>`, `<nav>`, `<main>`).
-- Clases con prefijo `.gtt-`: `gtt-entry`, `gtt-entry--page`, `gtt-archive-title`, `gtt-search-list`, `gtt-error-404`, etc.
+- Clases con sub-prefijo `.gtt-template-*`: `gtt-template-entry`, `gtt-template-entry--page`, `gtt-template-archive-title`, `gtt-template-search-list`, `gtt-template-error-404`, etc. Ver "Convención de prefijos CSS" más arriba.
 - Cero hex literales en plantillas. Todo el color y la tipografía vienen de `tokens.css`.
 - Cero estilos inline. Layout y espaciado los define el CSS, no el PHP.
 - Todos los strings de UI pasan por `__()` / `esc_html__()` con text domain `gastrototem`.
@@ -155,8 +174,8 @@ Ambas carpetas están vacías a propósito en esta fase. Esta sección se amplia
 | `papel-100` | `#EFEAE0` | Fondo editorial cálido. |
 | `grafito-900` | `#1A1A22` | Texto de cuerpo. |
 | `grafito-600` | `#3F3D38` | Texto secundario, separadores. |
-| `exito` | `#3D5A3A` | Estados de UI exitosa. **No** uso editorial. |
-| `aviso` | `#8B6B1F` | Estados de UI de aviso. **No** uso editorial. |
+| `success` | `#3D5A3A` | Estados de UI exitosa. **No** uso editorial. |
+| `warning` | `#8B6B1F` | Estados de UI de aviso. **No** uso editorial. |
 | `error` | `#7A2A2A` | Estados de UI de error. **No** uso editorial. |
 
 ### Capa 2 — escala completa (variables CSS en `tokens.css`)
@@ -164,7 +183,7 @@ Ambas carpetas están vacías a propósito en esta fase. Esta sección se amplia
 **Tinta** (color firma): `--gtt-color-tinta-50` → `--gtt-color-tinta-900`
 **Papel** (soporte cálido): `--gtt-color-papel-50` → `--gtt-color-papel-900`
 **Grafito** (texto y monocromo): `--gtt-color-grafito-50` → `--gtt-color-grafito-900`
-**Semánticos** (UI funcional): `--gtt-color-exito`, `--gtt-color-aviso`, `--gtt-color-error`
+**Semánticos** (UI funcional): `--gtt-color-success`, `--gtt-color-warning`, `--gtt-color-error`
 **Aliases de uso**: `--gtt-color-bg`, `--gtt-color-text`, `--gtt-color-text-muted`, `--gtt-color-accent`, `--gtt-color-rule`
 **Reservado**: `--gtt-color-blanco-puro` (`#FFFFFF`, solo documentos administrativos)
 
@@ -252,4 +271,4 @@ Síntoma de los tiempos de child de Astra: el container de Astra metía `backgro
 
 ## Versionado
 
-`v0.1.0` — cimientos del theme standalone. Tokens, paleta, tipografía y plantillas PHP clásicas (esqueleto sin diseño). Marcador `Begin: gastrototem child theme foundation` (commit `11b679e` del repo principal). Pivote standalone completado en commit `cef9b8a`. Plantillas restantes añadidas en commit `4dc4a16`.
+`v0.1.0` — cimientos del theme standalone. Tokens, paleta, tipografía y plantillas PHP clásicas (esqueleto sin diseño). Marcador `Begin: gastrototem child theme foundation` (commit `11b679e` del repo principal). Pivote standalone completado en commit `cef9b8a`. Plantillas restantes añadidas en commit `4dc4a16`. Limpieza de prefijos CSS (utilidades a `.gtt-u-*`, plantillas a `.gtt-template-*`, semánticos a inglés) en commits `d2c7990`/`19c7b68`/`e45287f`/`382e6dd`.
