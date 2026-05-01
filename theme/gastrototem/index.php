@@ -15,21 +15,21 @@ get_header();
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
-		<article id="post-<?php the_ID(); ?>" <?php post_class( 'gtt-entry' ); ?>>
-			<header class="gtt-entry-header">
+		<article id="post-<?php the_ID(); ?>" <?php post_class( 'gtt-template-entry' ); ?>>
+			<header class="gtt-template-entry-header">
 				<?php
 				if ( is_singular() ) {
-					the_title( '<h1 class="gtt-entry-title">', '</h1>' );
+					the_title( '<h1 class="gtt-template-entry-title">', '</h1>' );
 				} else {
 					the_title(
-						'<h2 class="gtt-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">',
+						'<h2 class="gtt-template-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">',
 						'</a></h2>'
 					);
 				}
 				?>
 			</header>
 
-			<div class="gtt-entry-content">
+			<div class="gtt-template-entry-content">
 				<?php
 				if ( is_singular() ) {
 					the_content();
@@ -46,7 +46,7 @@ get_header();
 
 <?php else : ?>
 
-	<p class="gtt-no-content"><?php esc_html_e( 'No hay contenido todavía.', 'gastrototem' ); ?></p>
+	<p class="gtt-template-no-content"><?php esc_html_e( 'No hay contenido todavía.', 'gastrototem' ); ?></p>
 
 <?php endif; ?>
 

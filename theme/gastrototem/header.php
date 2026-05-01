@@ -15,18 +15,18 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<a class="gtt-skip-link screen-reader-text" href="#gtt-content">
+<a class="gtt-template-skip-link screen-reader-text" href="#gtt-content">
 	<?php esc_html_e( 'Saltar al contenido', 'gastrototem' ); ?>
 </a>
 
-<header class="gtt-site-header" role="banner">
-	<div class="gtt-site-branding">
+<header class="gtt-template-site-header" role="banner">
+	<div class="gtt-template-site-branding">
 		<?php
 		if ( has_custom_logo() ) {
 			the_custom_logo();
 		} else {
 			printf(
-				'<a href="%1$s" rel="home" class="gtt-site-title">%2$s</a>',
+				'<a href="%1$s" rel="home" class="gtt-template-site-title">%2$s</a>',
 				esc_url( home_url( '/' ) ),
 				esc_html( get_bloginfo( 'name' ) )
 			);
@@ -40,12 +40,12 @@
 			array(
 				'theme_location' => 'primary',
 				'container'      => 'nav',
-				'container_class' => 'gtt-nav-primary',
-				'menu_class'     => 'gtt-nav-list',
+				'container_class' => 'gtt-template-nav-primary',
+				'menu_class'     => 'gtt-template-nav-list',
 			)
 		);
 	}
 	?>
 </header>
 
-<main id="gtt-content" class="gtt-site-main" role="main">
+<main id="gtt-content" class="gtt-template-site-main" role="main">

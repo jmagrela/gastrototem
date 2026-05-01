@@ -10,25 +10,25 @@ get_header();
 
 <?php if ( have_posts() ) : ?>
 
-	<header class="gtt-archive-header">
-		<?php the_archive_title( '<h1 class="gtt-archive-title">', '</h1>' ); ?>
-		<?php the_archive_description( '<div class="gtt-archive-description">', '</div>' ); ?>
+	<header class="gtt-template-archive-header">
+		<?php the_archive_title( '<h1 class="gtt-template-archive-title">', '</h1>' ); ?>
+		<?php the_archive_description( '<div class="gtt-template-archive-description">', '</div>' ); ?>
 	</header>
 
-	<div class="gtt-archive-list">
+	<div class="gtt-template-archive-list">
 		<?php while ( have_posts() ) : the_post(); ?>
 
-			<article id="post-<?php the_ID(); ?>" <?php post_class( 'gtt-entry gtt-entry--archive' ); ?>>
-				<header class="gtt-entry-header">
+			<article id="post-<?php the_ID(); ?>" <?php post_class( 'gtt-template-entry gtt-template-entry--archive' ); ?>>
+				<header class="gtt-template-entry-header">
 					<?php
 					the_title(
-						'<h2 class="gtt-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">',
+						'<h2 class="gtt-template-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">',
 						'</a></h2>'
 					);
 					?>
 
 					<?php if ( 'post' === get_post_type() ) : ?>
-						<div class="gtt-entry-meta">
+						<div class="gtt-template-entry-meta">
 							<time datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>">
 								<?php echo esc_html( get_the_date() ); ?>
 							</time>
@@ -36,7 +36,7 @@ get_header();
 					<?php endif; ?>
 				</header>
 
-				<div class="gtt-entry-summary">
+				<div class="gtt-template-entry-summary">
 					<?php the_excerpt(); ?>
 				</div>
 			</article>
@@ -55,7 +55,7 @@ get_header();
 
 <?php else : ?>
 
-	<p class="gtt-no-content">
+	<p class="gtt-template-no-content">
 		<?php esc_html_e( 'No hay contenido en este archivo todavía.', 'gastrototem' ); ?>
 	</p>
 

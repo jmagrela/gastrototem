@@ -8,13 +8,13 @@
 get_header();
 ?>
 
-<header class="gtt-search-header">
-	<h1 class="gtt-search-title">
+<header class="gtt-template-search-header">
+	<h1 class="gtt-template-search-title">
 		<?php
 		/* translators: %s: término de búsqueda */
 		printf(
 			esc_html__( 'Resultados para: %s', 'gastrototem' ),
-			'<span class="gtt-search-query">' . esc_html( get_search_query() ) . '</span>'
+			'<span class="gtt-template-search-query">' . esc_html( get_search_query() ) . '</span>'
 		);
 		?>
 	</h1>
@@ -22,20 +22,20 @@ get_header();
 
 <?php if ( have_posts() ) : ?>
 
-	<div class="gtt-search-list">
+	<div class="gtt-template-search-list">
 		<?php while ( have_posts() ) : the_post(); ?>
 
-			<article id="post-<?php the_ID(); ?>" <?php post_class( 'gtt-entry gtt-entry--search' ); ?>>
-				<header class="gtt-entry-header">
+			<article id="post-<?php the_ID(); ?>" <?php post_class( 'gtt-template-entry gtt-template-entry--search' ); ?>>
+				<header class="gtt-template-entry-header">
 					<?php
 					the_title(
-						'<h2 class="gtt-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">',
+						'<h2 class="gtt-template-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">',
 						'</a></h2>'
 					);
 					?>
 				</header>
 
-				<div class="gtt-entry-summary">
+				<div class="gtt-template-entry-summary">
 					<?php the_excerpt(); ?>
 				</div>
 			</article>
@@ -54,7 +54,7 @@ get_header();
 
 <?php else : ?>
 
-	<div class="gtt-search-empty">
+	<div class="gtt-template-search-empty">
 		<p><?php esc_html_e( 'No se han encontrado resultados. Prueba con otras palabras.', 'gastrototem' ); ?></p>
 		<?php get_search_form(); ?>
 	</div>

@@ -10,15 +10,15 @@ get_header();
 
 <?php while ( have_posts() ) : the_post(); ?>
 
-	<article id="post-<?php the_ID(); ?>" <?php post_class( 'gtt-entry gtt-entry--single' ); ?>>
-		<header class="gtt-entry-header">
-			<?php the_title( '<h1 class="gtt-entry-title">', '</h1>' ); ?>
+	<article id="post-<?php the_ID(); ?>" <?php post_class( 'gtt-template-entry gtt-template-entry--single' ); ?>>
+		<header class="gtt-template-entry-header">
+			<?php the_title( '<h1 class="gtt-template-entry-title">', '</h1>' ); ?>
 
-			<div class="gtt-entry-meta">
-				<time class="gtt-entry-date" datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>">
+			<div class="gtt-template-entry-meta">
+				<time class="gtt-template-entry-date" datetime="<?php echo esc_attr( get_the_date( DATE_W3C ) ); ?>">
 					<?php echo esc_html( get_the_date() ); ?>
 				</time>
-				<span class="gtt-entry-author">
+				<span class="gtt-template-entry-author">
 					<?php
 					/* translators: %s: nombre del autor */
 					printf( esc_html__( 'Por %s', 'gastrototem' ), esc_html( get_the_author() ) );
@@ -28,30 +28,30 @@ get_header();
 		</header>
 
 		<?php if ( has_post_thumbnail() ) : ?>
-			<figure class="gtt-entry-thumbnail">
+			<figure class="gtt-template-entry-thumbnail">
 				<?php the_post_thumbnail( 'large' ); ?>
 			</figure>
 		<?php endif; ?>
 
-		<div class="gtt-entry-content">
+		<div class="gtt-template-entry-content">
 			<?php
 			the_content();
 
 			wp_link_pages(
 				array(
-					'before' => '<nav class="gtt-page-links" aria-label="' . esc_attr__( 'Páginas de este contenido', 'gastrototem' ) . '">',
+					'before' => '<nav class="gtt-template-page-links" aria-label="' . esc_attr__( 'Páginas de este contenido', 'gastrototem' ) . '">',
 					'after'  => '</nav>',
 				)
 			);
 			?>
 		</div>
 
-		<footer class="gtt-entry-footer">
+		<footer class="gtt-template-entry-footer">
 			<?php
 			$categories = get_the_category_list( ', ' );
 			if ( $categories ) {
 				printf(
-					'<p class="gtt-entry-cats">%s %s</p>',
+					'<p class="gtt-template-entry-cats">%s %s</p>',
 					esc_html__( 'Categorías:', 'gastrototem' ),
 					$categories // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				);
@@ -60,7 +60,7 @@ get_header();
 			$tags = get_the_tag_list( '', ', ' );
 			if ( $tags ) {
 				printf(
-					'<p class="gtt-entry-tags">%s %s</p>',
+					'<p class="gtt-template-entry-tags">%s %s</p>',
 					esc_html__( 'Etiquetas:', 'gastrototem' ),
 					$tags // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				);
@@ -72,8 +72,8 @@ get_header();
 	<?php
 	the_post_navigation(
 		array(
-			'prev_text' => '<span class="gtt-nav-label">' . esc_html__( 'Anterior', 'gastrototem' ) . '</span> <span class="gtt-nav-title">%title</span>',
-			'next_text' => '<span class="gtt-nav-label">' . esc_html__( 'Siguiente', 'gastrototem' ) . '</span> <span class="gtt-nav-title">%title</span>',
+			'prev_text' => '<span class="gtt-template-nav-label">' . esc_html__( 'Anterior', 'gastrototem' ) . '</span> <span class="gtt-template-nav-title">%title</span>',
+			'next_text' => '<span class="gtt-template-nav-label">' . esc_html__( 'Siguiente', 'gastrototem' ) . '</span> <span class="gtt-template-nav-title">%title</span>',
 		)
 	);
 

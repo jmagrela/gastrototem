@@ -10,11 +10,11 @@ if ( post_password_required() ) {
 }
 ?>
 
-<section id="comments" class="gtt-comments">
+<section id="comments" class="gtt-template-comments">
 
 	<?php if ( have_comments() ) : ?>
 
-		<h2 class="gtt-comments-title">
+		<h2 class="gtt-template-comments-title">
 			<?php
 			$count = get_comments_number();
 			if ( '1' === (string) $count ) {
@@ -29,7 +29,7 @@ if ( post_password_required() ) {
 			?>
 		</h2>
 
-		<ol class="gtt-comments-list">
+		<ol class="gtt-template-comments-list">
 			<?php
 			wp_list_comments(
 				array(
@@ -51,7 +51,7 @@ if ( post_password_required() ) {
 		?>
 
 		<?php if ( ! comments_open() ) : ?>
-			<p class="gtt-comments-closed">
+			<p class="gtt-template-comments-closed">
 				<?php esc_html_e( 'Los comentarios están cerrados.', 'gastrototem' ); ?>
 			</p>
 		<?php endif; ?>
@@ -65,8 +65,8 @@ if ( post_password_required() ) {
 			'title_reply_to'      => esc_html__( 'Responder a %s', 'gastrototem' ),
 			'cancel_reply_link'   => esc_html__( 'Cancelar respuesta', 'gastrototem' ),
 			'label_submit'        => esc_html__( 'Publicar comentario', 'gastrototem' ),
-			'class_form'          => 'gtt-comment-form',
-			'class_submit'        => 'gtt-comment-submit',
+			'class_form'          => 'gtt-template-comment-form',
+			'class_submit'        => 'gtt-template-comment-submit',
 		)
 	);
 	?>
