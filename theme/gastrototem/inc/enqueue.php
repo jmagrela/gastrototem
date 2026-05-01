@@ -3,11 +3,10 @@
  * Gastrototem · Enqueue
  *
  * Carga de assets, en orden:
- * 1. Astra parent style.css
- * 2. Child style.css (cabecera)
- * 3. tokens.css (depende de child style)
- * 4. base.css (depende de tokens)
- * 5. Google Fonts (Inter + Instrument Serif + JetBrains Mono) con preconnect
+ * 1. style.css (cabecera del theme)
+ * 2. tokens.css (depende de style)
+ * 3. base.css (depende de tokens)
+ * 4. Google Fonts (Inter + Instrument Serif + JetBrains Mono) con preconnect
  *
  * Versionado por filemtime() para cache-busting en desarrollo.
  *
@@ -36,20 +35,13 @@ function gtt_theme_google_fonts_url() {
 }
 
 /**
- * Enqueue de estilos parent + child + tokens + base.
+ * Enqueue de estilos: style + tokens + base.
  */
 function gtt_theme_enqueue_styles() {
 	wp_enqueue_style(
-		'astra-parent-style',
-		get_template_directory_uri() . '/style.css',
-		array(),
-		wp_get_theme( 'astra' )->get( 'Version' )
-	);
-
-	wp_enqueue_style(
 		'gastrototem-style',
 		get_stylesheet_uri(),
-		array( 'astra-parent-style' ),
+		array(),
 		gtt_theme_asset_version( '/style.css' )
 	);
 

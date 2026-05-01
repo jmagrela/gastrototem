@@ -2,8 +2,6 @@
  * Gastrototem · Base
  *
  * Reset suave + tipografía base + utilidades mínimas.
- * Astra parent ya hace su propio reset; aquí solo lo que el child
- * debe imponer para mantener la marca.
  *
  * Cero hex literales. Cero font-family. Solo variables --gtt-*.
  */
@@ -19,16 +17,6 @@ body {
 	font-size: var(--gtt-text-base);
 	line-height: var(--gtt-leading-normal);
 	color: var(--gtt-color-text);
-	background-color: var(--gtt-color-bg);
-}
-
-/* Override del fondo del contenedor de Astra.
- * Astra mete `.ast-plain-container { background-color: var(--ast-global-color-4) }`
- * con mayor specificity que `body`. Igualamos specificity con `body.ast-*`
- * para que el papel-100 de la marca gane sin tocar la paleta interna de Astra
- * (que también usa color-4 para botones, dropdowns, etc.). */
-body.ast-plain-container,
-body.ast-page-builder-template {
 	background-color: var(--gtt-color-bg);
 }
 
