@@ -1,0 +1,58 @@
+/*
+ * Gastrototem · Base
+ *
+ * Reset suave + tipografía base + utilidades mínimas.
+ * Astra parent ya hace su propio reset; aquí solo lo que el child
+ * debe imponer para mantener la marca.
+ *
+ * Cero hex literales. Cero font-family. Solo variables --gt-*.
+ */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: var(--gt-font-sans);
+	font-size: var(--gt-text-base);
+	line-height: var(--gt-leading-normal);
+	color: var(--gt-color-text);
+	background-color: var(--gt-color-bg);
+}
+
+/* Override del fondo del contenedor de Astra.
+ * Astra mete `.ast-plain-container { background-color: var(--ast-global-color-4) }`
+ * con mayor specificity que `body`. Igualamos specificity con `body.ast-*`
+ * para que el papel-100 de la marca gane sin tocar la paleta interna de Astra
+ * (que también usa color-4 para botones, dropdowns, etc.). */
+body.ast-plain-container,
+body.ast-page-builder-template {
+	background-color: var(--gt-color-bg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--gt-font-sans);
+	font-weight: 500;
+	line-height: var(--gt-leading-tight);
+}
+
+/* ============================================================
+ * UTILIDADES MÍNIMAS
+ * ============================================================ */
+
+.gt-mono {
+	font-family: var(--gt-font-mono);
+}
+
+/* Mono + uppercase: añade tracking automáticamente. */
+.gt-mono.is-uppercase {
+	text-transform: uppercase;
+	letter-spacing: var(--gt-tracking-wide);
+}
+
+.gt-serif-italic {
+	font-family: var(--gt-font-serif);
+	font-style: italic;
+}
