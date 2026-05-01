@@ -30,17 +30,17 @@ h1, h2, h3, h4, h5, h6 {
  * UTILIDADES MÍNIMAS
  * ============================================================ */
 
-.gtt-mono {
+.gtt-u-mono {
 	font-family: var(--gtt-font-mono);
 }
 
 /* Mono + uppercase: añade tracking automáticamente. */
-.gtt-mono.is-uppercase {
+.gtt-u-mono.is-uppercase {
 	text-transform: uppercase;
 	letter-spacing: var(--gtt-tracking-wide);
 }
 
-.gtt-serif-italic {
+.gtt-u-serif-italic {
 	font-family: var(--gtt-font-serif);
 	font-style: italic;
 }
