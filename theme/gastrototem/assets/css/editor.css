@@ -12,11 +12,11 @@
  * tokens también ahí para asegurar que los colores y la tipografía
  * coinciden con lo que vería el visitante. */
 .editor-styles-wrapper {
-	font-family: var(--gt-font-sans);
-	font-size: var(--gt-text-base);
-	line-height: var(--gt-leading-normal);
-	color: var(--gt-color-text);
-	background-color: var(--gt-color-bg);
+	font-family: var(--gtt-font-sans);
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-text);
+	background-color: var(--gtt-color-bg);
 }
 
 .editor-styles-wrapper h1,
@@ -25,7 +25,7 @@
 .editor-styles-wrapper h4,
 .editor-styles-wrapper h5,
 .editor-styles-wrapper h6 {
-	font-family: var(--gt-font-sans);
+	font-family: var(--gtt-font-sans);
 	font-weight: 500;
-	line-height: var(--gt-leading-tight);
+	line-height: var(--gtt-leading-tight);
 }

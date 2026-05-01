@@ -5,7 +5,7 @@
  * Astra parent ya hace su propio reset; aquí solo lo que el child
  * debe imponer para mantener la marca.
  *
- * Cero hex literales. Cero font-family. Solo variables --gt-*.
+ * Cero hex literales. Cero font-family. Solo variables --gtt-*.
  */
 
 *,
@@ -15,11 +15,11 @@
 }
 
 body {
-	font-family: var(--gt-font-sans);
-	font-size: var(--gt-text-base);
-	line-height: var(--gt-leading-normal);
-	color: var(--gt-color-text);
-	background-color: var(--gt-color-bg);
+	font-family: var(--gtt-font-sans);
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-text);
+	background-color: var(--gtt-color-bg);
 }
 
 /* Override del fondo del contenedor de Astra.
@@ -29,30 +29,30 @@ body {
  * (que también usa color-4 para botones, dropdowns, etc.). */
 body.ast-plain-container,
 body.ast-page-builder-template {
-	background-color: var(--gt-color-bg);
+	background-color: var(--gtt-color-bg);
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: var(--gt-font-sans);
+	font-family: var(--gtt-font-sans);
 	font-weight: 500;
-	line-height: var(--gt-leading-tight);
+	line-height: var(--gtt-leading-tight);
 }
 
 /* ============================================================
  * UTILIDADES MÍNIMAS
  * ============================================================ */
 
-.gt-mono {
-	font-family: var(--gt-font-mono);
+.gtt-mono {
+	font-family: var(--gtt-font-mono);
 }
 
 /* Mono + uppercase: añade tracking automáticamente. */
-.gt-mono.is-uppercase {
+.gtt-mono.is-uppercase {
 	text-transform: uppercase;
-	letter-spacing: var(--gt-tracking-wide);
+	letter-spacing: var(--gtt-tracking-wide);
 }
 
-.gt-serif-italic {
-	font-family: var(--gt-font-serif);
+.gtt-serif-italic {
+	font-family: var(--gtt-font-serif);
 	font-style: italic;
 }

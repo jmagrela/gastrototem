@@ -12,113 +12,113 @@
 	/* ============================================================
 	 * COLOR — Familia Tinta (color firma)
 	 * ============================================================ */
-	--gt-color-tinta-50:  #EAEEF4;
-	--gt-color-tinta-100: #C8D2DF;
-	--gt-color-tinta-200: #97A8C0;
-	--gt-color-tinta-300: #647A9A;
-	--gt-color-tinta-400: #3D547A;
-	--gt-color-tinta-500: #1F3050;
-	--gt-color-tinta-600: #1B2944;
-	--gt-color-tinta-700: #152037;
-	--gt-color-tinta-800: #0F1828;
-	--gt-color-tinta-900: #0A101C;
+	--gtt-color-tinta-50:  #EAEEF4;
+	--gtt-color-tinta-100: #C8D2DF;
+	--gtt-color-tinta-200: #97A8C0;
+	--gtt-color-tinta-300: #647A9A;
+	--gtt-color-tinta-400: #3D547A;
+	--gtt-color-tinta-500: #1F3050;
+	--gtt-color-tinta-600: #1B2944;
+	--gtt-color-tinta-700: #152037;
+	--gtt-color-tinta-800: #0F1828;
+	--gtt-color-tinta-900: #0A101C;
 
 	/* ============================================================
 	 * COLOR — Familia Papel (soporte cálido)
 	 * ============================================================ */
-	--gt-color-papel-50:  #FAF7F1;
-	--gt-color-papel-100: #EFEAE0;
-	--gt-color-papel-200: #E5DFD0;
-	--gt-color-papel-300: #D8D0BD;
-	--gt-color-papel-400: #C4BAA2;
-	--gt-color-papel-500: #A89D83;
-	--gt-color-papel-600: #8A8068;
-	--gt-color-papel-700: #6B6353;
-	--gt-color-papel-800: #4F4940;
-	--gt-color-papel-900: #33302C;
+	--gtt-color-papel-50:  #FAF7F1;
+	--gtt-color-papel-100: #EFEAE0;
+	--gtt-color-papel-200: #E5DFD0;
+	--gtt-color-papel-300: #D8D0BD;
+	--gtt-color-papel-400: #C4BAA2;
+	--gtt-color-papel-500: #A89D83;
+	--gtt-color-papel-600: #8A8068;
+	--gtt-color-papel-700: #6B6353;
+	--gtt-color-papel-800: #4F4940;
+	--gtt-color-papel-900: #33302C;
 
 	/* ============================================================
 	 * COLOR — Familia Grafito (texto y monocromo)
 	 * Nota: 800 y 900 coinciden a propósito; 900 es color firma de
 	 * cuerpo, 800 queda como alias para futuras necesidades.
 	 * ============================================================ */
-	--gt-color-grafito-50:  #F5F4F1;
-	--gt-color-grafito-100: #E6E3DA;
-	--gt-color-grafito-200: #C9C4B8;
-	--gt-color-grafito-300: #9B968A;
-	--gt-color-grafito-400: #6B6760;
-	--gt-color-grafito-500: #3F3D38;
-	--gt-color-grafito-600: #2A2925;
-	--gt-color-grafito-700: #1F1E1B;
-	--gt-color-grafito-800: #1A1A22;
-	--gt-color-grafito-900: #1A1A22;
+	--gtt-color-grafito-50:  #F5F4F1;
+	--gtt-color-grafito-100: #E6E3DA;
+	--gtt-color-grafito-200: #C9C4B8;
+	--gtt-color-grafito-300: #9B968A;
+	--gtt-color-grafito-400: #6B6760;
+	--gtt-color-grafito-500: #3F3D38;
+	--gtt-color-grafito-600: #2A2925;
+	--gtt-color-grafito-700: #1F1E1B;
+	--gtt-color-grafito-800: #1A1A22;
+	--gtt-color-grafito-900: #1A1A22;
 
 	/* ============================================================
 	 * COLOR — Semánticos (UI funcional, NO copy editorial)
 	 * ============================================================ */
-	--gt-color-exito: #3D5A3A;
-	--gt-color-aviso: #8B6B1F;
-	--gt-color-error: #7A2A2A;
+	--gtt-color-exito: #3D5A3A;
+	--gtt-color-aviso: #8B6B1F;
+	--gtt-color-error: #7A2A2A;
 
 	/* ============================================================
 	 * COLOR — Aliases semánticos de uso
 	 * ============================================================ */
-	--gt-color-bg:         var(--gt-color-papel-100);
-	--gt-color-text:       var(--gt-color-grafito-900);
-	--gt-color-text-muted: var(--gt-color-grafito-500);
-	--gt-color-accent:     var(--gt-color-tinta-500);
-	--gt-color-rule:       var(--gt-color-grafito-200);
+	--gtt-color-bg:         var(--gtt-color-papel-100);
+	--gtt-color-text:       var(--gtt-color-grafito-900);
+	--gtt-color-text-muted: var(--gtt-color-grafito-500);
+	--gtt-color-accent:     var(--gtt-color-tinta-500);
+	--gtt-color-rule:       var(--gtt-color-grafito-200);
 
 	/* Reservado: blanco puro solo para documentos administrativos. */
-	--gt-color-blanco-puro: #FFFFFF;
+	--gtt-color-blanco-puro: #FFFFFF;
 
 	/* ============================================================
 	 * TIPOGRAFÍA — Pilas
 	 * ============================================================ */
-	--gt-font-sans:  'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	--gt-font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-	--gt-font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	--gtt-font-sans:  'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--gtt-font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+	--gtt-font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
 	/* ============================================================
 	 * TIPOGRAFÍA — Tamaños (clamp en los grandes para responsive)
 	 * ============================================================ */
-	--gt-text-xs:   0.75rem;     /* 12px - notas al pie */
-	--gt-text-sm:   0.875rem;    /* 14px - texto secundario */
-	--gt-text-base: 1.0625rem;   /* 17px - cuerpo por defecto */
-	--gt-text-lg:   1.25rem;     /* 20px - destacado */
-	--gt-text-xl:   1.5rem;      /* 24px - h3 */
-	--gt-text-2xl:  clamp(1.75rem, 3vw, 2rem);    /* 28-32px - h2 */
-	--gt-text-3xl:  clamp(2.25rem, 4vw, 3rem);    /* 36-48px - h1 */
-	--gt-text-4xl:  clamp(2.75rem, 6vw, 4.5rem);  /* 44-72px - hero */
+	--gtt-text-xs:   0.75rem;     /* 12px - notas al pie */
+	--gtt-text-sm:   0.875rem;    /* 14px - texto secundario */
+	--gtt-text-base: 1.0625rem;   /* 17px - cuerpo por defecto */
+	--gtt-text-lg:   1.25rem;     /* 20px - destacado */
+	--gtt-text-xl:   1.5rem;      /* 24px - h3 */
+	--gtt-text-2xl:  clamp(1.75rem, 3vw, 2rem);    /* 28-32px - h2 */
+	--gtt-text-3xl:  clamp(2.25rem, 4vw, 3rem);    /* 36-48px - h1 */
+	--gtt-text-4xl:  clamp(2.75rem, 6vw, 4.5rem);  /* 44-72px - hero */
 
 	/* ============================================================
 	 * TIPOGRAFÍA — Tracking y line-heights
 	 * ============================================================ */
-	--gt-tracking-wide: 0.18em;   /* mono en mayúsculas */
+	--gtt-tracking-wide: 0.18em;   /* mono en mayúsculas */
 
-	--gt-leading-tight:   1.15;   /* titulares */
-	--gt-leading-snug:    1.35;   /* subtítulos */
-	--gt-leading-normal:  1.55;   /* cuerpo */
-	--gt-leading-relaxed: 1.7;    /* cuerpo en piezas largas */
+	--gtt-leading-tight:   1.15;   /* titulares */
+	--gtt-leading-snug:    1.35;   /* subtítulos */
+	--gtt-leading-normal:  1.55;   /* cuerpo */
+	--gtt-leading-relaxed: 1.7;    /* cuerpo en piezas largas */
 
 	/* ============================================================
 	 * ESPACIADO — escala restringida
 	 * ============================================================ */
-	--gt-space-1:  0.25rem;   /* 4px */
-	--gt-space-2:  0.5rem;    /* 8px */
-	--gt-space-3:  0.75rem;   /* 12px */
-	--gt-space-4:  1rem;      /* 16px */
-	--gt-space-6:  1.5rem;    /* 24px */
-	--gt-space-8:  2rem;      /* 32px */
-	--gt-space-12: 3rem;      /* 48px */
-	--gt-space-16: 4rem;      /* 64px */
-	--gt-space-24: 6rem;      /* 96px */
-	--gt-space-32: 8rem;      /* 128px */
+	--gtt-space-1:  0.25rem;   /* 4px */
+	--gtt-space-2:  0.5rem;    /* 8px */
+	--gtt-space-3:  0.75rem;   /* 12px */
+	--gtt-space-4:  1rem;      /* 16px */
+	--gtt-space-6:  1.5rem;    /* 24px */
+	--gtt-space-8:  2rem;      /* 32px */
+	--gtt-space-12: 3rem;      /* 48px */
+	--gtt-space-16: 4rem;      /* 64px */
+	--gtt-space-24: 6rem;      /* 96px */
+	--gtt-space-32: 8rem;      /* 128px */
 
 	/* ============================================================
 	 * CONTENEDORES
 	 * ============================================================ */
-	--gt-container-prose:   38rem;   /* 608px - texto largo legible */
-	--gt-container-content: 64rem;   /* 1024px - contenido estándar */
-	--gt-container-wide:    80rem;   /* 1280px - secciones amplias */
+	--gtt-container-prose:   38rem;   /* 608px - texto largo legible */
+	--gtt-container-content: 64rem;   /* 1024px - contenido estándar */
+	--gtt-container-wide:    80rem;   /* 1280px - secciones amplias */
 }

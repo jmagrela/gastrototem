@@ -56,21 +56,21 @@ Lista corta de 7 colores y 3 familias tipográficas, visible en los selectores d
 
 Generan automáticamente CSS custom properties prefijadas con `--wp--preset--`. Por ejemplo `--wp--preset--color--tinta-500` y `--wp--preset--font-family--inter`.
 
-### Capa 2 · `assets/css/tokens.css` — escala completa con prefijo `--gt-`
+### Capa 2 · `assets/css/tokens.css` — escala completa con prefijo `--gtt-`
 
 Paleta completa con **todos los stops** (50–900) por familia, alias semánticos, escala tipográfica con `clamp()`, espaciado en escala restringida y anchos de contenedor. Estas variables son la fuente de verdad para cualquier CSS del theme. **No se permiten valores hex literales fuera de tokens.css** (excepción: los SVG de marca, que llevan el color hardcoded por motivos de portabilidad).
 
 Convención de nombres:
 
 ```
---gt-color-{familia}-{stop}
---gt-color-{semántico}
---gt-font-{rol}
---gt-text-{tamaño}
---gt-leading-{tipo}
---gt-tracking-{tipo}
---gt-space-{n}
---gt-container-{tipo}
+--gtt-color-{familia}-{stop}
+--gtt-color-{semántico}
+--gtt-font-{rol}
+--gtt-text-{tamaño}
+--gtt-leading-{tipo}
+--gtt-tracking-{tipo}
+--gtt-space-{n}
+--gtt-container-{tipo}
 ```
 
 ---
@@ -79,7 +79,7 @@ Convención de nombres:
 
 Pasos a seguir, en orden, para mantener las dos capas coherentes:
 
-1. **Define el color en `assets/css/tokens.css`** dentro del bloque `:root`, con el formato `--gt-color-{familia}-{stop}`. Si añades una familia nueva, define todos sus stops (50, 100, 200… 900) para mantener la escala.
+1. **Define el color en `assets/css/tokens.css`** dentro del bloque `:root`, con el formato `--gtt-color-{familia}-{stop}`. Si añades una familia nueva, define todos sus stops (50, 100, 200… 900) para mantener la escala.
 2. **Si el color debe estar en el editor**, añádelo a `theme.json` → `settings.color.palette` con un `slug` y un `name`. El slug se convierte automáticamente en `--wp--preset--color--{slug}`.
 3. **Documenta el nuevo color** en la sección "Paleta disponible" de este README.
 4. **No uses el hex literal en ningún CSS del theme** — siempre vía la variable de tokens.
@@ -113,12 +113,12 @@ Ambas carpetas están vacías a propósito en esta fase. Esta sección se amplia
 
 ### Capa 2 — escala completa (variables CSS en `tokens.css`)
 
-**Tinta** (color firma): `--gt-color-tinta-50` → `--gt-color-tinta-900`
-**Papel** (soporte cálido): `--gt-color-papel-50` → `--gt-color-papel-900`
-**Grafito** (texto y monocromo): `--gt-color-grafito-50` → `--gt-color-grafito-900`
-**Semánticos** (UI funcional): `--gt-color-exito`, `--gt-color-aviso`, `--gt-color-error`
-**Aliases de uso**: `--gt-color-bg`, `--gt-color-text`, `--gt-color-text-muted`, `--gt-color-accent`, `--gt-color-rule`
-**Reservado**: `--gt-color-blanco-puro` (`#FFFFFF`, solo documentos administrativos)
+**Tinta** (color firma): `--gtt-color-tinta-50` → `--gtt-color-tinta-900`
+**Papel** (soporte cálido): `--gtt-color-papel-50` → `--gtt-color-papel-900`
+**Grafito** (texto y monocromo): `--gtt-color-grafito-50` → `--gtt-color-grafito-900`
+**Semánticos** (UI funcional): `--gtt-color-exito`, `--gtt-color-aviso`, `--gtt-color-error`
+**Aliases de uso**: `--gtt-color-bg`, `--gtt-color-text`, `--gtt-color-text-muted`, `--gtt-color-accent`, `--gtt-color-rule`
+**Reservado**: `--gtt-color-blanco-puro` (`#FFFFFF`, solo documentos administrativos)
 
 Notas:
 - `grafito-800` y `grafito-900` coinciden en `#1A1A22` a propósito. `900` es el color firma de cuerpo; `800` queda como alias para necesidades futuras.
@@ -136,7 +136,7 @@ Tres familias web, cada una con un rol claramente diferenciado.
 | **Instrument Serif** | 400 italic | Acentos editoriales, pull quotes, palabras-acento. |
 | **JetBrains Mono** | 400, 500 | Folios, kickers en mayúsculas, datos técnicos, valores hex. |
 
-Pilas tipográficas en `tokens.css`: `--gt-font-sans`, `--gt-font-serif`, `--gt-font-mono`.
+Pilas tipográficas en `tokens.css`: `--gtt-font-sans`, `--gtt-font-serif`, `--gtt-font-mono`.
 
 ### Por qué estas tres y no otras
 
