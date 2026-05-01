@@ -1,8 +1,8 @@
-# Gastrototem · Child Theme
+# Gastrototem · Theme
 
-Child theme de **Astra** para el sitio público de **Gastrototem** — una firma andaluza de Alta Afinación Gastronómica.
+Theme propio standalone para el sitio público de **Gastrototem** — una firma andaluza de Alta Afinación Gastronómica.
 
-Este theme contiene únicamente los **cimientos**: tokens de marca (paleta, tipografía, espaciado), enqueue de assets, configuración del editor de Gutenberg y los SVG oficiales del sistema de marca. Los componentes visuales, plantillas de página y bloques se construyen en fases posteriores.
+Este theme contiene los **cimientos**: tokens de marca (paleta, tipografía, espaciado), enqueue de assets, configuración del editor de Gutenberg, plantillas PHP clásicas (esqueleto sin diseño) y los SVG oficiales del sistema de marca. Los componentes visuales y bloques se construyen en fases posteriores.
 
 ---
 
@@ -12,9 +12,9 @@ Este theme contiene únicamente los **cimientos**: tokens de marca (paleta, tipo
 |---|---|
 | WordPress | 6.4 |
 | PHP | 8.1 |
-| Tema padre | **Astra** (Pro recomendado, no requerido) |
+| Tema padre | **Ninguno** (theme standalone) |
 
-Si Astra no está instalado o activo como tema padre, el child aborta sus enqueue y muestra un aviso en el admin. No se carga nada que pueda romper el sitio.
+El theme se coordina con el plugin de reservas `gastrototem-booking`, que comparte prefijos `--gtt-` (CSS) y `gtt_` (PHP) con este theme. El plugin no es requisito para que el theme cargue, pero sí para que las páginas de reserva funcionen.
 
 ---
 
@@ -22,11 +22,20 @@ Si Astra no está instalado o activo como tema padre, el child aborta sus enqueu
 
 ```
 gastrototem/
-├── style.css                 Cabecera del child (sin reglas CSS)
-├── functions.php             Punto de entrada: guard de Astra + require de inc/
+├── style.css                 Cabecera del theme (sin reglas CSS)
+├── functions.php             Punto de entrada: define constantes + carga inc/
 ├── theme.json                Tokens expuestos al editor de Gutenberg
 ├── README.md                 Este archivo
 ├── screenshot.png            Imagen del theme para wp-admin (1200×900)
+├── index.php                 Plantilla fallback (loop genérico singular/archive)
+├── header.php                Cabecera HTML: doctype, wp_head, branding, nav
+├── footer.php                Pie HTML: footer + wp_footer
+├── page.php                  Plantilla para páginas (post_type=page)
+├── single.php                Plantilla para entradas individuales
+├── archive.php               Plantilla de archivos (categorías, etiquetas, autor, fecha)
+├── search.php                Plantilla de resultados de búsqueda
+├── 404.php                   Plantilla para contenido no encontrado
+├── comments.php              Plantilla de comentarios (incluida desde page/single)
 ├── assets/
 │   ├── brand/                4 SVG oficiales del sistema de marca
 │   ├── css/
@@ -35,14 +44,53 @@ gastrototem/
 │   │   └── editor.css        Estilos del editor (espejo de base + tokens)
 │   └── js/                   Vacío. Reservado para fases posteriores.
 ├── inc/
-│   ├── enqueue.php           Carga de Google Fonts + CSS del child
-│   ├── theme-setup.php       theme_supports, image sizes, text domain
+│   ├── enqueue.php           Carga de Google Fonts + CSS del theme
+│   ├── theme-setup.php       theme_supports, custom-logo, nav menus, text domain
 │   └── security.php          Hardening básico (XML-RPC, version, emoji, etc.)
 ├── patterns/                 Vacío. Block patterns de futuras fases.
 ├── blocks/                   Vacío. ACF/native blocks de futuras fases.
 ├── template-parts/           Vacío. Partes de plantilla de futuras fases.
 └── languages/                Vacío. Traducciones futuras.
 ```
+
+---
+
+## Convenciones de prefijos
+
+| Prefijo | Uso | Origen |
+|---|---|---|
+| `--gtt-*` | CSS custom properties (theme + plugin) | Compartido |
+| `.gtt-*` | Clases utilitarias y BEM CSS (theme) | Theme |
+| `gtt_theme_*` | Funciones PHP del theme | Theme |
+| `GTT_THEME_*` | Constantes PHP del theme | Theme |
+| `gtt_*` | Funciones públicas del plugin de reservas | Plugin |
+| `gastrototem` | Text domain (WP i18n) y slug del theme | Compartido |
+
+Regla de integración: **el theme conoce al plugin** (consume sus shortcodes/funciones públicas), **el plugin no conoce al theme**. Los tokens `--gtt-*` del theme son la fuente única; el plugin los consume sin mapeos.
+
+---
+
+## Plantillas — jerarquía y convenciones
+
+Plantillas PHP clásicas (no FSE). El theme cubre los contextos básicos de WordPress; cualquier contexto no cubierto cae en `index.php`.
+
+| Contexto | Plantilla | Body class clave |
+|---|---|---|
+| Página estática | `page.php` | `page page-id-{N}` |
+| Entrada individual | `single.php` | `single single-post postid-{N}` |
+| Categoría / etiqueta / autor / fecha | `archive.php` | `archive` |
+| Resultados de búsqueda | `search.php` | `search-results` |
+| 404 | `404.php` | `error404` |
+| Fallback | `index.php` | (varía) |
+
+Convenciones uniformes en las plantillas:
+
+- Estructuras semánticas (`<article>`, `<header>`, `<footer>`, `<nav>`, `<main>`).
+- Clases con prefijo `.gtt-`: `gtt-entry`, `gtt-entry--page`, `gtt-archive-title`, `gtt-search-list`, `gtt-error-404`, etc.
+- Cero hex literales en plantillas. Todo el color y la tipografía vienen de `tokens.css`.
+- Cero estilos inline. Layout y espaciado los define el CSS, no el PHP.
+- Todos los strings de UI pasan por `__()` / `esc_html__()` con text domain `gastrototem`.
+- `comments.php` se incluye desde `page.php` y `single.php` cuando hay comentarios o están abiertos.
 
 ---
 
@@ -154,6 +202,54 @@ Self-hosting de las fuentes se evaluará en una fase posterior. Hoy se cargan v�
 
 ---
 
+## Instalación
+
+1. Copiar la carpeta `gastrototem/` a `wp-content/themes/` del WordPress de destino.
+2. Desde `wp-admin → Apariencia → Temas`, activar **Gastrototem**.
+3. Vaciar caché del sitio (LiteSpeed, plugin de caché, CDN si aplica).
+
+Por línea de comandos (WP-CLI):
+
+```bash
+wp theme activate gastrototem
+wp cache flush
+wp litespeed-purge all
+```
+
+---
+
+## Troubleshooting
+
+### El theme aparece en wp-admin pero la home muestra plantillas de otro theme
+
+Esto suele indicar que la opción `template` en `wp_options` apunta a un theme distinto del activo en `stylesheet`. Pasa típicamente al **restaurar una base de datos** que se hizo cuando este theme era child de Astra (la opción `template` quedaba en `astra`).
+
+Solución:
+
+```bash
+wp option update template gastrototem
+wp cache flush
+wp litespeed-purge all
+```
+
+`wp theme activate gastrototem` no resuelve este caso porque WP-CLI considera el theme ya activo y omite el reset. Hay que actualizar la opción directamente.
+
+### Las fuentes no cargan
+
+Comprobar:
+
+1. Que no haya un Content Security Policy bloqueando `fonts.googleapis.com` o `fonts.gstatic.com`.
+2. Que el cliente no esté en una red sin acceso a Google.
+3. Que los `preconnect` se estén emitiendo: `view-source` y buscar `<link rel="preconnect" href="https://fonts.googleapis.com">`.
+
+Si las tres están bien, vaciar caché del navegador. Las fuentes se cargan vía un único enqueue en `inc/enqueue.php → gtt_theme_google_fonts_url()`.
+
+### Body bg sale gris-azulado en vez de papel
+
+Síntoma de los tiempos de child de Astra: el container de Astra metía `background-color: var(--ast-global-color-5)` con mayor specificity que `body`. Si aparece tras una restauración de DB anterior al pivote standalone, comprobar que `template` y `stylesheet` están en `gastrototem` (ver caso anterior) y que no queda ningún plugin de Astra activo.
+
+---
+
 ## Versionado
 
-`v0.1.0` — cimientos del child theme. Sin componentes, sin páginas. Marcador `Begin: gastrototem child theme foundation` (commit `11b679e` del repo principal).
+`v0.1.0` — cimientos del theme standalone. Tokens, paleta, tipografía y plantillas PHP clásicas (esqueleto sin diseño). Marcador `Begin: gastrototem child theme foundation` (commit `11b679e` del repo principal). Pivote standalone completado en commit `cef9b8a`. Plantillas restantes añadidas en commit `4dc4a16`.
