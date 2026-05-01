@@ -87,6 +87,10 @@ Theme y plugin comparten el namespace `gtt-` pero se reparten el uso plano y los
 
 Si añades código nuevo y dudas si una clase debe ir plana o con sub-prefijo, la regla es simple: **plano solo en plugin**. Cualquier clase emitida desde el theme **siempre** lleva sub-prefijo.
 
+### IDs estructurales
+
+Los IDs estructurales del theme usan prefijo plano `gtt-` sin sub-prefijo (`gtt-content`, y cualquier futuro `gtt-main`, `gtt-primary`, etc.). La regla del sub-prefijo se reserva para clases CSS, donde existe riesgo real de colisión por cascada con clases del plugin u otros plugins. Los IDs son únicos por documento y no comparten ese riesgo, por lo que mantener el prefijo plano es coherente con la convención de WordPress core y de la mayoría de themes (`#content`, `#main`, `#primary`).
+
 ---
 
 ## Plantillas — jerarquía y convenciones
