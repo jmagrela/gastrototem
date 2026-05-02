@@ -33,28 +33,6 @@ if ( ! empty( $_SERVER['REQUEST_URI'] ) ) {
 	);
 }
 
-/* -------------------------------------------------------------------------
- * Lockup SVG inline · cacheado en static (mismo patrón que header-main)
- * ---------------------------------------------------------------------- */
-
-$gtt_get_lockup_svg = static function (): string {
-	static $cached;
-	if ( ! isset( $cached ) ) {
-		$path = get_stylesheet_directory() . '/assets/brand/lockup-horizontal-gastrototem.svg';
-		if ( ! is_readable( $path ) ) {
-			$cached = '';
-		} else {
-			$svg = file_get_contents( $path );
-			if ( false === $svg || '' === $svg ) {
-				$cached = '';
-			} else {
-				$cached = str_replace( '<svg', '<svg aria-hidden="true"', $svg );
-			}
-		}
-	}
-	return $cached;
-};
-
 ?>
 <footer class="gtt-footer" role="contentinfo">
 
@@ -73,7 +51,7 @@ $gtt_get_lockup_svg = static function (): string {
 				<a class="gtt-footer__lockup"
 				   href="<?php echo esc_url( home_url( '/' ) ); ?>"
 				   aria-label="Gastrototem · Inicio">
-					<?php echo $gtt_get_lockup_svg(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG de marca controlado, sin input externo. ?>
+					<?php echo gtt_theme_inline_brand_svg( 'lockup-horizontal-gastrototem.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG de marca controlado, sin input externo. ?>
 				</a>
 				<p class="gtt-footer__descriptor">Una firma de Alta Afinación Gastronómica.</p>
 			</div>
