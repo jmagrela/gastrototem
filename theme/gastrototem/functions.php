@@ -19,3 +19,4 @@ define( 'GTT_THEME_URI', get_stylesheet_directory_uri() );
 require_once GTT_THEME_DIR . '/inc/theme-setup.php';
 require_once GTT_THEME_DIR . '/inc/enqueue.php';
 require_once GTT_THEME_DIR . '/inc/security.php';
+require_once GTT_THEME_DIR . '/inc/svg-helpers.php';

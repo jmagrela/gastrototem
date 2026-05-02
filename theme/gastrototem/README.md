@@ -55,31 +55,35 @@ gastrototem/
 
 ---
 
-## Convenciones de prefijos
+## Convención de prefijos
+
+El proyecto usa varios namespaces de prefijos según el dominio técnico. La tabla resume; los sub-bloques desarrollan la regla operativa por dominio.
 
 | Prefijo | Uso | Origen |
 |---|---|---|
-| `--gtt-*` | CSS custom properties (tokens de marca) | Compartido (theme + plugin) |
-| `.gtt-u-*` | Clases utilitarias CSS del theme | Theme |
-| `.gtt-template-*` | Clases de plantillas PHP del theme | Theme |
-| `.gtt-pattern-*`, `.gtt-block-*` | Clases de patterns y custom blocks (futuras fases) | Theme |
-| `.gtt-*` (plano, sin sub-prefijo) | Clases del plugin de reservas | Plugin |
-| `gtt_theme_*` | Funciones PHP del theme | Theme |
+| `--gtt-*` | CSS custom properties (design tokens) | Compartido (theme + plugin) |
+| `.gtt-u-*` | Clases CSS utilitarias del theme | Theme |
+| `.gtt-<componente>__elemento` | Clases CSS componentes BEM del theme (`gtt-header`, `gtt-footer`, etc.) | Theme |
+| `.gtt-template-*` | Clases CSS de plantillas PHP del theme | Theme |
+| `.gtt-pattern-*`, `.gtt-block-*` | Clases CSS de patterns y custom blocks (futuras fases) | Theme |
+| `.gtt-portal`, `.gtt-booking-app`, etc. | Block names del plugin (BEM propios) | Plugin |
+| `gtt_theme_*` | Funciones PHP del theme | Theme (`gastrototem-theme`) |
+| `gtt_*` | Funciones PHP públicas del plugin | Plugin (`gastrototem-booking`) |
 | `GTT_THEME_*` | Constantes PHP del theme | Theme |
-| `gtt_*` | Funciones públicas del plugin de reservas | Plugin |
+| `GTT_*` | Constantes PHP del plugin (si las hay) | Plugin |
+| `#gtt-*` | IDs HTML declarados por el theme (`#gtt-content`, etc.) | Theme |
+| `gastrototem-*` | WP enqueue handles (excepción — ver sub-bloque) | Theme |
 | `gastrototem` | Text domain (WP i18n) y slug del theme | Compartido |
 
 Regla de integración: **el theme conoce al plugin** (consume sus shortcodes/funciones públicas), **el plugin no conoce al theme**. Los tokens `--gtt-*` del theme son la fuente única; el plugin los consume sin mapeos.
 
----
-
-## Convención de prefijos CSS
+### CSS
 
 Theme y plugin comparten el namespace `gtt-` pero se reparten el uso plano y los sub-prefijos para evitar colisiones. Esta es la convención **vinculante** para cualquier CSS o HTML que se añada al ecosistema:
 
 - **`--gtt-*`** (sin sub-prefijo) — tokens visuales de marca (color, tipografía, espaciado). Se definen en `assets/css/tokens.css` del theme y se exponen también desde `theme.json` vía `--wp--preset--color--*`. **Compartidos** entre theme y plugin: el plugin los consume directamente sin alias intermedios.
 
-- **`.gtt-*`** (sin sub-prefijo) — clases del **plugin** de reservas (`.gtt-btn`, `.gtt-form`, `.gtt-badge`, etc., para el booking flow y el portal de cliente). **El theme NO añade clases con este prefijo plano.**
+- **`.gtt-*`** (sin sub-prefijo) — clases del **plugin** de reservas (`.gtt-portal`, `.gtt-booking-app`, etc., como block names propios para el booking flow y el portal de cliente). **El theme NO añade clases con este prefijo plano.**
 
 - **`.gtt-u-*`** — clases utilitarias del theme. Pequeñas, reutilizables, una sola responsabilidad. Ejemplos actuales: `.gtt-u-mono`, `.gtt-u-serif-italic`.
 
@@ -87,15 +91,28 @@ Theme y plugin comparten el namespace `gtt-` pero se reparten el uso plano y los
 
 Si añades código nuevo y dudas si una clase debe ir plana o con sub-prefijo, la regla es simple: **plano solo en plugin**. Cualquier clase emitida desde el theme **siempre** lleva sub-prefijo.
 
-### IDs estructurales
-
-Los IDs estructurales del theme usan prefijo plano `gtt-` sin sub-prefijo (`gtt-content`, y cualquier futuro `gtt-main`, `gtt-primary`, etc.). La regla del sub-prefijo se reserva para clases CSS, donde existe riesgo real de colisión por cascada con clases del plugin u otros plugins. Los IDs son únicos por documento y no comparten ese riesgo, por lo que mantener el prefijo plano es coherente con la convención de WordPress core y de la mayoría de themes (`#content`, `#main`, `#primary`).
-
-### Componentes del theme
+#### Componentes del theme
 
 Cada componente del theme registra su propio block name como sub-prefijo, siguiendo BEM clásico. Ejemplos: `.gtt-header`, `.gtt-header__bar`, `.gtt-header__lockup`. Esto extiende la convención sin colisionar con el plugin (cuyas clases viven bajo `.gtt-portal`, `.gtt-booking-app`, etc., también block names propios).
 
 Regla operativa: si una clase del theme empieza por `.gtt-X` donde `X` es un sustantivo (`header`, `footer`, `hero`, `card`, etc.), es el block name de un componente. Las utilidades del theme (`.gtt-u-*`) y los block names del plugin son nombres reservados que no se usan como block names del theme.
+
+### PHP
+
+- `gtt_theme_*` — funciones públicas del theme (`gastrototem-theme`).
+- `gtt_*` — funciones públicas del plugin (`gastrototem-booking`). Definido por el `CONTRACT.md` del plugin.
+- `GTT_THEME_*` — constantes PHP del theme.
+- `GTT_*` — constantes PHP del plugin (si las hay).
+
+Las funciones internas (no llamadas desde fuera del archivo donde viven) pueden omitir el prefijo si están dentro de una clase con namespace propio. Las funciones globales del theme **siempre** llevan `gtt_theme_*`.
+
+### IDs HTML
+
+Los IDs declarados por el theme usan prefijo `gtt-*`. Ejemplo: `<main id="gtt-content">`. El prefijo es `gtt-` (sin `theme`) por dos razones complementarias: los IDs viven en el DOM compartido y no necesitan distinguir tema de plugin — el plugin no debería declarar IDs propios (usa clases para todo) — y los IDs son únicos por documento, así que no existe el riesgo de colisión por cascada que sí afecta a las clases CSS. Mantener el prefijo plano es coherente con la convención de WordPress core y de la mayoría de themes (`#content`, `#main`, `#primary`).
+
+### WordPress enqueue handles (excepción)
+
+Los handles registrados con `wp_enqueue_style()` / `wp_enqueue_script()` usan prefijo `gastrototem-*` (ej.: `gastrototem-base`, `gastrototem-header`, `gastrototem-footer`). Es divergente del resto de namespaces por razones históricas — quedó así commiteado en Fase 0 y migrarlo no aporta valor real. Los handles solo viven dentro del registry interno de WP y no se referencian desde código no-WP, por lo que la divergencia no introduce riesgo de colisión.
 
 ---
 
@@ -136,6 +153,15 @@ El CSS depende de `base.css` y se enqueuea desde `inc/enqueue.php`. El JS se enq
 Componentes existentes:
 - `header-main` — header del sitio + overlay del menú principal.
 - `footer-main` — footer del sitio (CTA editorial + utility row + copyright).
+
+---
+
+## Helpers
+
+El theme expone funciones PHP públicas reutilizables desde `/inc/`. Convención: una función por unidad de utilidad, prefijo `gtt_theme_*`, docblock en inglés, comentarios humanos en español, `function_exists` guard. El theme declara `Requires PHP: 8.1`, así que todos los helpers usan tipos en parámetros y retorno.
+
+Helpers existentes:
+- **`gtt_theme_inline_brand_svg( $filename, $aria_hidden = true )`** — definido en `inc/svg-helpers.php`. Inyecta el contenido de un SVG de `/assets/brand/` ready-to-inline, con cache static por request y fallback silencioso. Usado por `header-main` y `footer-main`.
 
 ---
 
