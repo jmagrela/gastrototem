@@ -7,12 +7,7 @@
 ?>
 </main><!-- #gtt-content -->
 
-<footer class="gtt-template-site-footer" role="contentinfo">
-	<p class="gtt-template-footer-copy">
-		&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?>
-		<?php echo esc_html( get_bloginfo( 'name' ) ); ?>
-	</p>
-</footer>
+<?php get_template_part( 'template-parts/footer-main' ); ?>
 
 <?php wp_footer(); ?>
 </body>
