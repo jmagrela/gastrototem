@@ -76,6 +76,13 @@ function gtt_theme_enqueue_styles() {
 		gtt_theme_asset_version( '/assets/js/components/header.js' ),
 		true
 	);
+
+	wp_enqueue_style(
+		'gastrototem-footer',
+		GTT_THEME_URI . '/assets/css/components/footer.css',
+		array( 'gastrototem-base' ),
+		gtt_theme_asset_version( '/assets/css/components/footer.css' )
+	);
 }
 add_action( 'wp_enqueue_scripts', 'gtt_theme_enqueue_styles' );
 
