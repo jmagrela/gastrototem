@@ -19,7 +19,11 @@
 	if (!toggle || !overlay) return;
 
 	let isOpen = false;
-	let cachedBodyOverflow = '';
+	let cachedScrollY = 0;
+	let cachedBodyPosition = '';
+	let cachedBodyTop = '';
+	let cachedBodyLeft = '';
+	let cachedBodyRight = '';
 	let cachedBodyPaddingRight = '';
 
 	/**
@@ -31,22 +35,55 @@
 	}
 
 	/**
-	 * Aplica body scroll lock con compensación del scrollbar para evitar
-	 * salto lateral del contenido al ocultar el scroll.
+	 * Body scroll lock robusto:
+	 *
+	 * El approach simple (overflow:hidden) pierde scrollY al cerrar en
+	 * Chromium. La técnica robusta fija el body con position:fixed +
+	 * top:-scrollY, lo que mantiene el contenido visualmente en su sitio
+	 * sin permitir scroll. Al cerrar, restauramos los estilos cacheados y
+	 * hacemos un window.scrollTo para volver exactamente donde estábamos.
+	 *
+	 * Funciona en Chromium, Safari y Firefox.
 	 */
 	function lockBodyScroll() {
+		cachedScrollY = window.scrollY;
 		const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-		cachedBodyOverflow = document.body.style.overflow;
+
+		cachedBodyPosition = document.body.style.position;
+		cachedBodyTop = document.body.style.top;
+		cachedBodyLeft = document.body.style.left;
+		cachedBodyRight = document.body.style.right;
 		cachedBodyPaddingRight = document.body.style.paddingRight;
-		document.body.style.overflow = 'hidden';
+
+		document.body.style.position = 'fixed';
+		document.body.style.top = -cachedScrollY + 'px';
+		document.body.style.left = '0';
+		document.body.style.right = '0';
 		if (scrollbarWidth > 0) {
 			document.body.style.paddingRight = scrollbarWidth + 'px';
 		}
 	}
 
 	function unlockBodyScroll() {
-		document.body.style.overflow = cachedBodyOverflow;
+		const targetScrollY = cachedScrollY;
+		document.body.style.position = cachedBodyPosition;
+		document.body.style.top = cachedBodyTop;
+		document.body.style.left = cachedBodyLeft;
+		document.body.style.right = cachedBodyRight;
 		document.body.style.paddingRight = cachedBodyPaddingRight;
+
+		/* Tras quitar position:fixed del body, el motor no ha reflowed aún:
+		 * documentElement.scrollHeight sigue cacheado al tamaño del viewport
+		 * (porque el body fixed no contribuía al flow). Si llamamos scrollTo
+		 * síncronamente, se cappea contra ese scrollHeight viejo y termina
+		 * en 0. La solución robusta cross-browser es esperar dos rAF: el
+		 * primero deja que el motor agende el reflow, el segundo dispara
+		 * tras el siguiente paint con scrollHeight ya correcto. */
+		requestAnimationFrame( function () {
+			requestAnimationFrame( function () {
+				window.scrollTo( 0, targetScrollY );
+			} );
+		} );
 	}
 
 	/**
