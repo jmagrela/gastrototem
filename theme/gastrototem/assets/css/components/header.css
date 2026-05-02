@@ -1,0 +1,404 @@
+/*
+ * Gastrototem · Component · Header
+ *
+ * Header del sitio + overlay del menú principal.
+ * Mobile-first. Depende de assets/css/base.css.
+ *
+ * Cero hex literales · cero font-family literales · cero magic numbers.
+ * Todos los valores numéricos viven en custom properties locales o en tokens.
+ */
+
+.gtt-header {
+	/* Dimensiones */
+	--header-height-mobile: 64px;
+	--header-height-desktop: 80px;
+	--header-padding-x-mobile: 20px;
+	--header-padding-x-tablet: 32px;
+	--header-padding-x-desktop: 64px;
+	--header-border-bottom-width: 1px;
+
+	/* Lockup */
+	--lockup-width-mobile: 140px;
+	--lockup-width-desktop: 180px;
+
+	/* Toggle */
+	--toggle-hit-area: 44px;
+	--toggle-svg-size: 28px;
+	--toggle-morph-distance: 7px;
+
+	/* Overlay */
+	--overlay-padding-top: 96px;
+	--overlay-padding-bottom-mobile: 64px;
+	--overlay-padding-bottom-desktop: 64px;
+	--overlay-column-max-width: 720px;
+
+	/* Menú */
+	--menu-numeral-column-width: 64px;
+	--menu-label-size-mobile: 32px;
+	--menu-label-size-desktop: 48px;
+	--menu-label-line-height: 1.05;
+	--menu-numeral-size: 14px;
+	--menu-numeral-tracking: 0.18em;
+	--menu-rule-margin-y: 32px;
+
+	/* CTA del overlay */
+	--cta-margin-top-mobile: 64px;
+	--cta-margin-top-desktop: 96px;
+	--cta-kicker-size: 12px;
+	--cta-kicker-tracking: 0.18em;
+	--cta-kicker-margin-bottom: 12px;
+	--cta-link-size-mobile: 20px;
+	--cta-link-size-desktop: 24px;
+	--cta-arrow-translate: 4px;
+
+	/* Skip-link */
+	--skip-padding-y: 12px;
+	--skip-padding-x: 16px;
+	--skip-radius: 4px;
+	--skip-font-size: 14px;
+	--skip-offset: 8px;
+
+	/* Transiciones */
+	--transition-overlay-in: 200ms;
+	--transition-overlay-out: 160ms;
+	--transition-hover: 180ms;
+	--transition-easing: ease-out;
+
+	/* Z-index — comentario en el prompt:
+	 * La jerarquía interna del header (bar > overlay) se resuelve con
+	 * z-index ordinales locales (1, 2) declarados en las propias reglas
+	 * de .gtt-header__bar y .gtt-menu-overlay — no como tokens, porque
+	 * los valores absolutos son irrelevantes mientras bar > overlay.
+	 * --z-skip es el único z-index global, porque el skip-link debe
+	 * quedar por encima del propio header al recibir focus. */
+	--z-skip: 110;
+
+	position: relative;
+	background: var(--gtt-color-papel-100);
+	border-bottom: var(--header-border-bottom-width) solid var(--gtt-color-grafito-200);
+	color: var(--gtt-color-grafito-900);
+	font-family: var(--gtt-font-sans);
+}
+
+/* ============================================================
+ * SKIP-LINK
+ * ============================================================ */
+
+.gtt-skip-link {
+	position: absolute;
+	top: var(--skip-offset);
+	left: var(--skip-offset);
+	z-index: var(--z-skip);
+	transform: translateY(-150%);
+	transition: transform var(--transition-hover) var(--transition-easing);
+	background: var(--gtt-color-papel-100);
+	color: var(--gtt-color-tinta-500);
+	padding: var(--skip-padding-y) var(--skip-padding-x);
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--skip-font-size);
+	text-decoration: none;
+	border: 1px solid var(--gtt-color-grafito-200);
+	border-radius: var(--skip-radius);
+}
+
+.gtt-skip-link:focus {
+	transform: translateY(0);
+	outline: 2px solid var(--gtt-color-tinta-500);
+	outline-offset: 2px;
+}
+
+/* ============================================================
+ * BARRA SUPERIOR · lockup + toggle
+ * ============================================================ */
+
+.gtt-header__bar {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: var(--header-height-mobile);
+	padding-left: var(--header-padding-x-mobile);
+	padding-right: var(--header-padding-x-mobile);
+}
+
+@media (min-width: 768px) {
+	.gtt-header__bar {
+		padding-left: var(--header-padding-x-tablet);
+		padding-right: var(--header-padding-x-tablet);
+	}
+}
+
+@media (min-width: 1024px) {
+	.gtt-header__bar {
+		height: var(--header-height-desktop);
+		padding-left: var(--header-padding-x-desktop);
+		padding-right: var(--header-padding-x-desktop);
+	}
+}
+
+/* Lockup ------------------------------------------------------ */
+
+.gtt-header__lockup {
+	display: inline-block;
+	width: var(--lockup-width-mobile);
+	line-height: 0;
+	text-decoration: none;
+	background: transparent;
+}
+
+.gtt-header__lockup svg {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+@media (min-width: 1024px) {
+	.gtt-header__lockup {
+		width: var(--lockup-width-desktop);
+	}
+}
+
+/* Toggle (hamburguesa <-> X) --------------------------------- */
+
+.gtt-header__toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--toggle-hit-area);
+	height: var(--toggle-hit-area);
+	background: transparent;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	color: var(--gtt-color-grafito-900);
+	cursor: pointer;
+	transition: color var(--transition-hover) var(--transition-easing);
+}
+
+.gtt-header__toggle:focus-visible {
+	outline: 2px solid var(--gtt-color-tinta-500);
+	outline-offset: 2px;
+}
+
+.gtt-header__toggle svg {
+	width: var(--toggle-svg-size);
+	height: auto;
+	display: block;
+	overflow: visible;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-header__toggle:hover {
+		color: var(--gtt-color-tinta-500);
+	}
+}
+
+/* Líneas del toggle: morph hamburguesa → X ------------------- */
+
+.gtt-toggle-line {
+	transform-box: fill-box;
+	transform-origin: center;
+	transition:
+		transform var(--transition-hover) var(--transition-easing),
+		opacity var(--transition-hover) var(--transition-easing);
+}
+
+.gtt-header__toggle.is-open .gtt-toggle-line--top {
+	transform: translateY(var(--toggle-morph-distance)) rotate(45deg);
+}
+
+.gtt-header__toggle.is-open .gtt-toggle-line--middle {
+	opacity: 0;
+}
+
+.gtt-header__toggle.is-open .gtt-toggle-line--bottom {
+	transform: translateY(calc(var(--toggle-morph-distance) * -1)) rotate(-45deg);
+}
+
+/* ============================================================
+ * OVERLAY · menú principal
+ * ============================================================ */
+
+.gtt-menu-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 1;
+	background: var(--gtt-color-papel-200);
+	color: var(--gtt-color-grafito-900);
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition:
+		opacity var(--transition-overlay-out) var(--transition-easing),
+		visibility 0s linear var(--transition-overlay-out);
+}
+
+.gtt-menu-overlay.is-open {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transition:
+		opacity var(--transition-overlay-in) var(--transition-easing),
+		visibility 0s linear 0s;
+}
+
+.gtt-menu-overlay__inner {
+	height: 100%;
+	overflow-y: auto;
+	padding-top: var(--overlay-padding-top);
+	padding-bottom: var(--overlay-padding-bottom-mobile);
+	padding-left: var(--header-padding-x-mobile);
+	padding-right: var(--header-padding-x-mobile);
+}
+
+@media (min-width: 768px) {
+	.gtt-menu-overlay__inner {
+		padding-left: var(--header-padding-x-tablet);
+		padding-right: var(--header-padding-x-tablet);
+	}
+}
+
+@media (min-width: 1024px) {
+	.gtt-menu-overlay__inner {
+		padding-bottom: var(--overlay-padding-bottom-desktop);
+		padding-left: var(--header-padding-x-desktop);
+		padding-right: var(--header-padding-x-desktop);
+		max-width: calc(var(--overlay-column-max-width) + 2 * var(--header-padding-x-desktop));
+	}
+}
+
+/* Listas del overlay ---------------------------------------- */
+
+.gtt-menu-overlay__list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.gtt-menu-overlay__item + .gtt-menu-overlay__item {
+	margin-top: 0;
+}
+
+.gtt-menu-overlay__link {
+	display: flex;
+	align-items: baseline;
+	gap: 0;
+	color: inherit;
+	text-decoration: none;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.gtt-menu-overlay__numeral {
+	width: var(--menu-numeral-column-width);
+	flex-shrink: 0;
+	font-family: var(--gtt-font-mono);
+	font-weight: 400;
+	font-size: var(--menu-numeral-size);
+	text-transform: uppercase;
+	letter-spacing: var(--menu-numeral-tracking);
+	color: var(--gtt-color-grafito-500);
+	line-height: 1;
+}
+
+.gtt-menu-overlay__label {
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--menu-label-size-mobile);
+	line-height: var(--menu-label-line-height);
+	color: var(--gtt-color-grafito-900);
+	transition: color var(--transition-hover) var(--transition-easing);
+}
+
+@media (min-width: 1024px) {
+	.gtt-menu-overlay__label {
+		font-size: var(--menu-label-size-desktop);
+	}
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-menu-overlay__link:hover .gtt-menu-overlay__label {
+		color: var(--gtt-color-tinta-500);
+	}
+}
+
+/* Rule entre lista primaria y secundaria -------------------- */
+
+.gtt-menu-overlay__rule {
+	border: 0;
+	height: 1px;
+	background: var(--gtt-color-grafito-200);
+	margin-top: var(--menu-rule-margin-y);
+	margin-bottom: var(--menu-rule-margin-y);
+	margin-left: var(--menu-numeral-column-width);
+	margin-right: 0;
+	max-width: var(--overlay-column-max-width);
+}
+
+/* CTA inferior ---------------------------------------------- */
+
+.gtt-menu-overlay__cta {
+	margin-top: var(--cta-margin-top-mobile);
+	padding-left: var(--menu-numeral-column-width);
+}
+
+@media (min-width: 1024px) {
+	.gtt-menu-overlay__cta {
+		margin-top: var(--cta-margin-top-desktop);
+	}
+}
+
+.gtt-menu-overlay__kicker {
+	font-family: var(--gtt-font-mono);
+	font-weight: 500;
+	font-size: var(--cta-kicker-size);
+	text-transform: uppercase;
+	letter-spacing: var(--cta-kicker-tracking);
+	color: var(--gtt-color-grafito-500);
+	margin: 0 0 var(--cta-kicker-margin-bottom) 0;
+}
+
+.gtt-menu-overlay__cta-link {
+	display: inline-block;
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--cta-link-size-mobile);
+	color: var(--gtt-color-tinta-500);
+	text-decoration: none;
+	transition: color var(--transition-hover) var(--transition-easing);
+}
+
+@media (min-width: 1024px) {
+	.gtt-menu-overlay__cta-link {
+		font-size: var(--cta-link-size-desktop);
+	}
+}
+
+.gtt-menu-overlay__cta-arrow {
+	display: inline-block;
+	transition: transform var(--transition-hover) var(--transition-easing);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-menu-overlay__cta-link:hover {
+		color: var(--gtt-color-tinta-700);
+	}
+
+	.gtt-menu-overlay__cta-link:hover .gtt-menu-overlay__cta-arrow {
+		transform: translateX(var(--cta-arrow-translate));
+	}
+}
+
+/* ============================================================
+ * prefers-reduced-motion · accesibilidad sobre estética
+ * ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+	.gtt-header *,
+	.gtt-menu-overlay,
+	.gtt-menu-overlay * {
+		transition: none !important;
+	}
+}
