@@ -58,6 +58,24 @@ function gtt_theme_enqueue_styles() {
 		array( 'gastrototem-tokens' ),
 		gtt_theme_asset_version( '/assets/css/base.css' )
 	);
+
+	/* Componentes del theme. Cada componente declara aquí su CSS y, si lo
+	 * requiere, su JS. Todos los componentes dependen de gastrototem-base. */
+
+	wp_enqueue_style(
+		'gastrototem-header',
+		GTT_THEME_URI . '/assets/css/components/header.css',
+		array( 'gastrototem-base' ),
+		gtt_theme_asset_version( '/assets/css/components/header.css' )
+	);
+
+	wp_enqueue_script(
+		'gastrototem-header',
+		GTT_THEME_URI . '/assets/js/components/header.js',
+		array(),
+		gtt_theme_asset_version( '/assets/js/components/header.js' ),
+		true
+	);
 }
 add_action( 'wp_enqueue_scripts', 'gtt_theme_enqueue_styles' );
 
