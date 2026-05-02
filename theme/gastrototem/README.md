@@ -91,6 +91,12 @@ Si añades código nuevo y dudas si una clase debe ir plana o con sub-prefijo, l
 
 Los IDs estructurales del theme usan prefijo plano `gtt-` sin sub-prefijo (`gtt-content`, y cualquier futuro `gtt-main`, `gtt-primary`, etc.). La regla del sub-prefijo se reserva para clases CSS, donde existe riesgo real de colisión por cascada con clases del plugin u otros plugins. Los IDs son únicos por documento y no comparten ese riesgo, por lo que mantener el prefijo plano es coherente con la convención de WordPress core y de la mayoría de themes (`#content`, `#main`, `#primary`).
 
+### Componentes del theme
+
+Cada componente del theme registra su propio block name como sub-prefijo, siguiendo BEM clásico. Ejemplos: `.gtt-header`, `.gtt-header__bar`, `.gtt-header__lockup`. Esto extiende la convención sin colisionar con el plugin (cuyas clases viven bajo `.gtt-portal`, `.gtt-booking-app`, etc., también block names propios).
+
+Regla operativa: si una clase del theme empieza por `.gtt-X` donde `X` es un sustantivo (`header`, `footer`, `hero`, `card`, etc.), es el block name de un componente. Las utilidades del theme (`.gtt-u-*`) y los block names del plugin son nombres reservados que no se usan como block names del theme.
+
 ---
 
 ## Plantillas — jerarquía y convenciones
@@ -114,6 +120,21 @@ Convenciones uniformes en las plantillas:
 - Cero estilos inline. Layout y espaciado los define el CSS, no el PHP.
 - Todos los strings de UI pasan por `__()` / `esc_html__()` con text domain `gastrototem`.
 - `comments.php` se incluye desde `page.php` y `single.php` cuando hay comentarios o están abiertos.
+
+---
+
+## Componentes
+
+Cada componente del theme vive en tres ubicaciones paralelas con el mismo nombre base:
+
+- `template-parts/<componente>.php` — markup PHP.
+- `assets/css/components/<componente>.css` — estilos del componente.
+- `assets/js/components/<componente>.js` — lógica JS (opcional, solo si el componente la requiere).
+
+El CSS depende de `base.css` y se enqueuea desde `inc/enqueue.php`. El JS se enqueuea al final del `<body>` sin `defer`.
+
+Componentes existentes:
+- `header-main` — header del sitio + overlay del menú principal.
 
 ---
 
