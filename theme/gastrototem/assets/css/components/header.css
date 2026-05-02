@@ -4,7 +4,7 @@
  * Header del sitio + overlay del menú principal.
  * Mobile-first. Depende de assets/css/base.css.
  *
- * Cero hex literales · cero font-family literales · cero magic numbers.
+ * Cero hex literales · cero familias tipográficas literales · cero magic numbers.
  * Todos los valores numéricos viven en custom properties locales o en tokens.
  */
 
