@@ -1,0 +1,348 @@
+/*
+ * Gastrototem · Component · Footer
+ *
+ * Footer del sitio: CTA editorial (piso 1) + rule + utility row
+ * (piso 2: BRAND/CONTACTO/LEGAL) + copyright. Mobile-first, depende
+ * de assets/css/base.css.
+ *
+ * Cero hex literales · cero familias tipográficas literales · cero magic
+ * numbers. Todos los valores numéricos viven en custom properties
+ * locales o en tokens.
+ */
+
+.gtt-footer {
+	/* Container */
+	--footer-padding-x-mobile: 20px;
+	--footer-padding-x-tablet: 32px;
+	--footer-padding-x-desktop: 64px;
+	--footer-padding-top-mobile: 64px;
+	--footer-padding-top-desktop: 96px;
+	--footer-padding-bottom-mobile: 48px;
+	--footer-padding-bottom-desktop: 64px;
+	--footer-inner-max-width: 1280px;
+	--footer-border-top-width: 1px;
+
+	/* Piso 1 · CTA */
+	--cta-kicker-size: 12px;
+	--cta-kicker-tracking: 0.18em;
+	--cta-kicker-margin-bottom: 12px;
+	--cta-link-size-mobile: 24px;
+	--cta-link-size-desktop: 32px;
+	--cta-arrow-translate: 4px;
+
+	/* Rule entre pisos */
+	--rule-margin-y-mobile: 48px;
+	--rule-margin-y-desktop: 64px;
+
+	/* Piso 2 · Grid */
+	--utility-grid-gap-desktop: 64px;
+	--utility-stack-gap-mobile: 48px;
+
+	/* BRAND */
+	--lockup-width-mobile: 120px;
+	--lockup-width-desktop: 140px;
+	--descriptor-size: 14px;
+	--descriptor-margin-top: 16px;
+	--descriptor-line-height: 1.5;
+
+	/* Kicker de columna (CONTACTO / LEGAL) */
+	--col-kicker-size: 11px;
+	--col-kicker-tracking: 0.18em;
+	--col-kicker-margin-bottom: 16px;
+
+	/* CONTACTO */
+	--email-size: 16px;
+	--location-size: 14px;
+	--location-margin-top: 8px;
+
+	/* LEGAL */
+	--legal-link-size: 14px;
+	--legal-item-spacing: 8px;
+
+	/* Copyright */
+	--copyright-margin-top-mobile: 48px;
+	--copyright-margin-top-desktop: 64px;
+	--copyright-size: 11px;
+	--copyright-tracking: 0.05em;
+
+	/* Lockup hover */
+	--lockup-hover-opacity: 0.7;
+
+	/* Transiciones */
+	--transition-hover: 180ms;
+	--transition-easing: ease-out;
+
+	background: var(--gtt-color-papel-100);
+	border-top: var(--footer-border-top-width) solid var(--gtt-color-grafito-200);
+	color: var(--gtt-color-grafito-900);
+	font-family: var(--gtt-font-sans);
+}
+
+/* ============================================================
+ * INNER · padding y max-width alineados a la izquierda
+ * ============================================================ */
+
+.gtt-footer__inner {
+	max-width: var(--footer-inner-max-width);
+	margin: 0;
+	padding-top: var(--footer-padding-top-mobile);
+	padding-bottom: var(--footer-padding-bottom-mobile);
+	padding-left: var(--footer-padding-x-mobile);
+	padding-right: var(--footer-padding-x-mobile);
+}
+
+@media (min-width: 768px) {
+	.gtt-footer__inner {
+		padding-left: var(--footer-padding-x-tablet);
+		padding-right: var(--footer-padding-x-tablet);
+	}
+}
+
+@media (min-width: 1024px) {
+	.gtt-footer__inner {
+		padding-top: var(--footer-padding-top-desktop);
+		padding-bottom: var(--footer-padding-bottom-desktop);
+		padding-left: var(--footer-padding-x-desktop);
+		padding-right: var(--footer-padding-x-desktop);
+	}
+}
+
+/* ============================================================
+ * PISO 1 · CTA editorial
+ * ============================================================ */
+
+.gtt-footer__tier-cta {
+	/* Bloque autónomo. Sin grid, sin flex; el h2 y el a se apilan natural. */
+}
+
+.gtt-footer__cta-link {
+	display: inline-block;
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--cta-link-size-mobile);
+	color: var(--gtt-color-tinta-500);
+	text-decoration: none;
+	transition: color var(--transition-hover) var(--transition-easing);
+}
+
+@media (min-width: 1024px) {
+	.gtt-footer__cta-link {
+		font-size: var(--cta-link-size-desktop);
+	}
+}
+
+.gtt-footer__cta-arrow {
+	display: inline-block;
+	transition: transform var(--transition-hover) var(--transition-easing);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-footer__cta-link:hover {
+		color: var(--gtt-color-tinta-700);
+	}
+
+	.gtt-footer__cta-link:hover .gtt-footer__cta-arrow {
+		transform: translateX(var(--cta-arrow-translate));
+	}
+}
+
+/* ============================================================
+ * KICKERS · piso 1 (--cta) y piso 2 (CONTACTO / LEGAL)
+ *
+ * Base común para ambos kickers (mono uppercase tracking grafito-500).
+ * Solo difieren en font-size: 12px CTA vs 11px columnas.
+ * ============================================================ */
+
+.gtt-footer__kicker {
+	font-family: var(--gtt-font-mono);
+	font-weight: 500;
+	font-size: var(--col-kicker-size);
+	text-transform: uppercase;
+	letter-spacing: var(--col-kicker-tracking);
+	color: var(--gtt-color-grafito-500);
+	margin: 0 0 var(--col-kicker-margin-bottom) 0;
+	line-height: 1;
+}
+
+.gtt-footer__kicker--cta {
+	font-size: var(--cta-kicker-size);
+	letter-spacing: var(--cta-kicker-tracking);
+	margin-bottom: var(--cta-kicker-margin-bottom);
+}
+
+/* ============================================================
+ * RULE entre pisos
+ * ============================================================ */
+
+.gtt-footer__rule {
+	border: 0;
+	height: 1px;
+	background: var(--gtt-color-grafito-200);
+	margin-top: var(--rule-margin-y-mobile);
+	margin-bottom: var(--rule-margin-y-mobile);
+	margin-left: 0;
+	margin-right: 0;
+}
+
+@media (min-width: 1024px) {
+	.gtt-footer__rule {
+		margin-top: var(--rule-margin-y-desktop);
+		margin-bottom: var(--rule-margin-y-desktop);
+	}
+}
+
+/* ============================================================
+ * PISO 2 · Utility row · stack mobile, grid desktop
+ * ============================================================ */
+
+.gtt-footer__tier-utility {
+	display: block;
+}
+
+.gtt-footer__col {
+	margin-top: var(--utility-stack-gap-mobile);
+}
+
+.gtt-footer__col:first-child {
+	margin-top: 0;
+}
+
+@media (min-width: 1024px) {
+	.gtt-footer__tier-utility {
+		display: grid;
+		grid-template-columns: 2fr 1.5fr 1.5fr;
+		gap: var(--utility-grid-gap-desktop);
+	}
+
+	.gtt-footer__col,
+	.gtt-footer__col:first-child {
+		margin-top: 0;
+	}
+}
+
+/* BRAND -------------------------------------------------------- */
+
+.gtt-footer__lockup {
+	display: inline-block;
+	width: var(--lockup-width-mobile);
+	line-height: 0;
+	text-decoration: none;
+	background: transparent;
+	transition: opacity var(--transition-hover) var(--transition-easing);
+}
+
+.gtt-footer__lockup svg {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+@media (min-width: 1024px) {
+	.gtt-footer__lockup {
+		width: var(--lockup-width-desktop);
+	}
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-footer__lockup:hover {
+		opacity: var(--lockup-hover-opacity);
+	}
+}
+
+.gtt-footer__descriptor {
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--descriptor-size);
+	line-height: var(--descriptor-line-height);
+	color: var(--gtt-color-grafito-500);
+	margin: var(--descriptor-margin-top) 0 0 0;
+	text-wrap: balance;
+}
+
+/* CONTACTO ----------------------------------------------------- */
+
+.gtt-footer__email {
+	display: inline-block;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--email-size);
+	color: var(--gtt-color-grafito-900);
+	text-decoration: none;
+	transition: color var(--transition-hover) var(--transition-easing);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-footer__email:hover {
+		color: var(--gtt-color-tinta-500);
+	}
+}
+
+.gtt-footer__location {
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--location-size);
+	color: var(--gtt-color-grafito-500);
+	margin: var(--location-margin-top) 0 0 0;
+}
+
+/* LEGAL -------------------------------------------------------- */
+
+.gtt-footer__legal-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.gtt-footer__legal-item {
+	margin-top: var(--legal-item-spacing);
+}
+
+.gtt-footer__legal-item:first-child {
+	margin-top: 0;
+}
+
+.gtt-footer__legal-link {
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--legal-link-size);
+	color: var(--gtt-color-grafito-900);
+	text-decoration: none;
+	transition: color var(--transition-hover) var(--transition-easing);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-footer__legal-link:hover {
+		color: var(--gtt-color-tinta-500);
+	}
+}
+
+/* ============================================================
+ * COPYRIGHT
+ * ============================================================ */
+
+.gtt-footer__copyright {
+	font-family: var(--gtt-font-mono);
+	font-weight: 400;
+	font-size: var(--copyright-size);
+	letter-spacing: var(--copyright-tracking);
+	color: var(--gtt-color-grafito-500);
+	margin: var(--copyright-margin-top-mobile) 0 0 0;
+}
+
+@media (min-width: 1024px) {
+	.gtt-footer__copyright {
+		margin-top: var(--copyright-margin-top-desktop);
+	}
+}
+
+/* ============================================================
+ * prefers-reduced-motion · accesibilidad sobre estética
+ * ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+	.gtt-footer *,
+	.gtt-footer *::before,
+	.gtt-footer *::after {
+		transition: none !important;
+	}
+}
