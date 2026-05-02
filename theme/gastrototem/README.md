@@ -135,6 +135,7 @@ El CSS depende de `base.css` y se enqueuea desde `inc/enqueue.php`. El JS se enq
 
 Componentes existentes:
 - `header-main` — header del sitio + overlay del menú principal.
+- `footer-main` — footer del sitio (CTA editorial + utility row + copyright).
 
 ---
 
