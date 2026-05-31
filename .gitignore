@@ -2,3 +2,8 @@
 
 # Plugin se versiona en su propio repo
 plugins/
+
+# Secretos / credenciales — NUNCA subir
+.env.local
+.env*.local
+afinacion/
