@@ -12,8 +12,10 @@
 			"palette": [
 				{ "slug": "tinta-500",   "name": "Tinta",              "color": "#1F3050" },
 				{ "slug": "papel-100",   "name": "Papel",              "color": "#EFEAE0" },
+				{ "slug": "papel-200",   "name": "Papel 200",          "color": "#E5DFD0" },
 				{ "slug": "grafito-900", "name": "Grafito (cuerpo)",   "color": "#1A1A22" },
 				{ "slug": "grafito-600", "name": "Grafito (auxiliar)", "color": "#3F3D38" },
+				{ "slug": "grafito-200", "name": "Grafito (línea)",    "color": "#C9C4B8" },
 				{ "slug": "success",     "name": "Éxito",              "color": "#3D5A3A" },
 				{ "slug": "warning",     "name": "Aviso",              "color": "#8B6B1F" },
 				{ "slug": "error",       "name": "Error",              "color": "#7A2A2A" }
