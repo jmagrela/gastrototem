@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================
-# Gastrototem — Deploy child theme via rsync
+# Gastrototem — Deploy theme via rsync
 # ============================================
 #
 # Uso:
@@ -17,14 +17,14 @@ set -euo pipefail
 STAGING_HOST="147.93.93.132"
 STAGING_USER="u457559952"                          # usuario SSH de Hostinger
 STAGING_PORT="65002"                               # puerto SSH de Hostinger (normalmente 65002)
-STAGING_PATH="/home/u457559952/domains/gastrototem.com/public_html/2026/wp-content/themes/gastrototem-astra-child/"
+STAGING_PATH="/home/u457559952/domains/gastrototem.com/public_html/2026/wp-content/themes/gastrototem/"
 
 PRODUCTION_HOST="147.93.93.132"
 PRODUCTION_USER="u457559952"
 PRODUCTION_PORT="65002"
-PRODUCTION_PATH="/home/u457559952/domains/gastrototem.com/public_html/wp-content/themes/gastrototem-astra-child/"
+PRODUCTION_PATH="/home/u457559952/domains/gastrototem.com/public_html/wp-content/themes/gastrototem/"
 
-LOCAL_PATH="$(dirname "$0")/theme/gastrototem-astra-child/"
+LOCAL_PATH="$(dirname "$0")/theme/gastrototem/"
 
 # ── Lógica ───────────────────────────────────
 
