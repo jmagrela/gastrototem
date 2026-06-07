@@ -6,7 +6,7 @@
  * 1. style.css (cabecera del theme)
  * 2. tokens.css (depende de style)
  * 3. base.css (depende de tokens)
- * 4. Google Fonts (Inter + Instrument Serif + JetBrains Mono) con preconnect
+ * 4. Google Fonts (Inter + Source Serif 4 + JetBrains Mono) con preconnect
  *
  * Versionado por filemtime() para cache-busting en desarrollo.
  *
@@ -28,10 +28,10 @@ function gtt_theme_asset_version( $relative_path ) {
 /**
  * URL única de Google Fonts con las tres familias.
  *
- * Sintaxis ital,wght@1,400 para Instrument Serif italic 400.
+ * Sintaxis ital,opsz,wght@1,8..60,400 para Source Serif 4 italic 400.
  */
 function gtt_theme_google_fonts_url() {
-	return 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital,wght@1,400&family=JetBrains+Mono:wght@400;500&display=swap';
+	return 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap';
 }
 
 /**

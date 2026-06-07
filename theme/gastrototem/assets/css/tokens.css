@@ -76,7 +76,7 @@
 	 * TIPOGRAFÍA — Pilas
 	 * ============================================================ */
 	--gtt-font-sans:  'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	--gtt-font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+	--gtt-font-serif: 'Source Serif 4', Georgia, serif;
 	--gtt-font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
 	/* ============================================================
