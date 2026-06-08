@@ -1,0 +1,54 @@
+/*
+ * Gastrototem · Componente Documento
+ *
+ * Página-documento: banda de apertura tinta a sangre con un sentinel en su
+ * borde inferior y, debajo, el contenido normal. El centrado de los __inner se
+ * alinea al contenedor de contenido estándar del tema (--gtt-container-content)
+ * con gutter de tokens; el band en sí va a sangre (sin max-width).
+ *
+ * Cero hex literales. Solo variables --gtt-*.
+ */
+
+/* ============================================================
+ * CENTRADO — mismo ancho y gutter que el contenido estándar del tema
+ * ============================================================ */
+.gtt-doc-band__inner,
+.gtt-doc-content__inner {
+	max-width: var(--gtt-container-content);
+	margin-inline: auto;
+	padding-inline: var(--gtt-space-6);
+}
+
+/* ============================================================
+ * BANDA DE APERTURA — tinta a sangre (ancho completo del viewport)
+ * ============================================================ */
+.gtt-doc-band {
+	position: relative;
+	background-color: var(--gtt-color-tinta-500);
+	color: var(--gtt-color-papel-50);
+	padding-top: 140px;
+	padding-bottom: 96px;
+}
+
+.gtt-doc-band__title {
+	margin-top: 0;
+	color: var(--gtt-color-papel-50);
+}
+
+/* Marcador invisible del borde inferior de la banda. Arnés para un futuro
+ * IntersectionObserver del header; en esta pieza no tiene comportamiento. */
+.gtt-doc-band__sentinel {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 1px;
+	pointer-events: none;
+}
+
+/* ============================================================
+ * CONTENIDO
+ * ============================================================ */
+.gtt-doc-content__inner {
+	padding-block: var(--gtt-space-12);
+}

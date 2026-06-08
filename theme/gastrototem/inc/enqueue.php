@@ -84,6 +84,17 @@ function gtt_theme_enqueue_styles() {
 		gtt_theme_asset_version( '/assets/css/components/footer.css' )
 	);
 
+	/* Documento: solo en páginas con la plantilla "Documento". Sin JS en esta
+	 * pieza; el sentinel del band quedará como arnés para una pieza posterior. */
+	if ( is_page_template( 'template-documento.php' ) ) {
+		wp_enqueue_style(
+			'gastrototem-documento',
+			GTT_THEME_URI . '/assets/css/components/documento.css',
+			array( 'gastrototem-base' ),
+			gtt_theme_asset_version( '/assets/css/components/documento.css' )
+		);
+	}
+
 	/* Splash: solo en la home. El overlay nace oculto por CSS y la decisión
 	 * de mostrarlo (no-flash) es síncrona en template-parts/splash.php; este
 	 * JS solo hace la coreografía temporizada. */
