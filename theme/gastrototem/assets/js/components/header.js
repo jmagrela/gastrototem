@@ -227,3 +227,49 @@
 		setTimeout(cleanup, INTRO_CLEANUP_FALLBACK);
 	}, INTRO_REVEAL_DELAY);
 })();
+
+/*
+ * Gastrototem · Component · Header · Conmutación de piel (cerebro)
+ *
+ * IntersectionObserver sobre [data-gtt-sentinel] (borde inferior de la banda de
+ * apertura): mientras el sentinel no ha cruzado el borde inferior del header, la
+ * piel es transparente; al cruzarlo, sólida. Lee el contexto de data-gtt-context;
+ * 404 se exime (su campo tinta es un bloque posterior). Sin banda → sólida.
+ * No hay token de altura del header: se lee header.offsetHeight y el observer se
+ * recrea en resize (debounce 150ms) para mantener el rootMargin correcto.
+ */
+( function () {
+	if ( typeof IntersectionObserver === 'undefined' ) { return; }
+	var header = document.querySelector( '.gtt-header' );
+	if ( ! header ) { return; }
+	var ctx = header.getAttribute( 'data-gtt-context' );
+	if ( ctx === '404' ) { return; } // futuro: forzar transparente sobre campo tinta
+	var sentinel = document.querySelector( '[data-gtt-sentinel]' );
+	if ( ! sentinel ) {
+		header.classList.remove( 'is-transparent' ); // sin banda → sólida (defensivo)
+		return;
+	}
+	var observer = null;
+	function update() {
+		var h = header.offsetHeight;
+		var top = sentinel.getBoundingClientRect().top;
+		var past = top <= h; // el borde inferior de la banda alcanzó el del header
+		header.classList.toggle( 'is-transparent', ! past );
+	}
+	function setup() {
+		if ( observer ) { observer.disconnect(); }
+		var h = header.offsetHeight;
+		observer = new IntersectionObserver( function () { update(); }, {
+			rootMargin: '-' + h + 'px 0px 0px 0px',
+			threshold: 0
+		} );
+		observer.observe( sentinel );
+		update();
+	}
+	setup();
+	var resizeTimer;
+	window.addEventListener( 'resize', function () {
+		clearTimeout( resizeTimer );
+		resizeTimer = setTimeout( setup, 150 );
+	} );
+}() );

@@ -19,6 +19,18 @@
 
 <?php get_template_part( 'template-parts/header-main' ); ?>
 
+<script>
+/* Piel inicial síncrona antes del primer pintado, según contexto.
+   Fallback sin JS = piel sólida (base). Solo 'document' arranca transparente. */
+( function () {
+	var header = document.querySelector( '.gtt-header' );
+	if ( ! header ) { return; }
+	if ( header.getAttribute( 'data-gtt-context' ) === 'document' ) {
+		header.classList.add( 'is-transparent' );
+	}
+}() );
+</script>
+
 <?php if ( is_front_page() ) : ?>
 <script>
 /* Intro del header: decisión SÍNCRONA antes del primer pintado (espejo del

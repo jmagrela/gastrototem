@@ -38,7 +38,7 @@ if ( ! empty( $_SERVER['REQUEST_URI'] ) ) {
 }
 
 ?>
-<header class="gtt-header" role="banner">
+<header class="gtt-header" role="banner" data-gtt-context="<?php echo esc_attr( gtt_header_context() ); ?>">
 
 	<a class="gtt-skip-link" href="#gtt-content">Saltar al contenido</a>
 

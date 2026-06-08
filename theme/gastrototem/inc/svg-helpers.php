@@ -60,3 +60,28 @@ if ( ! function_exists( 'gtt_theme_inline_brand_svg' ) ) {
 		return $svg;
 	}
 }
+
+if ( ! function_exists( 'gtt_header_context' ) ) {
+	/**
+	 * Contexto del header para la página actual.
+	 *
+	 * Lo emite header-main.php como data-gtt-context y lo leen tanto el
+	 * micro-script de piel inicial (header.php) como el observer (header.js).
+	 * Orden deliberado: 404 gana a cualquier plantilla; 'document' solo cuando
+	 * la página usa la plantilla "Documento"; 'home' la portada; 'flat' el resto.
+	 *
+	 * @return string Uno de: '404' | 'document' | 'home' | 'flat'.
+	 */
+	function gtt_header_context() {
+		if ( is_404() ) {
+			return '404';
+		}
+		if ( is_page_template( 'template-documento.php' ) ) {
+			return 'document';
+		}
+		if ( is_front_page() ) {
+			return 'home';
+		}
+		return 'flat';
+	}
+}
