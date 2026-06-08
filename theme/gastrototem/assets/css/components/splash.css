@@ -42,11 +42,13 @@
 	justify-content: center;
 	background-color: var(--gtt-color-papel-100);
 
-	/* Nace oculto (ver NO-FLASH arriba). */
+	/* Nace oculto (ver NO-FLASH arriba). Sin transición en la base: la
+	 * APARICIÓN es instantánea (cubre desde el primer pintado). La transición
+	 * de opacity vive solo en la SALIDA (.is-leaving), para que solo se anime
+	 * el fade-out, no la entrada. */
 	opacity: 0;
 	visibility: hidden;
 	pointer-events: none;
-	transition: opacity var(--splash-fade) var(--splash-easing);
 }
 
 .gtt-splash.is-active {
@@ -55,9 +57,11 @@
 	pointer-events: auto;
 }
 
-/* Fade-out: splash.js añade .is-leaving tras --splash-hold. */
+/* Fade-out: splash.js añade .is-leaving tras --splash-hold. La transición de
+ * opacity se declara aquí (estado destino) para animar solo la salida 1→0. */
 .gtt-splash.is-leaving {
 	opacity: 0;
+	transition: opacity var(--splash-fade) var(--splash-easing);
 }
 
 /* ============================================================
