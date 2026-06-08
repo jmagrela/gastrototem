@@ -84,6 +84,7 @@
 	--header-bg:           var(--gtt-color-papel-100);
 	--header-border-color: var(--gtt-color-grafito-200);
 	--header-fg:           var(--gtt-color-grafito-900);   /* toggle vía currentColor */
+	--header-fg-hover:     var(--gtt-color-tinta-500);     /* :hover del toggle */
 	--lockup-square-fill:  var(--gtt-color-tinta-500);     /* cuadrado <rect>  */
 	--lockup-word-fill:    var(--gtt-color-tinta-500);     /* palabra path.st0 */
 	--lockup-symbol-fill:  var(--gtt-color-papel-100);     /* símbolo path.st1 */
@@ -119,6 +120,7 @@
 	--header-bg:           transparent;
 	--header-border-color: transparent;
 	--header-fg:           var(--gtt-color-papel-100);
+	--header-fg-hover:     var(--gtt-color-papel-50);
 	--lockup-square-fill:  transparent;
 	--lockup-word-fill:    var(--gtt-color-papel-100);
 	--lockup-symbol-fill:  var(--gtt-color-papel-100);
@@ -289,7 +291,7 @@
 
 @media (hover: hover) and (pointer: fine) {
 	.gtt-header__toggle:hover {
-		color: var(--gtt-color-tinta-500);
+		color: var(--header-fg-hover);
 	}
 }
 
