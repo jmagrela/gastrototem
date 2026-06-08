@@ -65,6 +65,8 @@
 	--transition-easing: ease-out;
 	--transition-skin: 240ms;   /* fondo + borde al conmutar de piel */
 	--transition-logo: 200ms;   /* rellenos del logo al conmutar de piel */
+	--transition-intro-base:   200ms;   /* transform del header FUERA del intro */
+	--transition-intro-reveal: 400ms;   /* bajada del header al revelar tras el splash */
 
 	/* ----------------------------------------------------------------
 	 * PIELES · el header tiene dos pieles conmutables por clase.
@@ -107,7 +109,8 @@
 	font-family: var(--gtt-font-sans);
 	transition:
 		background-color var(--transition-skin) var(--transition-easing),
-		border-color var(--transition-skin) var(--transition-easing);
+		border-color var(--transition-skin) var(--transition-easing),
+		transform var(--transition-intro-base) var(--transition-easing);
 }
 
 /* Piel TRANSPARENTE — solo redeclara las variables de piel. El JS de la
@@ -119,6 +122,33 @@
 	--lockup-square-fill:  transparent;
 	--lockup-word-fill:    var(--gtt-color-papel-100);
 	--lockup-symbol-fill:  var(--gtt-color-papel-100);
+}
+
+/* ============================================================
+ * ESTADO INTRO · aparición del header tras el splash (solo home)
+ *
+ * El script inline síncrono de header.php añade .is-intro antes del primer
+ * pintado (primera visita de sesión, con movimiento permitido): el header
+ * arranca oculto. header.js revela a ~2100ms con el dance de dos clases:
+ *
+ *   1. añade .is-revealing  → transform pasa a 400ms (override de la base)
+ *   2. quita  .is-intro     → translateY(0): la BAJADA anima a 400ms
+ *   3. tras la bajada, quita .is-revealing → vuelve a la base (200ms)
+ *
+ * Así la bajada es 400ms y cualquier transform FUERA del intro es 200ms,
+ * como en Lovable. .is-revealing reescribe la transición completa para
+ * conservar fondo/borde a su duración de la Pieza 1 durante la ventana.
+ * ============================================================ */
+
+.gtt-header.is-intro {
+	transform: translateY(-100%);
+}
+
+.gtt-header.is-revealing {
+	transition:
+		background-color var(--transition-skin) var(--transition-easing),
+		border-color var(--transition-skin) var(--transition-easing),
+		transform var(--transition-intro-reveal) var(--transition-easing);
 }
 
 /* ============================================================

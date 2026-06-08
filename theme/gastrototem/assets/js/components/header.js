@@ -176,3 +176,54 @@
 		}
 	});
 })();
+
+/*
+ * Gastrototem · Component · Header · Aparición tras el splash
+ *
+ * Bloque autocontenido, independiente del controlador del overlay de arriba.
+ * En la home, si el header arranca con .is-intro (lo añadió el script inline
+ * síncrono de header.php cuando no hay flag de sesión ni reduced-motion), lo
+ * revelamos tras el fade del splash con el dance de dos clases que la CSS
+ * espera: .is-revealing (transform 400ms) → quitar .is-intro (baja) → limpiar.
+ *
+ * Idempotente con el failsafe inline de header.php: si .is-intro ya no está
+ * (failsafe o nunca añadida), no hace nada.
+ */
+(function () {
+	'use strict';
+
+	/* Delay de la bajada: justo tras el fade del splash (~1900ms). */
+	const INTRO_REVEAL_DELAY = 2100;
+
+	/* Margen para limpiar .is-revealing si no llegara transitionend
+	 * (transición de 400ms; 600 da holgura). */
+	const INTRO_CLEANUP_FALLBACK = 600;
+
+	const header = document.querySelector('.gtt-header');
+	if (!header || !header.classList.contains('is-intro')) {
+		return;
+	}
+
+	setTimeout(function () {
+		/* El failsafe inline pudo revelarlo ya: no dupliques. */
+		if (!header.classList.contains('is-intro')) {
+			return;
+		}
+
+		header.classList.add('is-revealing');   // transform a 400ms durante la bajada
+		header.classList.remove('is-intro');     // dispara translateY(0)
+
+		const cleanup = function () {
+			header.classList.remove('is-revealing');
+			header.removeEventListener('transitionend', onEnd);
+		};
+		const onEnd = function (event) {
+			if (event.target === header && event.propertyName === 'transform') {
+				cleanup();
+			}
+		};
+
+		header.addEventListener('transitionend', onEnd);
+		setTimeout(cleanup, INTRO_CLEANUP_FALLBACK);
+	}, INTRO_REVEAL_DELAY);
+})();
