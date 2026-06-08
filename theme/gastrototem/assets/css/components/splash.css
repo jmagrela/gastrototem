@@ -1,0 +1,122 @@
+/*
+ * Gastrototem · Component · Splash
+ *
+ * Overlay de entrada (solo home), una vez por sesión. Lockup vertical
+ * centrado sobre papel; se desvanece a los pocos segundos.
+ *
+ * Depende de tokens.css (colores) y base.css. Cero hex literales, cero
+ * familias literales: todos los valores en custom properties locales o tokens.
+ *
+ * NO-FLASH: .gtt-splash nace OCULTO. Solo .is-active (añadida síncronamente
+ * por el script inline de splash.php cuando no hay flag de sesión) lo revela.
+ * Así, quien ya lo vio nunca lo pinta.
+ */
+
+.gtt-splash {
+	/* Tiempos — fuente única de verdad: splash.js los lee con getComputedStyle,
+	 * de modo que reduced-motion (más abajo) los reescribe en un solo sitio. */
+	--splash-hold: 1200ms;   /* quieto antes del fade */
+	--splash-fade: 700ms;    /* duración del fade-out */
+	--splash-easing: ease-out;
+
+	/* Z-index — escala del tema: header 60, skip-link 110. El splash cubre
+	 * todo durante <2s, por encima del skip-link. No 9999 a pelo. */
+	--splash-z-index: 200;
+
+	/* Rellenos del lockup — variante PRINCIPAL sobre papel (idéntica a la piel
+	 * sólida del header): cuadrado tinta, palabra tinta, símbolo papel. */
+	--splash-square-fill: var(--gtt-color-tinta-500);
+	--splash-word-fill:   var(--gtt-color-tinta-500);
+	--splash-symbol-fill: var(--gtt-color-papel-100);
+
+	/* Tamaño del lockup vertical */
+	--splash-lockup-height-mobile:  140px;
+	--splash-lockup-height-tablet:  160px;
+	--splash-lockup-height-desktop: 200px;
+
+	position: fixed;
+	inset: 0;
+	z-index: var(--splash-z-index);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--gtt-color-papel-100);
+
+	/* Nace oculto (ver NO-FLASH arriba). */
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity var(--splash-fade) var(--splash-easing);
+}
+
+.gtt-splash.is-active {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+}
+
+/* Fade-out: splash.js añade .is-leaving tras --splash-hold. */
+.gtt-splash.is-leaving {
+	opacity: 0;
+}
+
+/* ============================================================
+ * LOCKUP · vertical, recoloreado por región
+ * Mismo método que el logo del header: el SVG canónico NO se edita; los
+ * rellenos se controlan por elemento (rect = cuadrado) y por clase interna
+ * (path.st0 = palabra, path.st1 = símbolo). Especificidad (0,2,2) gana al
+ * <style> interno del SVG (0,1,0).
+ * ============================================================ */
+
+.gtt-splash__lockup svg {
+	display: block;
+	width: auto;
+	height: var(--splash-lockup-height-mobile);
+}
+
+@media (min-width: 768px) {
+	.gtt-splash__lockup svg {
+		height: var(--splash-lockup-height-tablet);
+	}
+}
+
+@media (min-width: 1024px) {
+	.gtt-splash__lockup svg {
+		height: var(--splash-lockup-height-desktop);
+	}
+}
+
+.gtt-splash__lockup svg rect {
+	fill: var(--splash-square-fill);
+}
+
+.gtt-splash__lockup svg path.st0 {
+	fill: var(--splash-word-fill);
+}
+
+.gtt-splash__lockup svg path.st1 {
+	fill: var(--splash-symbol-fill);
+}
+
+/* ============================================================
+ * SCROLL-LOCK · clase en <html>, puesta síncronamente al revelar y
+ * retirada por splash.js al terminar. Simple overflow:hidden (<2s).
+ * ============================================================ */
+
+html.gtt-splash-lock {
+	overflow: hidden;
+}
+
+/* ============================================================
+ * prefers-reduced-motion · sin animación
+ * Reescribe los tiempos (hold 600ms, fade 0) en un único sitio; splash.js
+ * los relee. Y anula la transición visual.
+ * ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+	.gtt-splash {
+		--splash-hold: 600ms;
+		--splash-fade: 0ms;
+		transition: none;
+	}
+}

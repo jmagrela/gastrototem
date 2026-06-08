@@ -15,6 +15,8 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<?php if ( is_front_page() ) { get_template_part( 'template-parts/splash' ); } ?>
+
 <?php get_template_part( 'template-parts/header-main' ); ?>
 
 <main id="gtt-content" class="gtt-template-site-main" role="main">

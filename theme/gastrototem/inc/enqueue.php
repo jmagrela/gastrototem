@@ -83,6 +83,26 @@ function gtt_theme_enqueue_styles() {
 		array( 'gastrototem-base' ),
 		gtt_theme_asset_version( '/assets/css/components/footer.css' )
 	);
+
+	/* Splash: solo en la home. El overlay nace oculto por CSS y la decisión
+	 * de mostrarlo (no-flash) es síncrona en template-parts/splash.php; este
+	 * JS solo hace la coreografía temporizada. */
+	if ( is_front_page() ) {
+		wp_enqueue_style(
+			'gastrototem-splash',
+			GTT_THEME_URI . '/assets/css/components/splash.css',
+			array( 'gastrototem-base' ),
+			gtt_theme_asset_version( '/assets/css/components/splash.css' )
+		);
+
+		wp_enqueue_script(
+			'gastrototem-splash',
+			GTT_THEME_URI . '/assets/js/components/splash.js',
+			array(),
+			gtt_theme_asset_version( '/assets/js/components/splash.js' ),
+			true
+		);
+	}
 }
 add_action( 'wp_enqueue_scripts', 'gtt_theme_enqueue_styles' );
 
