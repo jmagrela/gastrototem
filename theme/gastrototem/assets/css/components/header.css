@@ -115,10 +115,22 @@
 }
 
 /* Piel TRANSPARENTE — solo redeclara las variables de piel. El JS de la
- * Pieza 2 añade/quita esta clase; aquí es puramente declarativa. */
+ * Pieza 2 añade/quita esta clase; aquí es puramente declarativa.
+ *
+ * El fondo y el borde se mantienen transparentes siempre que la piel lo
+ * esté, también con el menú abierto: así el overlay (campo papel a sangre)
+ * se lee continuo bajo la barra. */
 .gtt-header.is-transparent {
 	--header-bg:           transparent;
 	--header-border-color: transparent;
+}
+
+/* El logo y el primer plano (toggle vía currentColor) solo van en claro
+ * MIENTRAS el menú está cerrado. Con el menú abierto (.is-menu-open) estas
+ * redeclaraciones se desactivan y cascadean de vuelta a los tokens SÓLIDOS
+ * de la base: el logo recupera su forma original (la de la home) y la "X"
+ * de cerrar queda legible sobre el fondo claro del overlay. */
+.gtt-header.is-transparent:not(.is-menu-open) {
 	--header-fg:           var(--gtt-color-papel-100);
 	--header-fg-hover:     var(--gtt-color-papel-50);
 	--lockup-square-fill:  transparent;

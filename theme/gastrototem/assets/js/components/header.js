@@ -126,6 +126,7 @@
 
 		toggle.classList.add('is-open');
 		overlay.classList.add('is-open');
+		header.classList.add('is-menu-open');
 		toggle.setAttribute('aria-expanded', 'true');
 		toggle.setAttribute('aria-label', 'Cerrar menú');
 		overlay.setAttribute('aria-hidden', 'false');
@@ -142,6 +143,7 @@
 
 		toggle.classList.remove('is-open');
 		overlay.classList.remove('is-open');
+		header.classList.remove('is-menu-open');
 		toggle.setAttribute('aria-expanded', 'false');
 		toggle.setAttribute('aria-label', 'Abrir menú');
 		overlay.setAttribute('aria-hidden', 'true');
