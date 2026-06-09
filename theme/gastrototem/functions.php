@@ -20,3 +20,4 @@ require_once GTT_THEME_DIR . '/inc/theme-setup.php';
 require_once GTT_THEME_DIR . '/inc/enqueue.php';
 require_once GTT_THEME_DIR . '/inc/security.php';
 require_once GTT_THEME_DIR . '/inc/svg-helpers.php';
+require_once GTT_THEME_DIR . '/inc/meta-titular.php';

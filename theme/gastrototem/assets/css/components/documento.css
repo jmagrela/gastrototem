@@ -30,9 +30,38 @@
 	padding-bottom: 96px;
 }
 
+/* ------------------------------------------------------------
+ * Textos de la banda — kicker (mono) + título (sans) + subtítulo.
+ * Todo por tokens: cero hex, cero font-family literal.
+ * ------------------------------------------------------------ */
+.gtt-doc-band__kicker {
+	font-family: var(--gtt-font-mono);
+	font-weight: 500;
+	font-size: 0.75rem;
+	letter-spacing: var(--gtt-tracking-wide);
+	text-transform: uppercase;
+	line-height: 1;
+	color: var(--gtt-color-papel-100);
+	margin: 0 0 var(--gtt-space-4) 0;
+}
+
 .gtt-doc-band__title {
-	margin-top: 0;
-	color: var(--gtt-color-papel-50);
+	font-family: var(--gtt-font-sans);
+	font-weight: 600;
+	font-size: var(--gtt-text-4xl);
+	line-height: 1.05;
+	color: var(--gtt-color-papel-100);
+	margin: 0;
+}
+
+.gtt-doc-band__subtitle {
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: 1.25rem;
+	line-height: 1.5;
+	color: var(--gtt-color-papel-100);
+	opacity: 0.8;
+	margin: var(--gtt-space-6) 0 0 0;
 }
 
 /* Marcador invisible del borde inferior de la banda. Arnés para un futuro
