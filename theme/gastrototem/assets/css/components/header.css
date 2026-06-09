@@ -85,9 +85,9 @@
 	--header-border-color: var(--gtt-color-grafito-200);
 	--header-fg:           var(--gtt-color-grafito-900);   /* toggle vía currentColor */
 	--header-fg-hover:     var(--gtt-color-tinta-500);     /* :hover del toggle */
-	--lockup-square-fill:  var(--gtt-color-tinta-500);     /* cuadrado <rect>  */
-	--lockup-word-fill:    var(--gtt-color-tinta-500);     /* palabra path.st0 */
-	--lockup-symbol-fill:  var(--gtt-color-papel-100);     /* símbolo path.st1 */
+	--lockup-square-fill:  var(--gtt-color-grafito-900);   /* cuadrado <rect>  */
+	--lockup-word-fill:    var(--gtt-color-grafito-900);   /* palabra path.st0 */
+	--lockup-symbol-fill:  var(--gtt-color-papel-100);     /* símbolo path.st1 (knockout) */
 
 	/* Z-index — la jerarquía interna del header (bar > overlay) se
 	 * resuelve con z-index ordinales locales (1, 2) en las propias
@@ -133,9 +133,9 @@
 .gtt-header.is-transparent:not(.is-menu-open) {
 	--header-fg:           var(--gtt-color-papel-100);
 	--header-fg-hover:     var(--gtt-color-papel-50);
-	--lockup-square-fill:  transparent;
+	--lockup-square-fill:  var(--gtt-color-papel-100);   /* cuadrado relleno papel (logo invertido) */
 	--lockup-word-fill:    var(--gtt-color-papel-100);
-	--lockup-symbol-fill:  var(--gtt-color-papel-100);
+	--lockup-symbol-fill:  var(--gtt-color-tinta-500);   /* símbolo knockout = color de la banda */
 }
 
 /* ============================================================
@@ -163,6 +163,26 @@
 		background-color var(--transition-skin) var(--transition-easing),
 		border-color var(--transition-skin) var(--transition-easing),
 		transform var(--transition-intro-reveal) var(--transition-easing);
+}
+
+/* ============================================================
+ * AUTO-OCULTACIÓN SOBRE LA BANDA
+ *
+ * Sobre la banda (piel transparente) el header solo se ve en el top:
+ * al bajar se desliza fuera y reaparece —ya sólido— al cruzar el
+ * sentinel hacia el contenido, donde queda fijo. El umbral es el propio
+ * sentinel (borde inferior de cada banda), no una altura fija; lo
+ * gobierna el cerebro de header.js añadiendo/quitando .is-hidden.
+ * El transform anima a --transition-intro-base (200ms) por la base.
+ * ============================================================ */
+.gtt-header.is-hidden {
+	transform: translateY(-100%);
+}
+
+/* Con el menú abierto el header está siempre presente (defensivo: el
+ * scroll-lock ya deja scrollY en 0, pero esto blinda cualquier carrera). */
+.gtt-header.is-menu-open {
+	transform: none;
 }
 
 /* ============================================================

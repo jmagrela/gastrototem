@@ -248,7 +248,7 @@
 	if ( ctx === '404' ) { return; } // futuro: forzar transparente sobre campo tinta
 	var sentinel = document.querySelector( '[data-gtt-sentinel]' );
 	if ( ! sentinel ) {
-		header.classList.remove( 'is-transparent' ); // sin banda → sólida (defensivo)
+		header.classList.remove( 'is-transparent', 'is-hidden' ); // sin banda → sólida y visible (defensivo)
 		return;
 	}
 	var observer = null;
@@ -257,6 +257,10 @@
 		var top = sentinel.getBoundingClientRect().top;
 		var past = top <= h; // el borde inferior de la banda alcanzó el del header
 		header.classList.toggle( 'is-transparent', ! past );
+		// Auto-ocultación: sobre la banda (transparente) el header solo se ve
+		// en el top; al bajar se oculta. Sobre el contenido (sólido) siempre
+		// visible. El umbral es el sentinel, no una altura fija.
+		header.classList.toggle( 'is-hidden', ! past && window.scrollY > 0 );
 	}
 	function setup() {
 		if ( observer ) { observer.disconnect(); }
@@ -274,4 +278,13 @@
 		clearTimeout( resizeTimer );
 		resizeTimer = setTimeout( setup, 150 );
 	} );
+	// El IntersectionObserver solo dispara al cruzar el sentinel; la
+	// auto-ocultación depende de la posición de scroll dentro de la banda,
+	// así que recalculamos también en scroll (throttled con rAF).
+	var ticking = false;
+	window.addEventListener( 'scroll', function () {
+		if ( ticking ) { return; }
+		ticking = true;
+		requestAnimationFrame( function () { update(); ticking = false; } );
+	}, { passive: true } );
 }() );
