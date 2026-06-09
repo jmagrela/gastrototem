@@ -85,6 +85,7 @@
 	--gtt-text-xs:   0.75rem;     /* 12px - notas al pie */
 	--gtt-text-sm:   0.875rem;    /* 14px - texto secundario */
 	--gtt-text-base: 1.0625rem;   /* 17px - cuerpo por defecto */
+	--gtt-text-prose: 1.1875rem;  /* 19px - cuerpo de prosa (hoja-documento) */
 	--gtt-text-lg:   1.25rem;     /* 20px - destacado */
 	--gtt-text-xl:   1.5rem;      /* 24px - h3 */
 	--gtt-text-2xl:  clamp(1.75rem, 3vw, 2rem);    /* 28-32px - h2 */
@@ -99,6 +100,7 @@
 	--gtt-leading-tight:   1.15;   /* titulares */
 	--gtt-leading-snug:    1.35;   /* subtítulos */
 	--gtt-leading-normal:  1.55;   /* cuerpo */
+	--gtt-leading-prose:   1.6;    /* cuerpo de prosa (hoja-documento) */
 	--gtt-leading-relaxed: 1.7;    /* cuerpo en piezas largas */
 
 	/* ============================================================

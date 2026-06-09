@@ -81,3 +81,109 @@
 .gtt-doc-content__inner {
 	padding-block: var(--gtt-space-12);
 }
+
+/* ============================================================
+ * HOJA DE PROSA — tipografía del contenido bajo la banda.
+ * Medida de lectura estrecha; Inter cuerpo, Source Serif 4 Italic
+ * solo en citas, mono solo en atribución/código. Grafito sobre
+ * papel. Cero hex, cero font-family literal.
+ * ============================================================ */
+.gtt-doc-prose {
+	max-width: var(--gtt-container-prose);
+}
+
+.gtt-doc-prose > :first-child {
+	margin-top: 0;
+}
+
+.gtt-doc-prose p {
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-prose);
+	line-height: var(--gtt-leading-prose);
+	color: var(--gtt-color-grafito-900);
+	margin: var(--gtt-space-6) 0 0 0;
+}
+
+.gtt-doc-prose h2 {
+	font-family: var(--gtt-font-sans);
+	font-weight: 600;
+	font-size: var(--gtt-text-2xl);
+	line-height: var(--gtt-leading-tight);
+	color: var(--gtt-color-grafito-900);
+	margin: var(--gtt-space-12) 0 var(--gtt-space-4) 0;
+}
+
+.gtt-doc-prose h3 {
+	font-family: var(--gtt-font-sans);
+	font-weight: 600;
+	font-size: var(--gtt-text-xl);
+	line-height: var(--gtt-leading-snug);
+	color: var(--gtt-color-grafito-900);
+	margin: var(--gtt-space-8) 0 var(--gtt-space-4) 0;
+}
+
+.gtt-doc-prose a {
+	color: var(--gtt-color-tinta-500);
+	text-decoration: none;
+}
+
+.gtt-doc-prose a:hover {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.gtt-doc-prose ul,
+.gtt-doc-prose ol {
+	margin: var(--gtt-space-6) 0 0 0;
+	padding-inline-start: var(--gtt-space-8);
+	font-size: var(--gtt-text-prose);
+	line-height: var(--gtt-leading-prose);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-doc-prose li {
+	margin-top: var(--gtt-space-2);
+}
+
+.gtt-doc-prose blockquote {
+	margin: var(--gtt-space-12) 0;
+	padding: 0;
+	border: 0;
+}
+
+.gtt-doc-prose blockquote::before {
+	content: "";
+	display: block;
+	width: 48px;
+	height: 1px;
+	background-color: var(--gtt-color-grafito-200);
+	margin-bottom: var(--gtt-space-6);
+}
+
+.gtt-doc-prose blockquote p {
+	font-family: var(--gtt-font-serif);
+	font-style: italic;
+	font-weight: 400;
+	font-size: clamp(1.75rem, 1.2rem + 2.5vw, 2.75rem);
+	line-height: 1.25;
+	color: var(--gtt-color-grafito-900);
+	margin: 0;
+}
+
+.gtt-doc-prose blockquote cite {
+	display: block;
+	margin-top: var(--gtt-space-6);
+	font-family: var(--gtt-font-mono);
+	font-style: normal;
+	font-weight: 500;
+	font-size: var(--gtt-text-xs);
+	letter-spacing: var(--gtt-tracking-wide);
+	text-transform: uppercase;
+	color: var(--gtt-color-grafito-500);
+}
+
+.gtt-doc-prose code {
+	font-family: var(--gtt-font-mono);
+	font-size: 0.9em;
+}

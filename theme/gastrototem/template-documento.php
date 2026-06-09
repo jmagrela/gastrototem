@@ -45,7 +45,9 @@ get_header();
 
 	<div class="gtt-doc-content">
 		<div class="gtt-doc-content__inner">
-			<?php the_content(); ?>
+			<div class="gtt-doc-prose">
+				<?php the_content(); ?>
+			</div>
 		</div>
 	</div>
 
