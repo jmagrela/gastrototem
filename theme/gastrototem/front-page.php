@@ -72,6 +72,27 @@ get_header();
 		<p class="gtt-home-lede">Vamos a tu restaurante sin avisar, lo leemos entero y te decimos qué pasa: a la cara y por escrito. Lo llamamos una Sesión de Afinación.</p>
 	</section>
 
+	<section id="metodo" class="gtt-home-section gtt-home-section--metodo" aria-labelledby="gtt-metodo-kicker">
+		<p class="gtt-home-kicker" id="gtt-metodo-kicker">Los pasos</p>
+		<ol class="gtt-pasos">
+			<li class="gtt-paso">
+				<p class="gtt-paso__num">01</p>
+				<h2 class="gtt-paso__titulo">Una visita</h2>
+				<p class="gtt-paso__texto">Venimos a comer como un cliente más, sin avisar. Leemos la carta, la sala, el servicio y el ritmo, todo a la vez.</p>
+			</li>
+			<li class="gtt-paso">
+				<p class="gtt-paso__num">02</p>
+				<h2 class="gtt-paso__titulo">Una conversación</h2>
+				<p class="gtt-paso__texto">Antes de irnos nos sentamos contigo y te contamos a la cara lo que hemos leído. Sin rodeos.</p>
+			</li>
+			<li class="gtt-paso">
+				<p class="gtt-paso__num">03</p>
+				<h2 class="gtt-paso__titulo">Un informe firmado</h2>
+				<p class="gtt-paso__texto">Te dejamos por escrito la lectura y las propuestas concretas, firmado, en el acto.</p>
+			</li>
+		</ol>
+	</section>
+
 </div>
 
 <?php
