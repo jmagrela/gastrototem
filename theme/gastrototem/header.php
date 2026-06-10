@@ -21,11 +21,15 @@
 
 <script>
 /* Piel inicial síncrona antes del primer pintado, según contexto.
-   Fallback sin JS = piel sólida (base). Solo 'document' arranca transparente. */
+   Fallback sin JS = piel sólida (base). Arrancan transparentes los contextos
+   que abren sobre un campo oscuro a sangre: 'document' (banda tinta) y 'home'
+   (hero sobre foto). Mata el flash sólido→transparente en la home sin splash
+   y en reduced-motion; el observer de header.js toma el relevo al hacer scroll. */
 ( function () {
 	var header = document.querySelector( '.gtt-header' );
 	if ( ! header ) { return; }
-	if ( header.getAttribute( 'data-gtt-context' ) === 'document' ) {
+	var ctx = header.getAttribute( 'data-gtt-context' );
+	if ( ctx === 'document' || ctx === 'home' ) {
 		header.classList.add( 'is-transparent' );
 	}
 }() );
