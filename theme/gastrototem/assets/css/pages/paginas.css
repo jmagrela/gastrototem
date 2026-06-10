@@ -91,3 +91,54 @@
 		transition: none;
 	}
 }
+
+/* ============================================================
+ * /AFINACIÓN — precio + reserva por zonas + Afinación en Profundidad
+ * ============================================================ */
+.gtt-afinacion-precio {
+	margin: var(--gtt-space-6) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--gtt-text-2xl);
+	line-height: var(--gtt-leading-snug);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-afinacion-nota {
+	margin: var(--gtt-space-2) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-afinacion-zonas-intro {
+	margin: var(--gtt-space-6) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-lg);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-grafito-900);
+}
+
+/* Afinación en Profundidad: hairline de separación + medida estrecha. */
+.gtt-profundidad {
+	border-top: 1px solid var(--gtt-color-grafito-200);
+	padding-top: var(--gtt-space-12);
+	max-width: 40rem;
+}
+
+.gtt-profundidad__texto {
+	margin: var(--gtt-space-6) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-relaxed);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-profundidad__cta {
+	margin-top: var(--gtt-space-6);
+	font-size: var(--gtt-text-base);
+}
