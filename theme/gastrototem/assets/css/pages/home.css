@@ -312,3 +312,42 @@
 		transform: none !important;
 	}
 }
+
+/* ========================================================================
+ * CUERPO DE LA HOME · secciones dentro de .gtt-home-contenido (papel)
+ *
+ * Cada sección es un <section> bajo el sentinel. Ritmo vertical editorial por
+ * margen entre secciones. Medida de lectura acotada por sección. Todo papel/
+ * grafito/tinta vía tokens; mono uppercase con --gtt-tracking-wide.
+ * ===================================================================== */
+
+.gtt-home-section {
+	max-width: var(--gtt-container-content);
+}
+
+.gtt-home-section + .gtt-home-section {
+	margin-top: var(--gtt-space-24);
+}
+
+/* Kicker mono (etiqueta de sección y de estado). */
+.gtt-home-kicker {
+	margin: 0;
+	font-family: var(--gtt-font-mono);
+	font-weight: 500;
+	font-size: var(--gtt-text-xs);
+	text-transform: uppercase;
+	letter-spacing: var(--gtt-tracking-wide);
+	color: var(--gtt-color-grafito-900);
+}
+
+/* Sección 1 · Qué hacemos -------------------------------------------------- */
+
+.gtt-home-lede {
+	margin: var(--gtt-space-6) 0 0;
+	max-width: 42rem;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-lg);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-grafito-900);
+}

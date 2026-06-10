@@ -67,12 +67,10 @@ get_header();
 
 	<span class="gtt-hero__sentinel" data-gtt-sentinel aria-hidden="true"></span>
 
-	<?php
-	while ( have_posts() ) :
-		the_post();
-		the_content();
-	endwhile;
-	?>
+	<section class="gtt-home-section gtt-home-section--lede">
+		<p class="gtt-home-kicker">Qué hacemos</p>
+		<p class="gtt-home-lede">Vamos a tu restaurante sin avisar, lo leemos entero y te decimos qué pasa: a la cara y por escrito. Lo llamamos una Sesión de Afinación.</p>
+	</section>
 
 </div>
 
