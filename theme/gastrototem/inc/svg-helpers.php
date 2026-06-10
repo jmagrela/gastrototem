@@ -61,14 +61,42 @@ if ( ! function_exists( 'gtt_theme_inline_brand_svg' ) ) {
 	}
 }
 
+if ( ! function_exists( 'gtt_interior_page_slugs' ) ) {
+	/**
+	 * Slugs de las páginas interiores propias (page-{slug}.php).
+	 *
+	 * Fuente única de verdad compartida por gtt_header_context() (contexto del
+	 * header) y el enqueue condicional de sus assets (inc/enqueue.php). Mantener
+	 * en sintonía con los slugs reales de WordPress y con el menú del header.
+	 *
+	 * @return string[] Lista de slugs.
+	 */
+	function gtt_interior_page_slugs() {
+		return array( 'afinacion', 'criterio', 'nosotros', 'contacto' );
+	}
+}
+
+if ( ! function_exists( 'gtt_is_interior_page' ) ) {
+	/**
+	 * ¿La consulta actual es una de las páginas interiores propias?
+	 *
+	 * @return bool
+	 */
+	function gtt_is_interior_page() {
+		return is_page( gtt_interior_page_slugs() );
+	}
+}
+
 if ( ! function_exists( 'gtt_header_context' ) ) {
 	/**
 	 * Contexto del header para la página actual.
 	 *
 	 * Lo emite header-main.php como data-gtt-context y lo leen tanto el
 	 * micro-script de piel inicial (header.php) como el observer (header.js).
-	 * Orden deliberado: 404 gana a cualquier plantilla; 'document' solo cuando
-	 * la página usa la plantilla "Documento"; 'home' la portada; 'flat' el resto.
+	 * Orden deliberado: 404 gana a cualquier plantilla; 'document' cuando la
+	 * página usa la plantilla "Documento" O es una de las interiores propias
+	 * (ambas abren sobre banda tinta a sangre con sentinel); 'home' la portada;
+	 * 'flat' el resto.
 	 *
 	 * @return string Uno de: '404' | 'document' | 'home' | 'flat'.
 	 */
@@ -76,7 +104,7 @@ if ( ! function_exists( 'gtt_header_context' ) ) {
 		if ( is_404() ) {
 			return '404';
 		}
-		if ( is_page_template( 'template-documento.php' ) ) {
+		if ( is_page_template( 'template-documento.php' ) || gtt_is_interior_page() ) {
 			return 'document';
 		}
 		if ( is_front_page() ) {

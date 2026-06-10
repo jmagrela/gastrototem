@@ -1,0 +1,248 @@
+/*
+ * Gastrototem · Componente · Primitivos editoriales
+ *
+ * Primitivos reutilizables por las páginas interiores propias (page-{slug}.php),
+ * realizados como partials en template-parts/: kicker mono, bloque de pasos
+ * (01/02/03), tarjeta de zona y pull-quote. Mismo lenguaje visual que el cuerpo
+ * de la home (front-page.php / pages/home.css).
+ *
+ * DEUDA ANOTADA · estas reglas conviven hoy con sus equivalentes inline de
+ * pages/home.css (kicker/pasos/zonas/pullquote). La unificación —extraer de
+ * home.css y repuntar el markup de la home a estos partials— queda APARCADA para
+ * no re-validar la home cerrada en esta pasada. Si se unifica, este archivo es
+ * el destino canónico de esas reglas.
+ *
+ * Cero hex literales · cero font-family literal. Solo var(--gtt-*).
+ */
+
+/* ============================================================
+ * KICKER MONO — etiqueta de sección y de estado (sobre papel).
+ * ============================================================ */
+.gtt-kicker {
+	margin: 0;
+	font-family: var(--gtt-font-mono);
+	font-weight: 500;
+	font-size: var(--gtt-text-xs);
+	text-transform: uppercase;
+	letter-spacing: var(--gtt-tracking-wide);
+	color: var(--gtt-color-grafito-900);
+}
+
+/* ============================================================
+ * BLOQUE DE PASOS — 01/02/03 con reglas (1 col → 3 col).
+ * ============================================================ */
+.gtt-pasos {
+	list-style: none;
+	margin: var(--gtt-space-8) 0 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+.gtt-paso {
+	padding: var(--gtt-space-6) 0;
+	border-top: 1px solid var(--gtt-color-grafito-200);
+}
+
+.gtt-paso:first-child {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.gtt-paso__num {
+	margin: 0;
+	font-family: var(--gtt-font-mono);
+	font-weight: 500;
+	font-size: var(--gtt-text-sm);
+	color: var(--gtt-color-tinta-500);
+}
+
+.gtt-paso__titulo {
+	margin: var(--gtt-space-3) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--gtt-text-xl);
+	line-height: var(--gtt-leading-tight);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-paso__texto {
+	margin: var(--gtt-space-2) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-relaxed);
+	color: var(--gtt-color-grafito-900);
+}
+
+/* Coda bajo la lista (no existe en la home; propia del partial). */
+.gtt-pasos-coda {
+	margin: var(--gtt-space-8) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-grafito-500);
+}
+
+@media (min-width: 768px) {
+	.gtt-pasos {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.gtt-paso {
+		padding: 0 var(--gtt-space-8);
+		border-top: 0;
+		border-left: 1px solid var(--gtt-color-grafito-200);
+	}
+
+	.gtt-paso:first-child {
+		padding-left: 0;
+		border-left: 0;
+	}
+
+	.gtt-paso:last-child {
+		padding-right: 0;
+	}
+}
+
+/* ============================================================
+ * TARJETA DE ZONA — estado (punto semántico) + nombre + CTA.
+ * La tarjeta se define por el borde, no por contraste de fondo.
+ * ============================================================ */
+.gtt-zonas-grid {
+	margin-top: var(--gtt-space-8);
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--gtt-space-4);
+}
+
+@media (min-width: 768px) {
+	.gtt-zonas-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--gtt-space-6);
+	}
+}
+
+.gtt-zona {
+	background-color: var(--gtt-color-papel-100);
+	border: 1px solid var(--gtt-color-grafito-200);
+	border-radius: 6px;
+	padding: var(--gtt-space-8);
+}
+
+.gtt-zona__estado {
+	display: flex;
+	align-items: center;
+	gap: var(--gtt-space-2);
+	margin-bottom: var(--gtt-space-4);
+}
+
+/* Punto de estado: color SEMÁNTICO de UI (no branding, no fondo de sección). */
+.gtt-zona__punto {
+	width: var(--gtt-space-2);
+	height: var(--gtt-space-2);
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.gtt-zona__punto--abierta {
+	background-color: var(--gtt-color-success);
+}
+
+.gtt-zona__punto--sin-fechas {
+	background-color: var(--gtt-color-warning);
+}
+
+.gtt-zona__punto--proximamente {
+	background-color: var(--gtt-color-grafito-200);
+}
+
+.gtt-zona__nombre {
+	margin: 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--gtt-text-xl);
+	line-height: var(--gtt-leading-tight);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-zona__sublinea {
+	margin: var(--gtt-space-2) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-sm);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-grafito-500);
+}
+
+.gtt-zona__cta {
+	display: inline-flex;
+	align-items: baseline;
+	gap: var(--gtt-space-2);
+	margin-top: var(--gtt-space-4);
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--gtt-text-base);
+	color: var(--gtt-color-grafito-900);
+	text-decoration: none;
+}
+
+.gtt-zona__cta-flecha {
+	display: inline-block;
+	transition: transform 180ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-zona__cta:hover .gtt-zona__cta-flecha {
+		transform: translateX(var(--gtt-space-1));
+	}
+
+	.gtt-zona__cta:hover .gtt-zona__cta-label {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.gtt-zona__cta-flecha {
+		transition: none;
+	}
+}
+
+/* ============================================================
+ * PULL-QUOTE — regla corta + cita serif italic + atribución mono.
+ * Grafito sobre papel (nunca tinta como texto sobre fondo oscuro).
+ * ============================================================ */
+.gtt-pullquote {
+	margin: 0;
+	max-width: 42rem;
+}
+
+.gtt-pullquote__regla {
+	width: var(--gtt-space-12);
+	height: 1px;
+	margin: 0 0 var(--gtt-space-6);
+	border: 0;
+	background-color: var(--gtt-color-grafito-200);
+}
+
+.gtt-pullquote__cita {
+	margin: 0;
+	font-family: var(--gtt-font-serif);
+	font-style: italic;
+	font-weight: 400;
+	font-size: var(--gtt-text-3xl);
+	line-height: var(--gtt-leading-tight);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-pullquote__atribucion {
+	margin: var(--gtt-space-6) 0 0;
+	font-family: var(--gtt-font-mono);
+	font-weight: 500;
+	font-size: var(--gtt-text-xs);
+	letter-spacing: var(--gtt-tracking-wide);
+	text-transform: uppercase;
+	color: var(--gtt-color-grafito-500);
+}

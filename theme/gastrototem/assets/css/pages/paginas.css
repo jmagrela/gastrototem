@@ -1,0 +1,93 @@
+/*
+ * Gastrototem · Páginas · Interiores (afinación / criterio / nosotros / contacto)
+ *
+ * Andamiaje común de las páginas interiores propias (page-{slug}.php): banda
+ * tinta de apertura —reutiliza .gtt-doc-band de components/documento.css— y, bajo
+ * ella, el cuerpo papel con secciones. Los primitivos (kicker, pasos, zonas,
+ * pull-quote) viven en components/primitivos.css; aquí va el SHELL del cuerpo y
+ * las secciones BESPOKE de cada página (cada una en su propio commit).
+ *
+ * Centrado igual que la banda (.gtt-doc-band__inner): max-width contenido +
+ * gutter de tokens; así banda y cuerpo alinean en pantallas anchas.
+ *
+ * Cero hex literales · cero font-family literal. Solo var(--gtt-*).
+ */
+
+/* ============================================================
+ * SHELL — cuerpo papel bajo la banda
+ * ============================================================ */
+.gtt-pagina {
+	background-color: var(--gtt-color-papel-100);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-pagina__inner {
+	max-width: var(--gtt-container-content);
+	margin-inline: auto;
+	padding-inline: var(--gtt-space-6);
+	padding-block: var(--gtt-space-12) var(--gtt-space-32);
+}
+
+/* Ritmo vertical entre secciones. */
+.gtt-pagina-seccion + .gtt-pagina-seccion {
+	margin-top: var(--gtt-space-24);
+}
+
+/* ============================================================
+ * PROSA — bloques de lectura (punto de vista / el oficio).
+ * Medida estrecha; primer párrafo pegado al kicker.
+ * ============================================================ */
+.gtt-prosa {
+	max-width: 40rem;
+	margin-top: var(--gtt-space-6);
+}
+
+.gtt-prosa p {
+	margin: var(--gtt-space-6) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-prose);
+	line-height: var(--gtt-leading-prose);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-prosa p:first-child {
+	margin-top: 0;
+}
+
+/* ============================================================
+ * ENLACE-CORREO / CTA «Escríbenos» sobre papel.
+ * Tinta como texto sobre fondo claro = permitido (la prohibición
+ * es tinta-texto sobre fondo oscuro).
+ * ============================================================ */
+.gtt-pagina-mail {
+	display: inline-flex;
+	align-items: baseline;
+	gap: var(--gtt-space-2);
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	color: var(--gtt-color-tinta-500);
+	text-decoration: none;
+}
+
+.gtt-pagina-mail-flecha {
+	display: inline-block;
+	transition: transform 180ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-pagina-mail:hover .gtt-pagina-mail-label {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	.gtt-pagina-mail:hover .gtt-pagina-mail-flecha {
+		transform: translateX(var(--gtt-space-1));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.gtt-pagina-mail-flecha {
+		transition: none;
+	}
+}

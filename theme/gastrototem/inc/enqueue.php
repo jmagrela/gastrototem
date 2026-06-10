@@ -84,14 +84,39 @@ function gtt_theme_enqueue_styles() {
 		gtt_theme_asset_version( '/assets/css/components/footer.css' )
 	);
 
-	/* Documento: solo en páginas con la plantilla "Documento". Sin JS en esta
-	 * pieza; el sentinel del band quedará como arnés para una pieza posterior. */
-	if ( is_page_template( 'template-documento.php' ) ) {
+	/* Documento: en páginas con la plantilla "Documento" Y en las interiores
+	 * propias (page-{slug}.php), que reutilizan la banda de apertura .gtt-doc-band
+	 * y su sentinel. El sentinel lo lee el observer del header (header.js). */
+	if ( is_page_template( 'template-documento.php' ) || gtt_is_interior_page() ) {
 		wp_enqueue_style(
 			'gastrototem-documento',
 			GTT_THEME_URI . '/assets/css/components/documento.css',
 			array( 'gastrototem-base' ),
 			gtt_theme_asset_version( '/assets/css/components/documento.css' )
+		);
+	}
+
+	/* Primitivos editoriales (kicker, pasos, zonas, pull-quote): solo en las
+	 * interiores propias, que los consumen vía partials. La home NO los carga:
+	 * mantiene sus propias copias inline en pages/home.css (sin tocar). La
+	 * unificación de ambas queda aparcada (ver components/primitivos.css). */
+	if ( gtt_is_interior_page() ) {
+		wp_enqueue_style(
+			'gastrototem-primitivos',
+			GTT_THEME_URI . '/assets/css/components/primitivos.css',
+			array( 'gastrototem-base' ),
+			gtt_theme_asset_version( '/assets/css/components/primitivos.css' )
+		);
+	}
+
+	/* Páginas interiores: shell del cuerpo + secciones bespoke. Depende de los
+	 * primitivos (orden de carga). Solo en las interiores propias. */
+	if ( gtt_is_interior_page() ) {
+		wp_enqueue_style(
+			'gastrototem-paginas',
+			GTT_THEME_URI . '/assets/css/pages/paginas.css',
+			array( 'gastrototem-base', 'gastrototem-primitivos' ),
+			gtt_theme_asset_version( '/assets/css/pages/paginas.css' )
 		);
 	}
 
