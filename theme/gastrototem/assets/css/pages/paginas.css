@@ -206,3 +206,58 @@
 		border-bottom: 0;
 	}
 }
+
+/* ============================================================
+ * /NOSOTROS — los dos afinadores (1 col → 2 col)
+ * ============================================================ */
+.gtt-dos__intro {
+	margin: var(--gtt-space-6) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-lg);
+	line-height: var(--gtt-leading-snug);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-dos {
+	margin-top: var(--gtt-space-8);
+	display: flex;
+	flex-direction: column;
+	gap: var(--gtt-space-12);
+}
+
+@media (min-width: 768px) {
+	.gtt-dos {
+		flex-direction: row;
+	}
+
+	.gtt-persona {
+		flex: 1;
+	}
+}
+
+.gtt-persona__nombre {
+	margin: 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--gtt-text-xl);
+	line-height: var(--gtt-leading-tight);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-persona__rol {
+	margin: var(--gtt-space-2) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-sm);
+	color: var(--gtt-color-grafito-500);
+}
+
+.gtt-persona__bio {
+	margin: var(--gtt-space-4) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-relaxed);
+	color: var(--gtt-color-grafito-900);
+}
