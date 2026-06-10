@@ -261,3 +261,61 @@
 	line-height: var(--gtt-leading-relaxed);
 	color: var(--gtt-color-grafito-900);
 }
+
+/* ============================================================
+ * /CONTACTO — canales (correo único, reservar, la firma)
+ * ============================================================ */
+.gtt-canal + .gtt-canal {
+	margin-top: var(--gtt-space-12);
+}
+
+.gtt-canal__mail {
+	display: inline-block;
+	margin-top: var(--gtt-space-3);
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--gtt-text-2xl);
+	line-height: var(--gtt-leading-tight);
+	color: var(--gtt-color-tinta-500);
+	text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-canal__mail:hover {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+}
+
+.gtt-canal__texto {
+	margin: var(--gtt-space-3) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-canal__texto a {
+	color: var(--gtt-color-tinta-500);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.gtt-firma-descriptor {
+	margin: var(--gtt-space-3) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-firma-descriptor__nota {
+	margin: var(--gtt-space-2) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-sm);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-grafito-500);
+}
