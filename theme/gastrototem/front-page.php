@@ -129,6 +129,17 @@ get_header();
 		</div>
 	</section>
 
+	<section class="gtt-home-section gtt-home-section--firma">
+		<figure class="gtt-pullquote">
+			<hr class="gtt-pullquote__regla" aria-hidden="true">
+			<blockquote class="gtt-pullquote__cita">Detrás de cada lectura hay un criterio y dos personas.</blockquote>
+		</figure>
+		<div class="gtt-home-firma">
+			<a class="gtt-home-link" href="<?php echo esc_url( '/criterio' ); ?>">Nuestro criterio <span aria-hidden="true">→</span></a>
+			<a class="gtt-home-link" href="<?php echo esc_url( '/nosotros' ); ?>">Quiénes somos <span aria-hidden="true">→</span></a>
+		</div>
+	</section>
+
 </div>
 
 <?php

@@ -557,3 +557,44 @@
 		transition: none;
 	}
 }
+
+/* Sección 4 · El criterio / la firma --------------------------------------- */
+/* Pull-quote con el lenguaje de la cita de las páginas-documento: Source Serif 4
+ * Italic, regla 48×1px grafito-200, sobre papel (texto grafito, no tinta). */
+
+.gtt-pullquote {
+	margin: 0;
+	max-width: 42rem;
+}
+
+.gtt-pullquote__regla {
+	width: var(--gtt-space-12);
+	height: 1px;
+	margin: 0 0 var(--gtt-space-6);
+	border: 0;
+	background-color: var(--gtt-color-grafito-200);
+}
+
+.gtt-pullquote__cita {
+	margin: 0;
+	font-family: var(--gtt-font-serif);
+	font-style: italic;
+	font-weight: 400;
+	font-size: var(--gtt-text-3xl);
+	line-height: var(--gtt-leading-tight);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-home-firma {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gtt-space-4);
+	margin-top: var(--gtt-space-8);
+}
+
+@media (min-width: 768px) {
+	.gtt-home-firma {
+		flex-direction: row;
+		gap: var(--gtt-space-8);
+	}
+}
