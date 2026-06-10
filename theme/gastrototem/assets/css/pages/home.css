@@ -164,7 +164,14 @@
 
 .gtt-hero__titulo {
 	margin: 0;
-	max-width: 16em;
+	/* Medida para que el titular rompa en 3 líneas como Lovable, sin <br>:
+	 * «Donde otros ven una comida,» / «nosotros leemos» / «un restaurante.».
+	 * Debe ser menor que el cap de .gtt-hero__composicion (64rem) para llegar a
+	 * actuar, y por debajo del umbral 2→3 líneas (~13.9em a tamaño máximo, medido
+	 * en staging). 13.6em deja la línea 1 completa con margen. «un restaurante.»
+	 * va unido por &nbsp; para caer entero a la 3.ª. En em → escala con el clamp
+	 * del tamaño (en móviles estrechos rompe natural en más líneas, deseable). */
+	max-width: 13.6em;
 	font-family: var(--gtt-font-sans);
 	font-weight: 600;
 	font-size: var(--gtt-text-4xl);

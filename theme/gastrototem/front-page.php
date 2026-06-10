@@ -47,7 +47,7 @@ get_header();
 		<div class="gtt-hero__composicion">
 			<p class="gtt-hero__folio">Folio I · Apertura</p>
 			<p class="gtt-hero__kicker">Una firma de Alta Afinación Gastronómica</p>
-			<h1 class="gtt-hero__titulo">Donde otros ven una comida, nosotros <em class="gtt-hero__acento">leemos</em> un restaurante.</h1>
+			<h1 class="gtt-hero__titulo">Donde otros ven una comida, nosotros <em class="gtt-hero__acento">leemos</em> un&nbsp;restaurante.</h1>
 			<p class="gtt-hero__subtitulo">Visitamos restaurantes, los escuchamos como un afinador escucha un instrumento, y devolvemos un informe firmado con propuestas concretas.</p>
 			<div class="gtt-hero__ctas">
 				<a class="gtt-hero__cta gtt-hero__cta--primario" href="#zonas">Verificar zonas y fechas <span class="gtt-hero__cta-flecha" aria-hidden="true">→</span></a>
