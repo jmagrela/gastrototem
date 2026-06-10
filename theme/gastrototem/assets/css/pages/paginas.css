@@ -142,3 +142,67 @@
 	margin-top: var(--gtt-space-6);
 	font-size: var(--gtt-text-base);
 }
+
+/* ============================================================
+ * /CRITERIO — las cuatro miradas (rejilla 1 col → 2×2 con hairlines)
+ * ============================================================ */
+.gtt-miradas {
+	margin-top: var(--gtt-space-6);
+	display: grid;
+	grid-template-columns: 1fr;
+	border-top: 1px solid var(--gtt-color-grafito-200);
+}
+
+.gtt-mirada {
+	padding: var(--gtt-space-8) 0;
+	border-bottom: 1px solid var(--gtt-color-grafito-200);
+}
+
+.gtt-mirada:last-child {
+	border-bottom: 0;
+}
+
+.gtt-mirada__titulo {
+	margin: 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--gtt-text-xl);
+	line-height: var(--gtt-leading-tight);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-mirada__texto {
+	margin: var(--gtt-space-3) 0 0;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-base);
+	line-height: var(--gtt-leading-relaxed);
+	color: var(--gtt-color-grafito-900);
+}
+
+@media (min-width: 768px) {
+	.gtt-miradas {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.gtt-mirada {
+		padding: var(--gtt-space-8);
+		border-bottom: 1px solid var(--gtt-color-grafito-200);
+	}
+
+	/* Columna izquierda: hairline vertical de separación + sangrado al borde. */
+	.gtt-mirada:nth-child(odd) {
+		padding-left: 0;
+		border-right: 1px solid var(--gtt-color-grafito-200);
+	}
+
+	.gtt-mirada:nth-child(even) {
+		padding-right: 0;
+	}
+
+	/* Última fila (3.ª y 4.ª) sin regla inferior. */
+	.gtt-mirada:nth-child(3),
+	.gtt-mirada:nth-child(4) {
+		border-bottom: 0;
+	}
+}
