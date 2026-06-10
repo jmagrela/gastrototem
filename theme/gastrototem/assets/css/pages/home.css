@@ -1,0 +1,281 @@
+/*
+ * Gastrototem · Page · Home (hero de portada)
+ *
+ * Pieza 1: estructura + composición editorial. SIN capa de movimiento (el
+ * zoom-scroll de la foto, el desvanecido del texto y el grano son una pieza
+ * posterior). Depende de assets/css/base.css.
+ *
+ * Cero hex literales · cero familias tipográficas literales. Todos los colores y
+ * tipografías vienen de tokens.css vía var(--gtt-*); las opacidades del overlay
+ * se derivan del token de grafito con color-mix (sin canales RGB literales).
+ *
+ * OVERLAP sin JS: .gtt-hero es sticky (z-index 0) y .gtt-home-contenido es
+ * relative (z-index 1) con fondo papel opaco: al hacer scroll el contenido sube
+ * y cubre el hero. El <main id="gtt-content"> (que abre header.php) envuelve a
+ * ambos como hermanos; no se abre ningún <main> nuevo.
+ */
+
+.gtt-hero {
+	/* Padding de la composición (a sangre la foto, con aire el texto). El top
+	 * deja paso al header fijo (64/80px) más respiración editorial. */
+	--hero-pad-x: var(--gtt-space-6);          /* 24px */
+	--hero-pad-top: 80px;                       /* despeja el header móvil + aire */
+	--hero-pad-bottom: var(--gtt-space-12);    /* 48px */
+	--hero-transition: 180ms ease-out;
+	--hero-title-tracking: -0.02em;
+
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	width: 100%;                                /* el <main> es full-width → a sangre */
+	z-index: 0;
+	overflow: hidden;
+	background-color: var(--gtt-color-grafito-900);
+	color: var(--gtt-color-papel-100);
+}
+
+@media (min-width: 768px) {
+	.gtt-hero {
+		--hero-pad-x: var(--gtt-space-12);     /* 48px */
+		--hero-pad-top: 100px;
+		--hero-pad-bottom: var(--gtt-space-16); /* 64px */
+	}
+}
+
+@media (min-width: 1024px) {
+	.gtt-hero {
+		--hero-pad-x: var(--gtt-space-16);     /* 64px */
+	}
+}
+
+/* Foto full-bleed --------------------------------------------------------- */
+
+.gtt-hero__foto {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 100% 100%;                /* móvil: encuadre inferior-derecho */
+	opacity: 0.6;                              /* móvil: foto atenuada sobre el grafito */
+}
+
+@media (min-width: 768px) {
+	.gtt-hero__foto {
+		object-position: center;
+		opacity: 1;
+	}
+}
+
+/* Overlay de contraste — solo desktop/tablet; en móvil contrasta la opacidad
+ * de la foto. Gradiente grafito derivado del token con color-mix (cero RGB). */
+.gtt-hero__overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	display: none;
+}
+
+@media (min-width: 768px) {
+	.gtt-hero__overlay {
+		display: block;
+		background: linear-gradient(
+			0deg,
+			color-mix(in srgb, var(--gtt-color-grafito-900) 85%, transparent) 0%,
+			color-mix(in srgb, var(--gtt-color-grafito-900) 75%, transparent) 35%,
+			color-mix(in srgb, var(--gtt-color-grafito-900) 35%, transparent) 60%,
+			transparent 100%
+		);
+	}
+}
+
+/* Composición editorial --------------------------------------------------- */
+
+.gtt-hero__contenido {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	padding: var(--hero-pad-top) var(--hero-pad-x) var(--hero-pad-bottom);
+}
+
+/* Rótulos / kicker / folio: pila mono en mayúsculas, papel. */
+.gtt-hero__rotulo,
+.gtt-hero__kicker,
+.gtt-hero__folio {
+	margin: 0;
+	font-family: var(--gtt-font-mono);
+	font-weight: 400;
+	font-size: var(--gtt-text-xs);
+	text-transform: uppercase;
+	letter-spacing: var(--gtt-tracking-wide);
+	color: var(--gtt-color-papel-100);
+}
+
+.gtt-hero__cabecera {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--gtt-space-4);
+}
+
+.gtt-hero__rotulo {
+	color: color-mix(in srgb, var(--gtt-color-papel-100) 75%, transparent);
+}
+
+.gtt-hero__composicion {
+	margin-top: auto;                          /* empuja la composición al pie */
+	max-width: var(--gtt-container-content);
+}
+
+.gtt-hero__folio {
+	margin-bottom: var(--gtt-space-6);
+	color: color-mix(in srgb, var(--gtt-color-papel-100) 75%, transparent);
+}
+
+.gtt-hero__kicker {
+	margin-bottom: var(--gtt-space-8);
+	font-weight: 500;
+}
+
+.gtt-hero__titulo {
+	margin: 0;
+	max-width: 16em;
+	font-family: var(--gtt-font-sans);
+	font-weight: 600;
+	font-size: var(--gtt-text-4xl);
+	line-height: var(--gtt-leading-tight);
+	letter-spacing: var(--hero-title-tracking);
+	color: var(--gtt-color-papel-100);
+}
+
+/* Corrección de marca (MARCA §3.3): «leemos» en serif italic PAPEL, nunca tinta
+ * sobre fondo oscuro. El acento lo da la cursiva, no el color. */
+.gtt-hero__acento {
+	font-family: var(--gtt-font-serif);
+	font-style: italic;
+	font-weight: 400;
+	color: var(--gtt-color-papel-100);
+}
+
+.gtt-hero__subtitulo {
+	margin: var(--gtt-space-6) 0 0;
+	max-width: 34em;
+	font-family: var(--gtt-font-sans);
+	font-weight: 400;
+	font-size: var(--gtt-text-lg);
+	line-height: var(--gtt-leading-snug);
+	color: var(--gtt-color-papel-100);
+}
+
+/* CTAs: sobrios sobre el oscuro. Sin exclamaciones, sin urgencia. */
+.gtt-hero__ctas {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--gtt-space-3);
+	margin-top: var(--gtt-space-8);
+}
+
+.gtt-hero__cta {
+	font-family: var(--gtt-font-sans);
+	text-decoration: none;
+	color: var(--gtt-color-papel-100);
+	transition: color var(--hero-transition);
+}
+
+.gtt-hero__cta--primario {
+	display: inline-flex;
+	align-items: baseline;
+	gap: var(--gtt-space-3);
+	font-weight: 500;
+	font-size: var(--gtt-text-lg);
+}
+
+.gtt-hero__cta--secundario {
+	font-weight: 400;
+	font-size: var(--gtt-text-base);
+}
+
+.gtt-hero__cta-flecha {
+	display: inline-block;
+	font-family: var(--gtt-font-serif);
+	font-style: italic;
+	transition: transform var(--hero-transition);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-hero__cta:hover {
+		color: var(--gtt-color-papel-50);
+	}
+
+	.gtt-hero__cta--primario:hover .gtt-hero__cta-flecha {
+		transform: translateX(var(--gtt-space-1));
+	}
+}
+
+/* Banda inferior ---------------------------------------------------------- */
+
+.gtt-hero__banda {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: var(--gtt-space-4);
+	margin-top: var(--gtt-space-12);
+	pointer-events: none;
+}
+
+.gtt-hero__rotulo--lamina {
+	display: none;                             /* oculta en móvil (como la referencia) */
+}
+
+@media (min-width: 640px) {
+	.gtt-hero__rotulo--lamina {
+		display: block;
+		color: color-mix(in srgb, var(--gtt-color-papel-100) 85%, transparent);
+	}
+}
+
+/* ========================================================================
+ * CONTENIDO · sube por encima del hero (overlap CSS puro)
+ * ===================================================================== */
+
+.gtt-home-contenido {
+	position: relative;
+	z-index: 1;
+	background-color: var(--gtt-color-papel-100);
+	color: var(--gtt-color-grafito-900);
+	padding: var(--gtt-space-24) var(--gtt-space-6);
+}
+
+@media (min-width: 768px) {
+	.gtt-home-contenido {
+		padding-inline: var(--gtt-space-12);
+	}
+}
+
+@media (min-width: 1024px) {
+	.gtt-home-contenido {
+		padding-inline: var(--gtt-space-16);
+	}
+}
+
+/* Sentinel del observer del header: marcador invisible en el tope del contenido. */
+.gtt-hero__sentinel {
+	display: block;
+	width: 1px;
+	height: 1px;
+}
+
+/* ========================================================================
+ * prefers-reduced-motion · accesibilidad sobre estética
+ * ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+	.gtt-hero__cta,
+	.gtt-hero__cta-flecha {
+		transition: none;
+	}
+}

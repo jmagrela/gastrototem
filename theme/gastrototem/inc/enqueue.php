@@ -95,6 +95,18 @@ function gtt_theme_enqueue_styles() {
 		);
 	}
 
+	/* Home: hero de portada. Solo en la portada (front-page.php). Sin JS en esta
+	 * pieza; el overlap hero↔contenido es CSS puro y el sentinel queda como arnés
+	 * del observer del header (ya construido). */
+	if ( is_front_page() ) {
+		wp_enqueue_style(
+			'gastrototem-home',
+			GTT_THEME_URI . '/assets/css/pages/home.css',
+			array( 'gastrototem-base' ),
+			gtt_theme_asset_version( '/assets/css/pages/home.css' )
+		);
+	}
+
 	/* Splash: solo en la home. El overlay nace oculto por CSS y la decisión
 	 * de mostrarlo (no-flash) es síncrona en template-parts/splash.php; este
 	 * JS solo hace la coreografía temporizada. */
