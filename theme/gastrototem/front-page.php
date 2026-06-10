@@ -93,6 +93,42 @@ get_header();
 		</ol>
 	</section>
 
+	<section id="zonas" class="gtt-home-section gtt-home-section--zonas" aria-labelledby="gtt-zonas-kicker">
+		<p class="gtt-home-kicker" id="gtt-zonas-kicker">Reservar</p>
+		<p class="gtt-home-precio">Una Sesión de Afinación son 1.000 € + IVA.</p>
+		<a class="gtt-home-link" href="<?php echo esc_url( '/afinacion' ); ?>">Ver la Sesión al detalle <span aria-hidden="true">→</span></a>
+		<p class="gtt-home-zonas-intro">Se reserva por zonas. Esto es lo que hay abierto ahora mismo:</p>
+		<div class="gtt-zonas-grid">
+
+			<article class="gtt-zona">
+				<div class="gtt-zona__estado">
+					<span class="gtt-zona__punto gtt-zona__punto--abierta" aria-hidden="true"></span>
+					<span class="gtt-home-kicker">Abierta</span>
+				</div>
+				<h2 class="gtt-zona__nombre">Málaga</h2>
+				<a class="gtt-zona__cta" href="<?php echo esc_url( '/reservar' ); ?>"><span class="gtt-zona__cta-label">Verificar fechas</span> <span class="gtt-zona__cta-flecha" aria-hidden="true">→</span></a>
+			</article>
+
+			<article class="gtt-zona">
+				<div class="gtt-zona__estado">
+					<span class="gtt-zona__punto gtt-zona__punto--sin-fechas" aria-hidden="true"></span>
+					<span class="gtt-home-kicker">Sin fechas</span>
+				</div>
+				<h2 class="gtt-zona__nombre">Granada</h2>
+				<p class="gtt-zona__sublinea">Sin fechas disponibles ahora mismo.</p>
+			</article>
+
+			<article class="gtt-zona">
+				<div class="gtt-zona__estado">
+					<span class="gtt-zona__punto gtt-zona__punto--proximamente" aria-hidden="true"></span>
+					<span class="gtt-home-kicker">Próximamente</span>
+				</div>
+				<h2 class="gtt-zona__nombre">Sevilla</h2>
+			</article>
+
+		</div>
+	</section>
+
 </div>
 
 <?php
