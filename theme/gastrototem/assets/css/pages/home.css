@@ -59,6 +59,8 @@
 	object-fit: cover;
 	object-position: 100% 100%;                /* móvil: encuadre inferior-derecho */
 	opacity: 0.6;                              /* móvil: foto atenuada sobre el grafito */
+	transform-origin: center center;           /* zoom (hero.js) desde el centro */
+	will-change: transform;                    /* zoom por scroll → capa de composición */
 }
 
 @media (min-width: 768px) {
@@ -119,6 +121,7 @@
 	display: flex;
 	flex-direction: column;
 	padding: var(--hero-pad-top) var(--hero-pad-x) var(--hero-pad-bottom);
+	will-change: opacity, transform;           /* desvanecido + parallax (hero.js) */
 }
 
 /* Rótulos / kicker / folio: pila mono en mayúsculas, papel. */
@@ -296,5 +299,16 @@
 	.gtt-hero__cta,
 	.gtt-hero__cta-flecha {
 		transition: none;
+	}
+
+	/* Sin movimiento: hero.js ya no instala listeners, pero blindamos por si
+	 * hubiera estilo inline previo. El grano (::after) NO se toca: es textura. */
+	.gtt-hero__foto {
+		transform: none !important;
+	}
+
+	.gtt-hero__contenido {
+		opacity: 1 !important;
+		transform: none !important;
 	}
 }

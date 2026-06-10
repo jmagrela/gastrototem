@@ -95,15 +95,24 @@ function gtt_theme_enqueue_styles() {
 		);
 	}
 
-	/* Home: hero de portada. Solo en la portada (front-page.php). Sin JS en esta
-	 * pieza; el overlap hero↔contenido es CSS puro y el sentinel queda como arnés
-	 * del observer del header (ya construido). */
+	/* Home: hero de portada. Solo en la portada (front-page.php). El overlap
+	 * hero↔contenido es CSS puro y el sentinel es arnés del observer del header.
+	 * hero.js añade la capa de movimiento (zoom + desvanecido + parallax) con su
+	 * propio listener de scroll; no toca header.js ni el observer. */
 	if ( is_front_page() ) {
 		wp_enqueue_style(
 			'gastrototem-home',
 			GTT_THEME_URI . '/assets/css/pages/home.css',
 			array( 'gastrototem-base' ),
 			gtt_theme_asset_version( '/assets/css/pages/home.css' )
+		);
+
+		wp_enqueue_script(
+			'gastrototem-hero',
+			GTT_THEME_URI . '/assets/js/components/hero.js',
+			array(),
+			gtt_theme_asset_version( '/assets/js/components/hero.js' ),
+			true
 		);
 	}
 
