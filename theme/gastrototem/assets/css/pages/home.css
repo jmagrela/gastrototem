@@ -91,6 +91,25 @@
 	}
 }
 
+/* Grano ------------------------------------------------------------------- */
+/* Capa de ruido sutil sobre la foto+overlay y por DEBAJO de la composición de
+ * texto (z-index 1, mismo plano que el overlay pero pintada después por ser
+ * ::after → queda encima de él; la composición es z-index 2 y manda sobre todo).
+ * SVG feTurbulence como data-URI; sin colores literales (ruido en escala neutra),
+ * estática (no se anima), pointer-events:none. Se mantiene también con
+ * prefers-reduced-motion (es textura, no movimiento). */
+.gtt-hero::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	opacity: 0.06;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='gtt-grano'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23gtt-grano)'/%3E%3C/svg%3E");
+	background-repeat: repeat;
+	background-size: 160px 160px;
+}
+
 /* Composición editorial --------------------------------------------------- */
 
 .gtt-hero__contenido {
