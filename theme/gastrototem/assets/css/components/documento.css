@@ -187,3 +187,44 @@
 	font-family: var(--gtt-font-mono);
 	font-size: 0.9em;
 }
+
+/* Tabla (p. ej. el inventario de cookies en la política): hairlines grafito,
+ * cabecera mono en versalitas, cuerpo Inter pequeño. Scroll horizontal en
+ * pantallas estrechas vía wrapper .gtt-doc-prose__table. */
+.gtt-doc-prose__table {
+	margin: var(--gtt-space-8) 0 0 0;
+	overflow-x: auto;
+}
+
+.gtt-doc-prose table {
+	width: 100%;
+	border-collapse: collapse;
+	font-family: var(--gtt-font-sans);
+	font-size: var(--gtt-text-sm);
+	line-height: var(--gtt-leading-normal);
+	color: var(--gtt-color-grafito-900);
+}
+
+.gtt-doc-prose th {
+	font-family: var(--gtt-font-mono);
+	font-weight: 500;
+	font-size: var(--gtt-text-xs);
+	letter-spacing: var(--gtt-tracking-wide);
+	text-transform: uppercase;
+	color: var(--gtt-color-grafito-500);
+	text-align: left;
+	vertical-align: bottom;
+	padding: 0 var(--gtt-space-4) var(--gtt-space-3) 0;
+	border-bottom: 1px solid var(--gtt-color-grafito-500);
+}
+
+.gtt-doc-prose td {
+	padding: var(--gtt-space-3) var(--gtt-space-4) var(--gtt-space-3) 0;
+	border-bottom: 1px solid var(--gtt-color-grafito-200);
+	vertical-align: top;
+}
+
+.gtt-doc-prose th:last-child,
+.gtt-doc-prose td:last-child {
+	padding-right: 0;
+}

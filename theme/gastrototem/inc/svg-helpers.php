@@ -67,12 +67,15 @@ if ( ! function_exists( 'gtt_interior_page_slugs' ) ) {
 	 *
 	 * Fuente única de verdad compartida por gtt_header_context() (contexto del
 	 * header) y el enqueue condicional de sus assets (inc/enqueue.php). Mantener
-	 * en sintonía con los slugs reales de WordPress y con el menú del header.
+	 * en sintonía con los slugs reales de WordPress, con el menú del header y con
+	 * los enlaces legales del footer. Todas abren sobre banda tinta a sangre con
+	 * sentinel (contexto 'document'); las legales (aviso-legal, privacidad,
+	 * cookies) usan además la hoja de prosa .gtt-doc-prose de documento.css.
 	 *
 	 * @return string[] Lista de slugs.
 	 */
 	function gtt_interior_page_slugs() {
-		return array( 'afinacion', 'criterio', 'nosotros', 'contacto' );
+		return array( 'afinacion', 'criterio', 'nosotros', 'contacto', 'aviso-legal', 'privacidad', 'cookies' );
 	}
 }
 
