@@ -1,0 +1,95 @@
+/*
+ * Gastrototem · Página · Error 404
+ *
+ * Campo tinta a pantalla completa. El header arranca forzado-transparente
+ * (logo papel invertido) sobre el campo, sin auto-hide ni toggle a sólido:
+ * no hay contenido papel debajo, el campo ocupa el viewport. Todo el texto
+ * en papel (la tinta nunca es texto sobre oscuro); el acento de «aquí» en
+ * Source Serif 4 Italic papel. Cero hex, cero font-family literal.
+ */
+
+.gtt-error404 {
+	/* Borde del CTA derivado de papel (misma técnica de muted que el footer). */
+	--error404-cta-border: color-mix(in srgb, var(--gtt-color-papel-100) 40%, transparent);
+	/* Transición local (no hay token global; convención: prop por componente). */
+	--error404-transition: 180ms;
+
+	min-height: 100vh;
+	min-height: 100dvh;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--gtt-space-12) var(--gtt-space-6);
+	background-color: var(--gtt-color-tinta-500);
+	color: var(--gtt-color-papel-100);
+	text-align: center;
+}
+
+.gtt-error404__inner {
+	max-width: var(--gtt-container-prose);
+}
+
+.gtt-error404__kicker {
+	font-family: var(--gtt-font-mono);
+	font-weight: 500;
+	font-size: var(--gtt-text-xs);
+	letter-spacing: var(--gtt-tracking-wide);
+	text-transform: uppercase;
+	line-height: 1;
+	color: var(--gtt-color-papel-100);
+	margin: 0 0 var(--gtt-space-6) 0;
+}
+
+.gtt-error404__title {
+	font-family: var(--gtt-font-sans);
+	font-weight: 600;
+	font-size: var(--gtt-text-3xl);
+	line-height: var(--gtt-leading-tight);
+	color: var(--gtt-color-papel-100);
+	margin: 0;
+	text-wrap: balance;
+}
+
+/* Acento tipográfico, no cromático: serif italic en el MISMO papel. */
+.gtt-error404__accent {
+	font-family: var(--gtt-font-serif);
+	font-style: italic;
+	font-weight: 400;
+	color: var(--gtt-color-papel-100);
+}
+
+.gtt-error404__cta {
+	display: inline-block;
+	margin-top: var(--gtt-space-12);
+	padding: var(--gtt-space-3) var(--gtt-space-6);
+	font-family: var(--gtt-font-sans);
+	font-weight: 500;
+	font-size: var(--gtt-text-sm);
+	color: var(--gtt-color-papel-100);
+	text-decoration: none;
+	border: 1px solid var(--error404-cta-border);
+	transition:
+		background-color var(--error404-transition) ease-out,
+		color var(--error404-transition) ease-out,
+		border-color var(--error404-transition) ease-out;
+}
+
+.gtt-error404__cta:focus-visible {
+	outline: 2px solid var(--gtt-color-papel-100);
+	outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.gtt-error404__cta:hover {
+		background-color: var(--gtt-color-papel-100);
+		color: var(--gtt-color-tinta-500);
+		border-color: var(--gtt-color-papel-100);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.gtt-error404__cta {
+		transition: none;
+	}
+}

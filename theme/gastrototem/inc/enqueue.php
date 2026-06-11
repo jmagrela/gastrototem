@@ -160,6 +160,18 @@ function gtt_theme_enqueue_styles() {
 			true
 		);
 	}
+
+	/* Error 404: campo tinta a pantalla completa. Solo en is_404(). El header
+	 * arranca forzado-transparente vía el contexto '404' (header.php/header.js);
+	 * aquí solo se encola la hoja del campo. */
+	if ( is_404() ) {
+		wp_enqueue_style(
+			'gastrototem-error-404',
+			GTT_THEME_URI . '/assets/css/pages/error-404.css',
+			array( 'gastrototem-base' ),
+			gtt_theme_asset_version( '/assets/css/pages/error-404.css' )
+		);
+	}
 }
 add_action( 'wp_enqueue_scripts', 'gtt_theme_enqueue_styles' );
 
