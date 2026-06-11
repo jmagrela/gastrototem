@@ -83,4 +83,15 @@ if [ -n "$DRY_RUN" ]; then
 else
   echo ""
   echo "✅ Desplegado en $ENV"
+
+  # ── Auto-purga LiteSpeed (acorde al ENTORNO del deploy) ──────
+  # El WP root se deriva de REMOTE_PATH —la MISMA variable por-entorno que usó
+  # el rsync— quitando el sufijo del tema. Así la purga golpea siempre el mismo
+  # entorno que se acaba de desplegar (staging→staging, prod→prod), nunca otro.
+  # Tolerante a fallo: un error de purga NO rompe el deploy (queda como aviso).
+  WP_PATH="${REMOTE_PATH%wp-content/themes/gastrototem/}"
+  echo ""
+  echo "🧹 Purgando cache LiteSpeed en ${ENV}..."
+  ssh -p "$PORT" "${USER}@${HOST}" "cd '$WP_PATH' && wp litespeed-purge all" \
+    || echo "[aviso] purga LiteSpeed falló: hazla manual (wp litespeed-purge all en $WP_PATH)"
 fi
