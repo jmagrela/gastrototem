@@ -2,7 +2,7 @@
 
 > Documento de marca de Gastrototem. Fuente única de verdad para identidad, léxico, voz y reglas de aplicación.
 >
-> Versión 1.0 · Mayo 2026 · Aprobado por Fernando Huidobro y Juan M. Agrela
+> Versión 1.1 · Junio 2026 · Aprobado por Fernando Huidobro y Juan M. Agrela
 >
 > Custodio único: Juan M. Agrela. Si este archivo cambia, sincroniza la copia del otro repositorio en el mismo commit cuando sea posible.
 
@@ -91,6 +91,7 @@ La implementación técnica concreta de la escala vive en `CLAUDE.md` del repo c
 
 - **Inter** (sans-serif) — sistema, UI, copy general, navegación, formularios.
 - **Source Serif 4 Italic** — uso enfático, decorativo, reservado para taglines, citas y palabras-acento. **Nunca para párrafos largos.**
+- **JetBrains Mono** (monospace) — datos, cifras, kickers, etiquetas y tablas (precios, fechas, códigos, encabezados de columna). Nunca para párrafos largos ni para el logotipo.
 
 ### 4.2 Reglas duras de uso
 
@@ -139,7 +140,7 @@ El léxico que sigue aplica a **toda salida pública o semipública** de Gastrot
 
 **No aplica** a comentarios internos privados de código (puedes comentar `// TODO: optimizar query` sin pánico) ni a documentación interna de implementación. Pero sí aplica a cualquier `string` que pueda llegar a un usuario.
 
-**Para la redacción de informes de afinación** (el PDF firmado), el léxico canónico vive en `prompt-redaccion.md`. Esa es la versión más detallada y específica. Si hay conflicto entre ambos documentos, **gana `prompt-redaccion.md` para informes** y **gana `MARCA.md` para todo lo demás**.
+**Para la redacción de informes de afinación** (el informe firmado), el léxico canónico vive en `prompt-redaccion.md`. Esa es la versión más detallada y específica. Si hay conflicto entre ambos documentos, **gana `prompt-redaccion.md` para informes** y **gana `MARCA.md` para todo lo demás**.
 
 ### 5.2 Palabras propias (úsalas siempre que el contexto lo permita)
 
@@ -178,7 +179,7 @@ excelencia · innovación · sinergia · garantizar · transformar · optimizar 
 ### 5.5 Taglines canónicos
 
 - **Conceptual:** «Donde otros ven una comida, nosotros leemos un restaurante.»
-- **Operacional:** «Una visita. Una conversación. Un PDF firmado. En el acto.»
+- **Operacional:** «Una visita. Una conversación. Un informe firmado. En el acto.»
 - **Descriptor:** «Gastrototem · Una firma de Alta Afinación Gastronómica.»
 
 Estos tres taglines son **textuales**. No se reformulan, no se traducen libremente, no se acortan creativamente. Si Claude Code va a usar un tagline, lo cita exacto o no lo usa.
@@ -188,7 +189,7 @@ Estos tres taglines son **textuales**. No se reformulan, no se traducen libremen
 **No se mide en horas, jornadas, días, mañanas, tardes.** Cualquier copy, microcopy, descripción de servicio o mensaje al cliente que diga «en tres horas observamos», «tras una jornada», «dos días de inmersión» o similar **es bug**.
 
 **Excepciones permitidas (las únicas):**
-- «en el acto» — referido a la entrega del PDF firmado.
+- «en el acto» — referido a la entrega del informe firmado.
 - «entre 15 y 30 días» — referido a la llamada de seguimiento.
 - Horas y minutos del restaurante observado (datos del propio restaurante: «a las 14:25 entran tres mesas») — esto sí.
 
@@ -196,7 +197,7 @@ Estos tres taglines son **textuales**. No se reformulan, no se traducen libremen
 
 ## 6. Referencia al destilado de redacción
 
-Para **informes de afinación** (el PDF firmado entregado al cliente al final de la sesión), existe un documento especializado:
+Para **informes de afinación** (el informe firmado entregado al cliente al final de la sesión), existe un documento especializado:
 
 **`prompt-redaccion.md`** — destilado de identidad y voz para el motor de redacción de informes. Custodio único: Juan M. Agrela.
 
@@ -213,7 +214,7 @@ Ese documento contiene:
 |---|---|
 | Copy de web, UI, emails, redes | MARCA.md |
 | Mensaje de commit o PR | MARCA.md (sección 5) |
-| Cualquier cosa que vaya al PDF firmado del cliente | prompt-redaccion.md |
+| Cualquier cosa que vaya al informe firmado del cliente | prompt-redaccion.md |
 | Configuración del prompt enviado a la API | prompt-redaccion.md |
 | Componente UI que muestra un fragmento del informe | ambos: visualmente MARCA.md, contenido prompt-redaccion.md |
 
@@ -258,7 +259,7 @@ Reglas duras de marca, transversales a cualquier salida del producto. Si Claude 
 
 ### 8.2 De voz y comunicación
 
-- **No se promete transformaciones.** La promesa es operativa: visita, conversación, PDF firmado, propuestas concretas. Lo que el restaurante haga después es su decisión.
+- **No se promete transformaciones.** La promesa es operativa: visita, conversación, informe firmado, propuestas concretas. Lo que el restaurante haga después es su decisión.
 - **No se ofrece lo que no se hace.** Gastrototem no asesora, no consulta, no acompaña, no forma. Hace afinaciones. Si el copy implica algo distinto, está mal.
 - **No se compara el restaurante con otros restaurantes ni con marcas.** Ni en redes, ni en propuestas comerciales, ni en informes.
 - **No se usa lenguaje de marketing.** Sin emoticonos. Sin mayúsculas enfáticas. Sin signos de exclamación en CTAs. Sin urgencia artificial («solo hoy», «últimas plazas», «no te lo pierdas»).
@@ -269,7 +270,7 @@ Reglas duras de marca, transversales a cualquier salida del producto. Si Claude 
 ### 8.3 De datos del cliente
 
 - **Las notas de la sesión son material altamente sensible.** Contienen observaciones críticas sobre restaurantes reales. No se exponen en logs públicos, no se envían a herramientas de terceros para debugging, no se incluyen en mensajes de error que lleguen al frontend.
-- **El PDF firmado pertenece exclusivamente al cliente final del restaurante.** No se reutiliza, no se comparte como ejemplo, no se usa para marketing.
+- **El informe firmado pertenece exclusivamente al cliente final del restaurante.** No se reutiliza, no se comparte como ejemplo, no se usa para marketing.
 - **Las fotos de mesa pueden contener clientes reales del restaurante.** Cara visible, niños, situaciones identificables. No se usan jamás para marketing ni para entrenamiento de modelos.
 
 Las políticas técnicas concretas de retención, cifrado y borrado viven en el `CLAUDE.md` del repo correspondiente.
@@ -280,7 +281,7 @@ Las políticas técnicas concretas de retención, cifrado y borrado viven en el 
 
 Términos del oficio que Claude Code va a encontrar en código, comentarios, documentación, copy, y debe entender sin ambigüedad.
 
-- **Afinación** — el servicio de Gastrototem. Una visita más conversación más PDF firmado.
+- **Afinación** — el servicio de Gastrototem. Una visita más conversación más informe firmado.
 - **Afinamiento** — el proceso o resultado de afinar, en abstracto.
 - **Sesión de Afinación** — el servicio principal, 1.000 € + IVA.
 - **Afinación en Profundidad** — la versión extendida, 3.500 € + IVA. Nunca llamada «Premium».
@@ -289,8 +290,8 @@ Términos del oficio que Claude Code va a encontrar en código, comentarios, doc
 - **Mesa** — la unidad de observación. Donde ocurre la sesión.
 - **Cliente más exigente** — el comensal-tipo que la afinación tiene en cuenta para juzgar.
 - **Lectura del restaurante** — el output mental del afinador. Lo que se vuelca al PDF.
-- **PDF firmado** — el entregable del servicio. Documento físico-digital con la afinación, firmado por Fernando y Juan en el acto.
-- **En el acto** — referido al PDF: entregado al final de la conversación, en presencia de la propiedad.
+- **Informe firmado** — el entregable del servicio. Documento físico-digital (PDF) con la afinación, firmado por Fernando y Juan en el acto. En copy público: siempre «informe firmado», nunca «PDF firmado».
+- **En el acto** — referido al informe: entregado al final de la conversación, en presencia de la propiedad.
 - **Conversación** — el momento posterior a la comida, antes del PDF, donde se comparte la lectura con la propiedad. Cara a cara.
 - **Llamada de control** — el seguimiento, entre 15 y 30 días después.
 - **Profile A · B · C** — segmentación interna de tres tipos de cliente directo: A = consolidado estancado, B = nuevo proyecto con ambición, C = restaurante en forma que afina por oficio. Nunca aparece esta nomenclatura en salida pública.
@@ -344,4 +345,4 @@ Esto puede generar fricción puntual con el flujo de trabajo, y es deliberado. L
 
 ---
 
-*Fin de `MARCA.md`. Versión 1.0 · Mayo 2026.*
+*Fin de `MARCA.md`. Versión 1.1 · Junio 2026.*
