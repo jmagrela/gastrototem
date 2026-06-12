@@ -3,7 +3,7 @@
  * Template part: footer-main
  *
  * Footer global sobre TINTA: CTA de reserva (piso 1) + 4 columnas (piso 2:
- * Navegación / Contacto / Zonas abiertas / Legal) + firma con logo invertido
+ * Navegación / Contacto / Zonas de afinación / Legal) + firma con logo invertido
  * (piso 3) + cierre (piso 4). Presentacional, sin JS. El logo se recolorea a la
  * variante invertida (papel sobre tinta) por CSS; no se edita el SVG canónico.
  *
@@ -82,7 +82,7 @@ if ( ! empty( $_SERVER['REQUEST_URI'] ) ) {
 			</div>
 
 			<div class="gtt-footer__col">
-				<h2 class="gtt-footer__kicker">Zonas abiertas</h2>
+				<h2 class="gtt-footer__kicker">Zonas de afinación</h2>
 				<ul class="gtt-footer__list" role="list">
 					<?php foreach ( $zonas_abiertas as $zona ) : ?>
 						<li class="gtt-footer__list-item gtt-footer__zona"><?php echo esc_html( $zona ); ?></li>
