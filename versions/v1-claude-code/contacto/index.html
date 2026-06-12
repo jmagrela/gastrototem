@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto — Gastrototem</title>
+<meta name="description" content="Contacta con Gastrototem. Reserva una Sesión de Afinación o envianos tu consulta. Sevilla.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --off-white: #f7f7f5;
+    --gray-warm: #e8e6e1;
+    --gray-mid: #999690;
+    --gray-dark: #4a4845;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Montserrat', 'Helvetica Neue', sans-serif;
+    --page-max: 1200px;
+    --page-pad: clamp(20px, 5vw, 80px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { font-family: var(--sans); background: var(--white); color: var(--black); overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  .container { max-width: var(--page-max); margin: 0 auto; padding: 0 var(--page-pad); }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* HEADER */
+  .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--black); transition: background 0.3s ease; }
+  .site-header__inner { display: flex; align-items: center; justify-content: space-between; padding: 18px var(--page-pad); max-width: var(--page-max); margin: 0 auto; }
+  .site-header__logo img { height: 28px; width: auto; display: block; }
+  .site-nav { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .site-nav a { color: var(--gray-mid); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s; }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav__cta { background: var(--white) !important; color: var(--black) !important; padding: 10px 24px; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 2px; text-transform: uppercase; display: inline-block; transition: background 0.3s, transform 0.2s !important; }
+  .site-nav__cta:hover { background: var(--off-white) !important; transform: translateY(-1px); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--white); margin: 5px 0; transition: transform 0.3s, opacity 0.3s; }
+  @media (max-width: 768px) {
+    .nav-toggle { display: block; }
+    .site-nav { position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--black); flex-direction: column; justify-content: center; gap: 40px; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .site-nav.open { transform: translateX(0); }
+    .site-nav a { font-size: 16px; }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: var(--black); color: var(--white);
+    padding: clamp(140px, 20vh, 220px) 0 clamp(60px, 10vh, 120px);
+  }
+  .page-header__label { font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gray-mid); margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+  .page-header__label::before { content: ''; width: 40px; height: 1px; background: var(--gray-mid); }
+  .page-header__title { font-family: var(--serif); font-size: clamp(36px, 6vw, 72px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; max-width: 800px; }
+  .page-header__title em { font-style: italic; }
+  .page-header__intro { font-size: clamp(16px, 1.6vw, 19px); font-weight: 300; line-height: 1.7; color: var(--gray-mid); max-width: 560px; margin-top: 28px; }
+
+  /* CONTACT LAYOUT */
+  .contact-section { padding: clamp(80px, 12vh, 160px) 0; }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(60px, 8vw, 140px);
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .contact-layout { grid-template-columns: 1fr; gap: 60px; }
+  }
+
+  /* FORM */
+  .contact-form { display: flex; flex-direction: column; gap: 0; }
+
+  .form-group {
+    position: relative;
+    border-bottom: 1px solid var(--gray-warm);
+  }
+
+  .form-group label {
+    position: absolute; top: 20px; left: 0;
+    font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gray-mid); transition: all 0.3s; pointer-events: none;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; padding: 28px 0 12px; border: none; background: transparent;
+    font-family: var(--sans); font-size: 15px; font-weight: 400; color: var(--black);
+    outline: none; resize: none;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--black); }
+
+  .form-group input:focus + label,
+  .form-group input:not(:placeholder-shown) + label,
+  .form-group textarea:focus + label,
+  .form-group textarea:not(:placeholder-shown) + label,
+  .form-group select:focus + label,
+  .form-group select:valid + label {
+    top: 4px; font-size: 10px; color: var(--black);
+  }
+
+  .form-group select {
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999690' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 0 center;
+  }
+
+  .form-group select option { font-family: var(--sans); }
+
+  .form-group textarea { min-height: 120px; }
+
+  .form-submit {
+    margin-top: 40px;
+    display: inline-flex; align-items: center; gap: 16px;
+    background: var(--black); color: var(--white); padding: 20px 48px;
+    border: none; cursor: pointer;
+    font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase; transition: transform 0.3s, box-shadow 0.3s;
+    align-self: flex-start;
+  }
+
+  .form-submit:hover {
+    transform: translateY(-2px); box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  }
+
+  /* CONTACT INFO */
+  .contact-info__group { margin-bottom: 48px; }
+
+  .contact-info__label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gray-mid); margin-bottom: 12px;
+  }
+
+  .contact-info__value {
+    font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--gray-dark);
+  }
+
+  .contact-info__value a {
+    color: var(--black); text-decoration: none; border-bottom: 1px solid var(--gray-warm);
+    transition: border-color 0.3s;
+  }
+
+  .contact-info__value a:hover { border-color: var(--black); }
+
+  /* BOOKING CALLOUT */
+  .booking-callout {
+    background: var(--off-white);
+    padding: clamp(32px, 4vw, 48px);
+    margin-top: 48px;
+  }
+
+  .booking-callout__title {
+    font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .booking-callout__text {
+    font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--gray-dark);
+    margin-bottom: 24px;
+  }
+
+  .booking-callout__link {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--black); text-decoration: none; transition: gap 0.3s;
+  }
+
+  .booking-callout__link:hover { gap: 16px; }
+
+  /* FAQ MINI */
+  .faq-mini { background: var(--off-white); padding: clamp(80px, 12vh, 160px) 0; }
+
+  .faq-mini__title {
+    font-family: var(--serif); font-size: clamp(28px, 3.5vw, 44px); font-weight: 400;
+    margin-bottom: 48px;
+  }
+
+  .faq-mini__item {
+    border-bottom: 1px solid var(--gray-warm);
+    padding: 24px 0;
+  }
+
+  .faq-mini__q {
+    font-size: 15px; font-weight: 500; margin-bottom: 8px;
+  }
+
+  .faq-mini__a {
+    font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--gray-dark);
+  }
+
+  /* FOOTER */
+  .site-footer { background: var(--black); color: var(--gray-mid); border-top: 1px solid rgba(255,255,255,0.08); }
+  .site-footer__inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding: 60px var(--page-pad); max-width: var(--page-max); margin: 0 auto; }
+  @media (max-width: 768px) { .site-footer__inner { grid-template-columns: 1fr 1fr; gap: 32px; } }
+  .footer-brand__desc { font-size: 14px; font-weight: 300; line-height: 1.7; margin-top: 20px; max-width: 280px; }
+  .footer-col__title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 20px; }
+  .footer-col__list { list-style: none; }
+  .footer-col__list li { margin-bottom: 10px; }
+  .footer-col__list a { color: var(--gray-mid); text-decoration: none; font-size: 14px; font-weight: 300; transition: color 0.3s; }
+  .footer-col__list a:hover { color: var(--white); }
+  .site-footer__bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 24px var(--page-pad); max-width: var(--page-max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 300; }
+  @media (max-width: 768px) { .site-footer__bottom { flex-direction: column; gap: 12px; text-align: center; } }
+  .footer-social { display: flex; gap: 20px; }
+  .footer-social a { color: var(--gray-mid); text-decoration: none; transition: color 0.3s; }
+  .footer-social a:hover { color: var(--white); }
+
+  .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
+</style>
+</head>
+<body>
+
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="../index.html" class="site-header__logo" aria-label="Gastrototem — Inicio">
+      <img src="../afinacion/logo-gastrototem-white.svg" alt="Gastrototem" width="170" height="34">
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul class="site-nav" role="list">
+        <li><a href="../afinacion/index.html">Afinación</a></li>
+        <li><a href="../criterio/index.html">Criterio</a></li>
+        <li><a href="../nosotros/index.html">Nosotros</a></li>
+        <li><a href="../contacto/index.html">Contacto</a></li>
+        <li><a href="../afinacion/reservar" class="site-nav__cta">Reservar sesión</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="container">
+    <p class="page-header__label reveal">Contacto</p>
+    <h1 class="page-header__title reveal reveal-delay-1">Hablemos<br><em>sin rodeos.</em></h1>
+    <p class="page-header__intro reveal reveal-delay-2">
+      Si tienes un restaurante y quieres saber lo que realmente necesitas oir, escribenos. Sin compromiso, sin formularios eternos.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-layout">
+      <!-- FORM -->
+      <div class="reveal">
+        <form class="contact-form" action="#" method="post">
+          <div class="form-group">
+            <input type="text" id="nombre" name="nombre" placeholder=" " required>
+            <label for="nombre">Nombre</label>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder=" " required>
+            <label for="email">Email</label>
+          </div>
+          <div class="form-group">
+            <input type="text" id="restaurante" name="restaurante" placeholder=" ">
+            <label for="restaurante">Restaurante (opcional)</label>
+          </div>
+          <div class="form-group">
+            <input type="text" id="ciudad" name="ciudad" placeholder=" ">
+            <label for="ciudad">Ciudad</label>
+          </div>
+          <div class="form-group">
+            <select id="asunto" name="asunto" required>
+              <option value="" disabled selected></option>
+              <option value="afinación">Quiero reservar una Sesión de Afinación</option>
+              <option value="información">Quiero más información</option>
+              <option value="prensa">Prensa / colaboración</option>
+              <option value="otro">Otro</option>
+            </select>
+            <label for="asunto">Asunto</label>
+          </div>
+          <div class="form-group">
+            <textarea id="mensaje" name="mensaje" placeholder=" " rows="4" required></textarea>
+            <label for="mensaje">Mensaje</label>
+          </div>
+          <button type="submit" class="form-submit">
+            Enviar mensaje
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- INFO -->
+      <div class="reveal reveal-delay-2">
+        <div class="contact-info__group">
+          <p class="contact-info__label">Email</p>
+          <p class="contact-info__value"><a href="mailto:hola@gastrototem.com">hola@gastrototem.com</a></p>
+        </div>
+        <div class="contact-info__group">
+          <p class="contact-info__label">Redes</p>
+          <p class="contact-info__value">
+            <a href="https://instagram.com/gastrototem" target="_blank" rel="noopener">Instagram @gastrototem</a><br>
+            <a href="https://linkedin.com/company/gastrototem" target="_blank" rel="noopener">LinkedIn</a>
+          </p>
+        </div>
+        <div class="contact-info__group">
+          <p class="contact-info__label">Base</p>
+          <p class="contact-info__value">Sevilla, España<br>Sesiones en toda la península</p>
+        </div>
+        <div class="contact-info__group">
+          <p class="contact-info__label">Tiempo de respuesta</p>
+          <p class="contact-info__value">Respondemos en menos de 24 horas laborables</p>
+        </div>
+
+        <div class="booking-callout">
+          <h3 class="booking-callout__title">Reservar directamente</h3>
+          <p class="booking-callout__text">Si ya sabes que quieres una Sesión de Afinación, puedes reservar directamente sin pasar por el formulario.</p>
+          <a href="../afinacion/reservar" class="booking-callout__link">
+            Ir a reserva
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ MINI -->
+<section class="faq-mini">
+  <div class="container">
+    <h2 class="faq-mini__title reveal">Antes de escribir</h2>
+    <div class="faq-mini__item reveal">
+      <p class="faq-mini__q">¿Trabajáis fuera de Sevilla?</p>
+      <p class="faq-mini__a">Sí. Realizamos sesiones en toda España. Los desplazamientos fuera de Sevilla pueden implicar gastos adicionales de transporte y alojamiento, que se presupuestan por adelantado.</p>
+    </div>
+    <div class="faq-mini__item reveal reveal-delay-1">
+      <p class="faq-mini__q">¿Cuánto cuesta?</p>
+      <p class="faq-mini__a">La Sesión de Afinación tiene un precio cerrado de 1.000 EUR + IVA. Incluye visita de incógnito, reunión inmediata, informe profesional en 48h y llamada de control a 30 dias.</p>
+    </div>
+    <div class="faq-mini__item reveal reveal-delay-2">
+      <p class="faq-mini__q">¿Hacéis consultoría, gestión de redes o diseño de cartas?</p>
+      <p class="faq-mini__a">No. Hacemos una sola cosa: evaluar tu restaurante con criterio profesional y entregarte un díagnóstico honesto. No somos agencia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="footer-brand">
+      <img src="../afinacion/logo-gastrototem-white.svg" alt="Gastrototem" width="140" height="28">
+      <p class="footer-brand__desc">Crítica gastronómica que afina restaurantes. Sevilla.</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col__title">Navegar</h4>
+      <ul class="footer-col__list">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../afinacion/index.html">Afinación</a></li>
+        <li><a href="../criterio/index.html">Criterio</a></li>
+        <li><a href="../nosotros/index.html">Nosotros</a></li>
+        <li><a href="../contacto/index.html">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col__title">Legal</h4>
+      <ul class="footer-col__list">
+        <li><a href="../aviso-legal/index.html">Aviso legal</a></li>
+        <li><a href="../privacidad/index.html">Privacidad</a></li>
+        <li><a href="../cookies/index.html">Cookies</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col__title">Contacto</h4>
+      <ul class="footer-col__list">
+        <li><a href="mailto:hola@gastrototem.com">hola@gastrototem.com</a></li>
+        <li><a href="https://instagram.com/gastrototem" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://linkedin.com/company/gastrototem" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <span>&copy; 2025 Gastrototem S.L. &mdash; B90123514</span>
+    <div class="footer-social">
+      <a href="https://instagram.com/gastrototem" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://linkedin.com/company/gastrototem" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  const navToggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.site-nav');
+  navToggle.addEventListener('click', () => { const isOpen = nav.classList.toggle('open'); navToggle.classList.toggle('open'); navToggle.setAttribute('aria-expanded', isOpen); document.body.style.overflow = isOpen ? 'hidden' : ''; });
+  nav.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { nav.classList.remove('open'); navToggle.classList.remove('open'); navToggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }); });
+
+  const header = document.querySelector('.site-header');
+  window.addEventListener('scroll', () => { header.style.boxShadow = window.scrollY > 100 ? '0 1px 0 rgba(255,255,255,0.05)' : 'none'; }, { passive: true });
+</script>
+
+</body>
+</html>

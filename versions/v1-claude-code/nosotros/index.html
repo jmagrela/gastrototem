@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nosotros — Gastrototem</title>
+<meta name="description" content="Fernando Huidobro y Juanma Agrela. Criticos gastronomicos, socios fundadores de Gastrototem. Sevilla.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --off-white: #f7f7f5;
+    --gray-warm: #e8e6e1;
+    --gray-mid: #999690;
+    --gray-dark: #4a4845;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Montserrat', 'Helvetica Neue', sans-serif;
+    --page-max: 1200px;
+    --page-pad: clamp(20px, 5vw, 80px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { font-family: var(--sans); background: var(--white); color: var(--black); overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  .container { max-width: var(--page-max); margin: 0 auto; padding: 0 var(--page-pad); }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* HEADER */
+  .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--black); transition: background 0.3s ease; }
+  .site-header__inner { display: flex; align-items: center; justify-content: space-between; padding: 18px var(--page-pad); max-width: var(--page-max); margin: 0 auto; }
+  .site-header__logo img { height: 28px; width: auto; display: block; }
+  .site-nav { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .site-nav a { color: var(--gray-mid); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s; }
+  .site-nav a:hover { color: var(--white); }
+  .site-nav__cta { background: var(--white) !important; color: var(--black) !important; padding: 10px 24px; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 2px; text-transform: uppercase; display: inline-block; transition: background 0.3s, transform 0.2s !important; }
+  .site-nav__cta:hover { background: var(--off-white) !important; transform: translateY(-1px); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--white); margin: 5px 0; transition: transform 0.3s, opacity 0.3s; }
+  @media (max-width: 768px) {
+    .nav-toggle { display: block; }
+    .site-nav { position: fixed; top: 64px; left: 0; right: 0; bottom: 0; background: var(--black); flex-direction: column; justify-content: center; gap: 40px; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .site-nav.open { transform: translateX(0); }
+    .site-nav a { font-size: 16px; }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: var(--black); color: var(--white);
+    padding: clamp(140px, 20vh, 220px) 0 clamp(60px, 10vh, 120px);
+  }
+  .page-header__label { font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gray-mid); margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+  .page-header__label::before { content: ''; width: 40px; height: 1px; background: var(--gray-mid); }
+  .page-header__title { font-family: var(--serif); font-size: clamp(36px, 6vw, 72px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; max-width: 800px; }
+  .page-header__title em { font-style: italic; }
+  .page-header__intro { font-size: clamp(16px, 1.6vw, 19px); font-weight: 300; line-height: 1.7; color: var(--gray-mid); max-width: 560px; margin-top: 28px; }
+
+  /* SECTION */
+  .section { padding: clamp(80px, 12vh, 160px) 0; }
+  .section--dark { background: var(--black); color: var(--white); }
+  .section--warm { background: var(--off-white); }
+  .section__label { font-size: 11px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gray-mid); margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+  .section__label::before { content: ''; width: 40px; height: 1px; background: currentColor; }
+  .section__title { font-family: var(--serif); font-size: clamp(32px, 4.5vw, 60px); font-weight: 400; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 24px; max-width: 700px; }
+  .section__intro { font-size: clamp(16px, 1.5vw, 18px); font-weight: 300; line-height: 1.8; color: var(--gray-dark); max-width: 600px; margin-bottom: 60px; }
+  .section--dark .section__intro { color: var(--gray-mid); }
+
+  /* FOUNDERS */
+  .founders {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 100px);
+    margin-top: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .founders { grid-template-columns: 1fr; gap: 60px; }
+  }
+
+  .founder__portrait {
+    background: var(--gray-warm);
+    aspect-ratio: 3/4;
+    margin-bottom: 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 64px; font-style: italic; color: var(--gray-mid);
+    user-select: none;
+  }
+
+  .founder__name {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+
+  .founder__role {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gray-mid); margin-bottom: 24px;
+  }
+
+  .founder__bio {
+    font-size: 15px; font-weight: 300; line-height: 1.9; color: var(--gray-dark);
+  }
+
+  .founder__bio p + p { margin-top: 16px; }
+
+  .founder__links {
+    margin-top: 24px; display: flex; gap: 20px;
+  }
+
+  .founder__links a {
+    color: var(--gray-mid); text-decoration: none; transition: color 0.3s;
+    font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .founder__links a:hover { color: var(--black); }
+
+  /* HISTORIA */
+  .historia-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 100px);
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .historia-layout { grid-template-columns: 1fr; }
+  }
+
+  .historia__text {
+    font-size: 15px; font-weight: 300; line-height: 1.9; color: var(--gray-dark);
+  }
+
+  .historia__text p + p { margin-top: 20px; }
+
+  .historia__aside {
+    border-left: 2px solid var(--gray-warm);
+    padding-left: clamp(24px, 3vw, 40px);
+  }
+
+  .historia__quote {
+    font-family: var(--serif); font-size: clamp(22px, 2.5vw, 30px); font-weight: 400;
+    font-style: italic; line-height: 1.4; margin-bottom: 20px;
+  }
+
+  .historia__attr {
+    font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-mid);
+  }
+
+  /* VALORES */
+  .valores-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .valores-grid { grid-template-columns: 1fr; }
+  }
+
+  .valor {
+    border-top: 2px solid var(--white);
+    padding-top: 28px;
+  }
+
+  .valor__title {
+    font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 16px; color: var(--white);
+  }
+
+  .valor__text {
+    font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--gray-mid);
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: clamp(100px, 18vh, 240px) 0;
+  }
+
+  .cta-section__title {
+    font-family: var(--serif); font-size: clamp(36px, 5.5vw, 72px); font-weight: 400;
+    line-height: 1.15; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto;
+  }
+
+  .cta-section__subtitle {
+    font-size: 16px; font-weight: 300; color: var(--gray-mid); margin-bottom: 50px;
+  }
+
+  .cta-section__btn {
+    display: inline-flex; align-items: center; gap: 16px;
+    background: var(--black); color: var(--white); padding: 22px 56px;
+    font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .cta-section__btn:hover {
+    transform: translateY(-2px); box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+
+  /* FOOTER */
+  .site-footer { background: var(--black); color: var(--gray-mid); border-top: 1px solid rgba(255,255,255,0.08); }
+  .site-footer__inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding: 60px var(--page-pad); max-width: var(--page-max); margin: 0 auto; }
+  @media (max-width: 768px) { .site-footer__inner { grid-template-columns: 1fr 1fr; gap: 32px; } }
+  .footer-brand__desc { font-size: 14px; font-weight: 300; line-height: 1.7; margin-top: 20px; max-width: 280px; }
+  .footer-col__title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 20px; }
+  .footer-col__list { list-style: none; }
+  .footer-col__list li { margin-bottom: 10px; }
+  .footer-col__list a { color: var(--gray-mid); text-decoration: none; font-size: 14px; font-weight: 300; transition: color 0.3s; }
+  .footer-col__list a:hover { color: var(--white); }
+  .site-footer__bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 24px var(--page-pad); max-width: var(--page-max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 300; }
+  @media (max-width: 768px) { .site-footer__bottom { flex-direction: column; gap: 12px; text-align: center; } }
+  .footer-social { display: flex; gap: 20px; }
+  .footer-social a { color: var(--gray-mid); text-decoration: none; transition: color 0.3s; }
+  .footer-social a:hover { color: var(--white); }
+
+  .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; }
+</style>
+</head>
+<body>
+
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="../index.html" class="site-header__logo" aria-label="Gastrototem — Inicio">
+      <img src="../afinacion/logo-gastrototem-white.svg" alt="Gastrototem" width="170" height="34">
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav>
+      <ul class="site-nav" role="list">
+        <li><a href="../afinacion/index.html">Afinación</a></li>
+        <li><a href="../criterio/index.html">Criterio</a></li>
+        <li><a href="../nosotros/index.html">Nosotros</a></li>
+        <li><a href="../contacto/index.html">Contacto</a></li>
+        <li><a href="../afinacion/reservar" class="site-nav__cta">Reservar sesión</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="container">
+    <p class="page-header__label reveal">Nosotros</p>
+    <h1 class="page-header__title reveal reveal-delay-1">Dos miradas.<br><em>Un criterio.</em></h1>
+    <p class="page-header__intro reveal reveal-delay-2">
+      Gastrototem es Fernando Huidobro y Juanma Agrela. Criticos gastronomicos con trayectoria contrastada en Sevilla y más allá. No delegamos en colaboradores externos.
+    </p>
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<section class="section">
+  <div class="container">
+    <div class="founders">
+      <div class="reveal">
+        <div class="founder__portrait">F</div>
+        <h2 class="founder__name">Fernando Huidobro</h2>
+        <p class="founder__role">Socio fundador</p>
+        <div class="founder__bio">
+          <p>Crítico gastronómico con años de trayectoria evaluando restaurantes. Su mirada se centra en la precisión técnica, la coherencia de la propuesta culinaria y el rigor del producto.</p>
+          <p>Formado en el ejercicio directo de la crítica, Fernando aporta la perspectiva analítica que desmonta un restaurante pieza a pieza para entender que funciona, que sobra y que falta.</p>
+        </div>
+        <div class="founder__links">
+          <a href="https://linkedin.com/in/" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="founder__portrait">J</div>
+        <h2 class="founder__name">Juanma Agrela</h2>
+        <p class="founder__role">Socio fundador</p>
+        <div class="founder__bio">
+          <p>Formado en comunicación y narrativa gastronómica. Evalúa la experiencia global del restaurante: la sala, la atmósfera, la coherencia entre lo que un restaurante dice ser y lo que realmente es.</p>
+          <p>Juanma aporta la perspectiva del relato y la experiencia vivida. Si Fernando desmonta el mecanismo, Juanma evalua si la música que produce tiene sentido para quien la escucha.</p>
+        </div>
+        <div class="founder__links">
+          <a href="https://linkedin.com/in/" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://instagram.com/" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORIA -->
+<section class="section section--warm">
+  <div class="container">
+    <p class="section__label reveal">La historia</p>
+    <h2 class="section__title reveal reveal-delay-1">De agencia a firma de crítica.</h2>
+    <div class="historia-layout">
+      <div class="historia__text reveal reveal-delay-2">
+        <p>
+          Gastrototem empezó como una agencia de servicios para gastronomía. Hacíamos de todo: redes sociales, fotografia, consultoría, eventos. El problema es que hacíamos demasiado y decíamos demasiado poco.
+        </p>
+        <p>
+          Con el tiempo entendimos que lo que realmente sabíamos hacer — lo que nos distinguía — era evaluar restaurantes con criterio profesional. Decir la verdad sobre lo que veíamos, con fundamento y sin interés en agradar.
+        </p>
+        <p>
+          Así nació Gastrototem 2.0: una firma de Crítica gastronómica especializada que entra en tu restaurante como cualquier cliente y te entrega un díagnóstico honesto, concreto y accionable. Un solo servicio, hecho con rigor.
+        </p>
+      </div>
+      <div class="historia__aside reveal reveal-delay-3">
+        <p class="historia__quote">Dejamos de hacer muchas cosas para hacer una sola bien: decir la verdad sobre tu restaurante.</p>
+        <p class="historia__attr">Gastrototem, 2024</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section class="section section--dark">
+  <div class="container">
+    <p class="section__label reveal">Lo que nos define</p>
+    <h2 class="section__title reveal reveal-delay-1">Principios no negociables.</h2>
+    <div class="valores-grid">
+      <div class="valor reveal">
+        <h3 class="valor__title">Independencia</h3>
+        <p class="valor__text">No tenemos acuerdos comerciales con proveedores, distribuidores ni guias. Nuestro criterio no se compra, no se negocia, no se suaviza.</p>
+      </div>
+      <div class="valor reveal reveal-delay-1">
+        <h3 class="valor__title">Honestidad radical</h3>
+        <p class="valor__text">Si algo no funciona, lo decimos. Si algo es excelente, también. No buscamos agradar ni incomodar: buscamos que mejores con información real.</p>
+      </div>
+      <div class="valor reveal reveal-delay-2">
+        <h3 class="valor__title">Trabajo real</h3>
+        <p class="valor__text">Todo lo que publicamos, opinamos o recomendamos sale de experiencias vividas. No fabricamos contenido: lo extraemos de cada mesa, cada sala, cada servicio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATOS EMPRESA -->
+<section class="section">
+  <div class="container" style="text-align: center;">
+    <p class="section__label reveal" style="justify-content: center;">La empresa</p>
+    <h2 class="section__title reveal reveal-delay-1" style="margin-left: auto; margin-right: auto;">Gastrototem S.L.</h2>
+    <p class="reveal reveal-delay-2" style="font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--gray-dark); max-width: 480px; margin: 0 auto;">
+      CIF: B90123514<br>
+      Sevilla, España<br>
+      <a href="mailto:hola@gastrototem.com" style="color: var(--black);">hola@gastrototem.com</a>
+    </p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section--warm">
+  <div class="container cta-section">
+    <p class="section__label reveal" style="justify-content: center;">Siguiente paso</p>
+    <h2 class="cta-section__title reveal reveal-delay-1">Si quieres saber<br>lo que tu restaurante<br>necesita oir.</h2>
+    <p class="cta-section__subtitle reveal reveal-delay-2">Conoce la Sesión de Afinación</p>
+    <a href="../afinacion/index.html" class="cta-section__btn reveal reveal-delay-3">
+      Ver el servicio
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="footer-brand">
+      <img src="../afinacion/logo-gastrototem-white.svg" alt="Gastrototem" width="140" height="28">
+      <p class="footer-brand__desc">Crítica gastronómica que afina restaurantes. Sevilla.</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col__title">Navegar</h4>
+      <ul class="footer-col__list">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="../afinacion/index.html">Afinación</a></li>
+        <li><a href="../criterio/index.html">Criterio</a></li>
+        <li><a href="../nosotros/index.html">Nosotros</a></li>
+        <li><a href="../contacto/index.html">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col__title">Legal</h4>
+      <ul class="footer-col__list">
+        <li><a href="../aviso-legal/index.html">Aviso legal</a></li>
+        <li><a href="../privacidad/index.html">Privacidad</a></li>
+        <li><a href="../cookies/index.html">Cookies</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col__title">Contacto</h4>
+      <ul class="footer-col__list">
+        <li><a href="mailto:hola@gastrototem.com">hola@gastrototem.com</a></li>
+        <li><a href="https://instagram.com/gastrototem" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://linkedin.com/company/gastrototem" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <span>&copy; 2025 Gastrototem S.L. &mdash; B90123514</span>
+    <div class="footer-social">
+      <a href="https://instagram.com/gastrototem" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://linkedin.com/company/gastrototem" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  const navToggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.site-nav');
+  navToggle.addEventListener('click', () => { const isOpen = nav.classList.toggle('open'); navToggle.classList.toggle('open'); navToggle.setAttribute('aria-expanded', isOpen); document.body.style.overflow = isOpen ? 'hidden' : ''; });
+  nav.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { nav.classList.remove('open'); navToggle.classList.remove('open'); navToggle.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; }); });
+
+  const header = document.querySelector('.site-header');
+  window.addEventListener('scroll', () => { header.style.boxShadow = window.scrollY > 100 ? '0 1px 0 rgba(255,255,255,0.05)' : 'none'; }, { passive: true });
+</script>
+
+</body>
+</html>
